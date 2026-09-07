@@ -1,0 +1,62 @@
+name: Import Beaux Birthday Photos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-drive-photos.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-photos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Google Drive downloader
+        run: pip install --disable-pip-version-check gdown
+
+      - name: Download birthday album into repository
+        run: |
+          rm -rf assets/photos
+          mkdir -p assets/photos
+          gdown --folder 'https://drive.google.com/drive/folders/1RzIu6trF_6-r1UyMMEUiO7V111ACk4BZ' -O assets/photos --remaining-ok
+
+      - name: Generate local photo manifest
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          root = Path('assets/photos')
+          files = sorted(
+              str(p.as_posix())
+              for p in root.rglob('*')
+              if p.is_file() and p.suffix.lower() in {'.jpg','.jpeg','.png','.webp','.gif'}
+          )
+          Path('assets/photos.js').write_text(
+              'window.BEAUX_PHOTOS = ' + json.dumps(files, ensure_ascii=False) + ';\n',
+              encoding='utf-8'
+          )
+          print(f'Prepared {len(files)} local photos')
+          PY
+
+      - name: Commit imported photos
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/photos assets/photos.js
+          if git diff --cached --quiet; then
+            echo 'No photo changes to commit.'
+          else
+            git commit -m 'Import Beaux birthday photos into local assets'
+            git push
+          fi
