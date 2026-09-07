@@ -1,1 +1,58 @@
-window.BEAUX_MEDIA = [{"full": "assets/photos/IMG-20260705-WA0002.jpg", "thumb": "assets/thumbs/IMG-20260705-WA0002.webp"}, {"full": "assets/photos/IMG-20260710-WA0001.jpg", "thumb": "assets/thumbs/IMG-20260710-WA0001.webp"}, {"full": "assets/photos/IMG-20260710-WA0003.jpg", "thumb": "assets/thumbs/IMG-20260710-WA0003.webp"}, {"full": "assets/photos/IMG-20260728-WA0000.jpg", "thumb": "assets/thumbs/IMG-20260728-WA0000.webp"}, {"full": "assets/photos/IMG-20260728-WA0001.jpg", "thumb": "assets/thumbs/IMG-20260728-WA0001.webp"}, {"full": "assets/photos/IMG-20260728-WA0002.jpg", "thumb": "assets/thumbs/IMG-20260728-WA0002.webp"}, {"full": "assets/photos/IMG-20260728-WA0003.jpg", "thumb": "assets/thumbs/IMG-20260728-WA0003.webp"}, {"full": "assets/photos/IMG-20260903-WA0001.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0001.webp"}, {"full": "assets/photos/IMG-20260903-WA0002.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0002.webp"}, {"full": "assets/photos/IMG-20260903-WA0003.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0003.webp"}, {"full": "assets/photos/IMG-20260903-WA0004.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0004.webp"}, {"full": "assets/photos/IMG-20260903-WA0005.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0005.webp"}, {"full": "assets/photos/IMG-20260903-WA0006.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0006.webp"}, {"full": "assets/photos/IMG-20260903-WA0007.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0007.webp"}, {"full": "assets/photos/IMG-20260903-WA0009.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0009.webp"}, {"full": "assets/photos/IMG-20260903-WA0010.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0010.webp"}, {"full": "assets/photos/IMG-20260903-WA0011.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0011.webp"}, {"full": "assets/photos/IMG-20260903-WA0012.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0012.webp"}, {"full": "assets/photos/IMG-20260903-WA0013.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0013.webp"}, {"full": "assets/photos/IMG-20260903-WA0014.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0014.webp"}, {"full": "assets/photos/IMG-20260903-WA0015.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0015.webp"}, {"full": "assets/photos/IMG-20260903-WA0016.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0016.webp"}, {"full": "assets/photos/IMG-20260903-WA0017.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0017.webp"}, {"full": "assets/photos/IMG-20260903-WA0019.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0019.webp"}, {"full": "assets/photos/IMG-20260903-WA0020.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0020.webp"}, {"full": "assets/photos/IMG-20260903-WA0021.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0021.webp"}, {"full": "assets/photos/IMG-20260903-WA0022.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0022.webp"}, {"full": "assets/photos/IMG-20260903-WA0023.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0023.webp"}, {"full": "assets/photos/IMG-20260903-WA0024.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0024.webp"}, {"full": "assets/photos/IMG-20260903-WA0025.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0025.webp"}, {"full": "assets/photos/IMG-20260903-WA0026.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0026.webp"}, {"full": "assets/photos/IMG-20260903-WA0028.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0028.webp"}, {"full": "assets/photos/IMG-20260903-WA0029.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0029.webp"}, {"full": "assets/photos/IMG-20260903-WA0031.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0031.webp"}, {"full": "assets/photos/IMG-20260903-WA0032.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0032.webp"}, {"full": "assets/photos/IMG-20260903-WA0033.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0033.webp"}, {"full": "assets/photos/IMG-20260903-WA0034.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0034.webp"}, {"full": "assets/photos/IMG-20260903-WA0035.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0035.webp"}, {"full": "assets/photos/IMG-20260903-WA0036.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0036.webp"}, {"full": "assets/photos/IMG-20260903-WA0037.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0037.webp"}, {"full": "assets/photos/IMG-20260903-WA0038.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0038.webp"}, {"full": "assets/photos/IMG-20260903-WA0039.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0039.webp"}, {"full": "assets/photos/IMG-20260903-WA0040.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0040.webp"}, {"full": "assets/photos/IMG-20260903-WA0041.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0041.webp"}, {"full": "assets/photos/IMG-20260903-WA0042.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0042.webp"}, {"full": "assets/photos/IMG-20260903-WA0043.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0043.webp"}, {"full": "assets/photos/IMG-20260903-WA0044.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0044.webp"}, {"full": "assets/photos/IMG-20260903-WA0045.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0045.webp"}, {"full": "assets/photos/IMG-20260903-WA0046.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0046.webp"}, {"full": "assets/photos/IMG-20260903-WA0047.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0047.webp"}, {"full": "assets/photos/IMG-20260903-WA0048.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0048.webp"}, {"full": "assets/photos/IMG-20260903-WA0049.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0049.webp"}, {"full": "assets/photos/IMG-20260903-WA0050.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0050.webp"}, {"full": "assets/photos/IMG-20260903-WA0051.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0051.webp"}, {"full": "assets/photos/IMG-20260903-WA0052.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0052.webp"}, {"full": "assets/photos/IMG-20260903-WA0053.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0053.webp"}, {"full": "assets/photos/IMG-20260903-WA0055.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0055.webp"}, {"full": "assets/photos/IMG-20260903-WA0056.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0056.webp"}, {"full": "assets/photos/IMG-20260903-WA0057.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0057.webp"}, {"full": "assets/photos/IMG-20260903-WA0059.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0059.webp"}, {"full": "assets/photos/IMG-20260903-WA0060.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0060.webp"}, {"full": "assets/photos/IMG-20260903-WA0061.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0061.webp"}, {"full": "assets/photos/IMG-20260903-WA0062.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0062.webp"}, {"full": "assets/photos/IMG-20260903-WA0063.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0063.webp"}, {"full": "assets/photos/IMG-20260903-WA0064.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0064.webp"}, {"full": "assets/photos/IMG-20260903-WA0065.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0065.webp"}, {"full": "assets/photos/IMG-20260903-WA0066.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0066.webp"}, {"full": "assets/photos/IMG-20260903-WA0067.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0067.webp"}, {"full": "assets/photos/IMG-20260903-WA0069.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0069.webp"}, {"full": "assets/photos/IMG-20260903-WA0070.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0070.webp"}, {"full": "assets/photos/IMG-20260903-WA0071.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0071.webp"}, {"full": "assets/photos/IMG-20260903-WA0072.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0072.webp"}, {"full": "assets/photos/IMG-20260903-WA0073.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0073.webp"}, {"full": "assets/photos/IMG-20260903-WA0074.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0074.webp"}, {"full": "assets/photos/IMG-20260903-WA0075.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0075.webp"}, {"full": "assets/photos/IMG-20260903-WA0077.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0077.webp"}, {"full": "assets/photos/IMG-20260903-WA0078.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0078.webp"}, {"full": "assets/photos/IMG-20260903-WA0079.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0079.webp"}, {"full": "assets/photos/IMG-20260903-WA0080.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0080.webp"}, {"full": "assets/photos/IMG-20260903-WA0081.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0081.webp"}, {"full": "assets/photos/IMG-20260903-WA0082.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0082.webp"}, {"full": "assets/photos/IMG-20260903-WA0083.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0083.webp"}, {"full": "assets/photos/IMG-20260903-WA0084.jpg", "thumb": "assets/thumbs/IMG-20260903-WA0084.webp"}];
+window.BEAUX_MEDIA=(window.BEAUX_PHOTOS||[]).map(function(p){return{full:p,thumb:p.replace('assets/photos/','assets/thumbs/').replace(/\.(jpg|jpeg|png)$/i,'.webp')}});
+
+(function(){
+  const vault=document.getElementById('vault');
+  const dogs=document.getElementById('dogs');
+  const avatar=document.getElementById('avatar');
+  const uni=document.getElementById('uni');
+  const callBeaux=document.getElementById('callBeaux');
+  const enter=document.getElementById('enter');
+  const pass=document.getElementById('pass');
+  if(!vault||!dogs)return;
+
+  // FIRST SCENE: locked dog guardians.
+  vault.classList.remove('on');
+  avatar&&avatar.classList.remove('on');
+  uni&&uni.classList.remove('on');
+  dogs.classList.add('on');
+
+  const style=document.createElement('style');
+  style.textContent=`
+    #dogs .dogWrap:before{content:'🔒  BIRTHDAY GATE LOCKED';display:inline-block;margin-bottom:12px;padding:9px 14px;border:1px solid #ffffff55;border-radius:999px;background:#ffffff12;font-size:10px;font-weight:900;letter-spacing:.16em;box-shadow:0 8px 24px #0004}
+    #dogs .dogCard:before{content:'🔒';position:absolute;left:50%;top:12%;transform:translateX(-50%);z-index:5;font-size:28px;filter:drop-shadow(0 5px 10px #0008);transition:.3s}
+    #dogs .dogCard.ready:before{content:'🔓';transform:translateX(-50%) scale(1.08)}
+    #dogs .dogCard:not(.ready){filter:saturate(.7) brightness(.82)}
+    #dogs .dogCard.ready{filter:none}
+  `;
+  document.head.appendChild(style);
+
+  const h2=dogs.querySelector('h2');
+  const p=dogs.querySelector('.dogWrap>p');
+  const labels=dogs.querySelectorAll('.dogLabel');
+  if(h2)h2.textContent='Unlock the two dog guardians first.';
+  if(p)p.textContent='Tap both locked dogs. When both approve, the Birthday Vault will open.';
+  if(labels[0])labels[0].textContent='LOCKED GUARDIAN ONE';
+  if(labels[1])labels[1].textContent='LOCKED GUARDIAN TWO';
+  if(callBeaux)callBeaux.textContent='UNLOCK BIRTHDAY VAULT ✦';
+
+  if(callBeaux){
+    callBeaux.addEventListener('click',function(e){
+      if(callBeaux.disabled)return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      dogs.classList.remove('on');
+      vault.classList.add('on');
+    },true);
+  }
+
+  if(enter){
+    enter.addEventListener('click',function(e){
+      if((pass?.value||'').trim().toUpperCase()!=='BEAUX')return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      vault.classList.remove('on');
+      avatar&&avatar.classList.add('on');
+      setTimeout(function(){document.getElementById('speakAgain')?.click()},450);
+    },true);
+  }
+})();
