@@ -1,0 +1,72 @@
+name: Optimize Beaux Photos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/photos/**'
+      - '.github/workflows/optimize-photos.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Pillow
+        run: pip install --disable-pip-version-check pillow
+
+      - name: Build lightweight thumbnails and manifest
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          import json
+
+          src_root = Path('assets/photos')
+          thumb_root = Path('assets/thumbs')
+          thumb_root.mkdir(parents=True, exist_ok=True)
+
+          records = []
+          allowed = {'.jpg','.jpeg','.png','.webp'}
+          for src in sorted(p for p in src_root.rglob('*') if p.is_file() and p.suffix.lower() in allowed):
+              rel = src.relative_to(src_root)
+              thumb = (thumb_root / rel).with_suffix('.webp')
+              thumb.parent.mkdir(parents=True, exist_ok=True)
+              try:
+                  with Image.open(src) as im:
+                      im = ImageOps.exif_transpose(im).convert('RGB')
+                      im.thumbnail((360,360), Image.Resampling.LANCZOS)
+                      im.save(thumb, 'WEBP', quality=72, method=6)
+                  records.append({'full': src.as_posix(), 'thumb': thumb.as_posix()})
+              except Exception as e:
+                  print('skip', src, e)
+
+          Path('assets/photos-optimized.js').write_text(
+              'window.BEAUX_MEDIA = ' + json.dumps(records, ensure_ascii=False) + ';\n',
+              encoding='utf-8'
+          )
+          print(f'Created {len(records)} optimized thumbnails')
+          PY
+
+      - name: Commit optimized thumbnails
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/thumbs assets/photos-optimized.js
+          if git diff --cached --quiet; then
+            echo 'No optimized photo changes to commit.'
+          else
+            git commit -m 'Generate optimized birthday photo thumbnails'
+            git push
+          fi
