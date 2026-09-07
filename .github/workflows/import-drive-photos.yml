@@ -29,7 +29,7 @@ jobs:
         run: |
           rm -rf assets/photos
           mkdir -p assets/photos
-          gdown --folder 'https://drive.google.com/drive/folders/1RzIu6trF_6-r1UyMMEUiO7V111ACk4BZ' -O assets/photos
+          gdown --folder 'https://drive.google.com/drive/folders/1RzIu6trF_6-r1UyMMEUiO7V111ACk4BZ' -O assets/photos || true
 
       - name: Generate local photo manifest
         run: |
