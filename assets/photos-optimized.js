@@ -12,7 +12,7 @@ window.BEAUX_MEDIA=(window.BEAUX_PHOTOS||[]).map(function(p){return{full:p,thumb
 
   const keeperImg=document.querySelector('#avatar .avatarFrame img');
   if(keeperImg){
-    keeperImg.src='assets/beaux-avatar-keeper.webp?v=4';
+    keeperImg.src='assets/beaux-avatar-keeper-v2.webp?v=1';
     keeperImg.alt='Beaux — Keeper of the Birthday Universe';
     keeperImg.classList.add('keeperAvatarImage');
   }
