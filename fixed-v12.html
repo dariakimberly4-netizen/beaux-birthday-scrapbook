@@ -5,7 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>BEAUX — Tiny Flower Memory Garden</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050706;color:#f7e6c7;font-family:Arial,sans-serif}#garden{position:fixed;inset:0;width:100%;height:100%;border:0;display:none;background:#050706}#lock{position:fixed;z-index:5;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:radial-gradient(circle,#273126,#080b09 64%,#030403)}.lockCard{width:min(92vw,440px)}.hero{width:min(72vw,330px);height:min(42vh,320px);object-fit:cover;border-radius:48% 48% 44% 44%;border:1px solid #d7b778;box-shadow:0 0 50px #e4b86744}h1{font:clamp(30px,7vw,44px) Georgia,serif;letter-spacing:.17em;margin:17px 0 5px}.tiny{color:#cfc5b6;font-size:13px}form{display:flex;justify-content:center;gap:8px;margin-top:16px;flex-wrap:wrap}#pw{height:50px;width:200px;border-radius:28px;padding:0 17px;background:#fffdf6;border:2px solid #d1b77d;text-align:center;letter-spacing:.15em;color:#17130f;font-size:16px}#go{height:50px;min-width:112px;border-radius:28px;padding:0 20px;border:0;background:#d0ac70;color:#15120e;font-weight:800;font-size:14px;cursor:pointer}.error{min-height:22px;margin-top:9px;color:#f2b2ad;font-size:12px}@media(max-width:600px){#pw{width:min(58vw,210px)}}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050706;color:#f7e6c7;font-family:Arial,sans-serif}
+#garden{position:fixed;inset:0;border:0;display:none;background:#050706;transform-origin:top left}
+#lock{position:fixed;z-index:5;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:radial-gradient(circle,#273126,#080b09 64%,#030403)}
+.lockCard{width:min(92vw,440px)}
+.hero{width:min(72vw,330px);height:min(42vh,320px);object-fit:cover;border-radius:48% 48% 44% 44%;border:1px solid #d7b778;box-shadow:0 0 50px #e4b86744}
+h1{font:clamp(30px,7vw,44px) Georgia,serif;letter-spacing:.17em;margin:17px 0 5px}
+.tiny{color:#cfc5b6;font-size:13px}
+form{display:flex;justify-content:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+#pw{height:50px;width:200px;border-radius:28px;padding:0 17px;background:#fffdf6;border:2px solid #d1b77d;text-align:center;letter-spacing:.15em;color:#17130f;font-size:16px}
+#go{height:50px;min-width:112px;border-radius:28px;padding:0 20px;border:0;background:#d0ac70;color:#15120e;font-weight:800;font-size:14px;cursor:pointer}
+.error{min-height:22px;margin-top:9px;color:#f2b2ad;font-size:12px}
+@media (min-width:901px){#garden{width:58.824%;height:58.824%;transform:scale(1.7)}}
+@media (min-width:601px) and (max-width:900px){#garden{width:71.43%;height:71.43%;transform:scale(1.4)}}
+@media (max-width:600px){#garden{width:100%;height:100%;transform:none}#pw{width:min(58vw,210px)}}
 </style>
 </head>
 <body>
