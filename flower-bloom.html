@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>BEAUX — Birthday Flower Bloom</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#07100b;color:#fff;font-family:Arial,sans-serif}body{overflow:hidden;background:radial-gradient(circle at 50% 35%,#263226 0,#101811 38%,#050806 78%)}button,input{font:inherit}.hidden{display:none!important}
+#lock{position:fixed;inset:0;z-index:999;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 38%,#283328,#0a0d0a 68%,#030403)}.lockCard{text-align:center;width:min(92vw,460px)}.hero{width:min(72vw,330px);height:min(42vh,320px);object-fit:cover;border-radius:48% 48% 44% 44%;border:1px solid #d8b978;box-shadow:0 0 48px #ddb96955}h1{font:clamp(34px,8vw,52px) Georgia,serif;letter-spacing:.17em;margin:18px 0 5px;color:#f2d8a5}.sub{color:#d2c9bb;font-size:13px;letter-spacing:.08em}.lockForm{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:18px}#pw{width:205px;height:50px;border-radius:28px;border:2px solid #d3ba84;background:#fffdf6;color:#17130f;text-align:center;letter-spacing:.16em;padding:0 14px}#go{height:50px;min-width:112px;border:0;border-radius:28px;background:#d2ae73;color:#17130f;font-weight:800;cursor:pointer}.err{min-height:22px;margin-top:8px;color:#f5b8b1;font-size:12px}
+#app{position:fixed;inset:0;overflow:hidden}.topbar{position:absolute;z-index:50;top:16px;left:18px;right:18px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font:14px Georgia,serif;letter-spacing:.18em;color:#f2d8a5}.controls{display:flex;gap:8px}.pill{border:1px solid #d4b16e88;background:#101710dd;color:#ecd5ad;border-radius:999px;padding:10px 14px;cursor:pointer}
+#gardenViewport{position:absolute;inset:70px 0 82px;overflow:auto;touch-action:pan-x pan-y;scrollbar-width:none}#gardenViewport::-webkit-scrollbar{display:none}#garden{position:relative;width:2200px;height:1600px;margin:auto;transform-origin:center;background:radial-gradient(circle at 50% 50%,#18241955,transparent 48%)}
+.flower{position:absolute;width:128px;height:128px;transform:translate(-50%,-50%);cursor:pointer;filter:drop-shadow(0 12px 22px #0008);transition:filter .25s}.flower:hover{filter:brightness(1.08) drop-shadow(0 14px 30px #0009)}.petal{position:absolute;left:50%;top:50%;width:48px;height:70px;margin-left:-24px;margin-top:-60px;border-radius:70% 70% 48% 48%;background:linear-gradient(180deg,#ffd9dc 0,#f0a4ae 52%,#c67886 100%);transform-origin:24px 60px;transition:transform .85s cubic-bezier(.16,.8,.2,1),opacity .6s;box-shadow:0 0 12px #f9c0c433}.center{position:absolute;left:50%;top:50%;width:68px;height:68px;transform:translate(-50%,-50%) scale(.12);opacity:0;border-radius:50%;overflow:hidden;border:3px solid #edcc8e;background:#161a16;box-shadow:0 0 28px #eecf8a66;transition:transform .85s cubic-bezier(.2,.9,.2,1),opacity .55s}.center img{width:100%;height:100%;object-fit:cover;display:block}.flower.bud .petal{opacity:.92}.flower.bud .p1{transform:rotate(0deg) translateY(22px) scale(.45,.72)}.flower.bud .p2{transform:rotate(60deg) translateY(22px) scale(.45,.72)}.flower.bud .p3{transform:rotate(120deg) translateY(22px) scale(.45,.72)}.flower.bud .p4{transform:rotate(180deg) translateY(22px) scale(.45,.72)}.flower.bud .p5{transform:rotate(240deg) translateY(22px) scale(.45,.72)}.flower.bud .p6{transform:rotate(300deg) translateY(22px) scale(.45,.72)}.flower.bloomed .p1{transform:rotate(0deg) translateY(-18px) scale(1)}.flower.bloomed .p2{transform:rotate(60deg) translateY(-18px) scale(1)}.flower.bloomed .p3{transform:rotate(120deg) translateY(-18px) scale(1)}.flower.bloomed .p4{transform:rotate(180deg) translateY(-18px) scale(1)}.flower.bloomed .p5{transform:rotate(240deg) translateY(-18px) scale(1)}.flower.bloomed .p6{transform:rotate(300deg) translateY(-18px) scale(1)}.flower.bloomed .center{transform:translate(-50%,-50%) scale(1);opacity:1}.flower.justBloomed{animation:pulse 1s ease}@keyframes pulse{50%{filter:brightness(1.25) drop-shadow(0 0 30px #f7c4cf)}}
+.spark{position:absolute;width:4px;height:4px;border-radius:50%;background:#f4d485;box-shadow:0 0 10px #ffe7a6;opacity:.7;animation:tw 2s ease-in-out infinite alternate;pointer-events:none}@keyframes tw{to{opacity:.15;transform:scale(.5)}}
+.bottom{position:absolute;z-index:60;left:0;right:0;bottom:14px;text-align:center;pointer-events:none;color:#cfc6b7;font-size:12px;letter-spacing:.07em}.bottom b{display:block;font:16px Georgia,serif;color:#eacb96;letter-spacing:.1em;margin-bottom:5px}
+#viewer{position:fixed;z-index:1200;inset:0;background:#020302ef;display:none;place-items:center;padding:24px}#viewer.show{display:grid}#viewer img{max-width:92vw;max-height:84vh;object-fit:contain;border-radius:18px;box-shadow:0 28px 80px #000}.close{position:absolute;right:18px;top:18px;width:50px;height:50px;border-radius:50%;border:1px solid #fff6;background:#101510e8;color:#fff;font-size:28px;cursor:pointer}
+#final{position:fixed;z-index:1100;inset:0;display:none;place-items:center;background:#030603d9;padding:24px;text-align:center}#final.show{display:grid}.finalCard{max-width:620px}.finalFlower{font-size:90px;animation:finalBloom 1.5s ease both}@keyframes finalBloom{from{transform:scale(.1) rotate(-20deg);opacity:0}to{transform:scale(1);opacity:1}}.finalCard h2{font:clamp(36px,8vw,64px) Georgia,serif;margin:8px 0;color:#efd19b}.finalCard p{font:20px Georgia,serif;color:#f4e8d4;line-height:1.5}.finalCard button{margin-top:18px}
+@media(max-width:700px){#garden{width:1500px;height:1200px}.flower{width:110px;height:110px}.petal{width:42px;height:62px;margin-left:-21px;margin-top:-54px;transform-origin:21px 53px}.center{width:62px;height:62px}.brand{font-size:11px;max-width:55%}.pill{padding:9px 11px;font-size:12px}.hero{width:min(80vw,310px)}}
+</style>
+</head>
+<body>
+<div id="lock"><div class="lockCard">
+<img class="hero" src="assets/photos/IMG-20260728-WA0000.jpg" alt="Two dogs on the beach">
+<h1>BEAUX</h1><div class="sub">A GARDEN OF BLOOMING MEMORIES</div>
+<form id="lockForm" class="lockForm"><input id="pw" type="password" placeholder="PASSWORD" aria-label="Password"><button id="go" type="submit">ENTER</button></form><div id="err" class="err"></div>
+</div></div>
+<div id="app" class="hidden">
+<div class="topbar"><div class="brand">BEAUX — BIRTHDAY FLOWER BLOOM</div><div class="controls"><button id="bloomAll" class="pill">BLOOM ALL</button><button id="motion" class="pill">PAUSE MOTION</button></div></div>
+<div id="gardenViewport"><div id="garden"></div></div>
+<div class="bottom"><b>Every bloom holds a memory.</b>Tap a bud to bloom • tap the photo to open it</div>
+</div>
+<div id="viewer"><button id="close" class="close">×</button><img id="big" alt="Memory"></div>
+<div id="final"><div class="finalCard"><div class="finalFlower">🌸</div><h2>Happy Birthday, Beaux</h2><p>Every flower holds a memory, and every memory leads back to you.</p><button id="backGarden" class="pill">BACK TO THE GARDEN</button></div></div>
+<script src="assets/photos.js?v=flower1"></script>
+<script>
+(function(){
+const lock=document.getElementById('lock'),app=document.getElementById('app'),pw=document.getElementById('pw'),err=document.getElementById('err');
+document.getElementById('lockForm').addEventListener('submit',e=>{e.preventDefault();if((pw.value||'').trim().toUpperCase()==='BEAUX'){lock.classList.add('hidden');app.classList.remove('hidden');setTimeout(centerGarden,100)}else{err.textContent='Password is BEAUX ✦';pw.focus();pw.select();}});
+setTimeout(()=>pw.focus(),120);
+const garden=document.getElementById('garden'),viewport=document.getElementById('gardenViewport'),viewer=document.getElementById('viewer'),big=document.getElementById('big'),final=document.getElementById('final');
+let photos=(window.BEAUX_PHOTOS||[]).slice(0,100);
+function normalize(src){const m=/drive\.google\.com\/uc\?export=view&id=([^&]+)/.exec(src);return m?`https://drive.google.com/thumbnail?id=${m[1]}&sz=w1000`:src;}
+photos=photos.map(normalize);
+function pos(i){const cols=10,rows=10,c=i%cols,r=Math.floor(i/cols),j=(i*47)%37;return{x:130+c*205+(r%2)*70+((j%5)-2)*9,y:115+r*145+((j%7)-3)*7};}
+function flower(src,i){const f=document.createElement('div');f.className='flower bud';const p=pos(i);f.style.left=p.x+'px';f.style.top=p.y+'px';f.dataset.src=src;for(let k=1;k<=6;k++){const s=document.createElement('span');s.className='petal p'+k;f.appendChild(s)}const c=document.createElement('span');c.className='center';const im=document.createElement('img');im.src=src;im.loading='lazy';im.onerror=()=>{im.style.display='none';c.textContent='✦';c.style.display='grid';c.style.placeItems='center';c.style.color='#efd19b';c.style.fontSize='28px'};c.appendChild(im);f.appendChild(c);f.addEventListener('click',()=>{if(f.classList.contains('bud')){bloom(f)}else{big.src=src;viewer.classList.add('show')}});garden.appendChild(f)}
+function bloom(f){if(!f.classList.contains('bud'))return;f.classList.remove('bud');f.classList.add('bloomed','justBloomed');setTimeout(()=>f.classList.remove('justBloomed'),1000);if(document.querySelectorAll('.flower.bloomed').length===photos.length)setTimeout(()=>final.classList.add('show'),800)}
+photos.forEach(flower);
+for(let i=0;i<90;i++){const s=document.createElement('i');s.className='spark';s.style.left=Math.random()*2200+'px';s.style.top=Math.random()*1600+'px';s.style.animationDelay=(Math.random()*2)+'s';garden.appendChild(s)}
+let auto=true,raf;function drift(){if(auto){garden.style.transform=`translateY(${Math.sin(Date.now()/3500)*5}px)`}raf=requestAnimationFrame(drift)}drift();
+document.getElementById('motion').onclick=e=>{auto=!auto;e.target.textContent=auto?'PAUSE MOTION':'RESUME MOTION';if(!auto)garden.style.transform='none'};
+document.getElementById('bloomAll').onclick=()=>{document.querySelectorAll('.flower.bud').forEach((f,i)=>setTimeout(()=>bloom(f),i*85))};
+document.getElementById('close').onclick=()=>viewer.classList.remove('show');viewer.onclick=e=>{if(e.target===viewer)viewer.classList.remove('show')};document.getElementById('backGarden').onclick=()=>final.classList.remove('show');
+function centerGarden(){viewport.scrollLeft=(garden.offsetWidth-viewport.clientWidth)/2;viewport.scrollTop=(garden.offsetHeight-viewport.clientHeight)/2}window.addEventListener('resize',centerGarden);
+})();
+</script>
+</body>
+</html>
