@@ -42,7 +42,7 @@ body.bloom #orbit{animation:wildBurst 2.4s cubic-bezier(.2,.8,.2,1)}@keyframes w
 <body>
 <div id="lock">
   <div class="lockCard">
-    <img class="hero" id="lockImg" alt="Beaux memory">
+    <img class="hero" id="lockImg" src="https://drive.google.com/uc?export=view&id=1YYue4sgu3RA9N9CR6GgnbivANttdIHcY" alt="Beaux with the two dogs">
     <h1>BEAUX</h1>
     <div class="tiny">A tiny flower garden made from memories.</div>
     <form id="lockForm" autocomplete="off">
@@ -85,7 +85,6 @@ body.bloom #orbit{animation:wildBurst 2.4s cubic-bezier(.2,.8,.2,1)}@keyframes w
 (function(){
 const photos=window.BEAUX_PHOTOS||[];
 const orbit=document.getElementById('orbit'),world=document.getElementById('world'),viewer=document.getElementById('viewer'),big=document.getElementById('big');
-if(photos[0])document.getElementById('lockImg').src=photos[0];
 function makeFlower(src,i){
  const f=document.createElement('div');f.className='flower';
  const ring=3+i%5,a=i*2.399963229728653,r=Math.min(innerWidth,innerHeight)*(0.16+ring*.045)+(i%7)*5;
