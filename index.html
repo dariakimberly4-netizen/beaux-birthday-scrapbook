@@ -14,14 +14,14 @@ body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle 
 .gesture{pointer-events:auto;border:1px solid #c9a86c88;border-radius:30px;padding:11px 14px;background:#121411dd;color:#f4e6d1;font-size:12px;cursor:pointer}.gesture.on{background:#354631}
 #world{position:absolute;inset:74px 0 108px;perspective:1100px;overflow:hidden}
 #orbit{position:absolute;left:50%;top:50%;width:1px;height:1px;transform-style:preserve-3d;will-change:transform}
-.flower{position:absolute;width:34px;height:34px;margin:-17px;transform-style:preserve-3d;cursor:pointer;transition:filter .2s,transform .2s}
-.flower:hover,.flower:active{filter:brightness(1.35) drop-shadow(0 0 10px #ffb8b8)}
-.petal{position:absolute;left:11px;top:1px;width:12px;height:18px;border-radius:60% 60% 45% 45%;background:linear-gradient(#ffe3df,#e99b9e);transform-origin:6px 16px;box-shadow:0 0 6px #ffb5a944}
-.core{position:absolute;z-index:3;left:6px;top:6px;width:22px;height:22px;border:1.5px solid #f4d39c;border-radius:50%;overflow:hidden;background:#171916;box-shadow:0 0 12px #efb76a88}.core img{width:100%;height:100%;object-fit:cover}
-.wildPetal{position:fixed;z-index:4;top:-8vh;width:9px;height:15px;border-radius:70% 20% 70% 20%;background:linear-gradient(#ffd4d4,#e9929c);opacity:.58;pointer-events:none;animation:fall var(--dur) linear infinite;filter:drop-shadow(0 0 5px #ffb9a866)}
+.flower{position:absolute;width:82px;height:82px;margin:-41px;transform-style:preserve-3d;cursor:pointer;transition:filter .2s,transform .2s}
+.flower:hover,.flower:active{filter:brightness(1.18) drop-shadow(0 0 16px #ffb8b8)}
+.petal{position:absolute;left:31px;top:5px;width:20px;height:34px;border-radius:60% 60% 45% 45%;background:linear-gradient(#ffe3df,#e99b9e);transform-origin:10px 36px;box-shadow:0 0 8px #ffb5a944;opacity:.72}
+.core{position:absolute;z-index:3;left:11px;top:11px;width:60px;height:60px;border:2px solid #f4d39c;border-radius:50%;overflow:hidden;background:#171916;box-shadow:0 0 18px #efb76aaa}.core img{width:100%;height:100%;object-fit:cover;display:block}
+.wildPetal{position:fixed;z-index:4;top:-8vh;width:9px;height:15px;border-radius:70% 20% 70% 20%;background:linear-gradient(#ffd4d4,#e9929c);opacity:.48;pointer-events:none;animation:fall var(--dur) linear infinite;filter:drop-shadow(0 0 5px #ffb9a866)}
 @keyframes fall{0%{transform:translate3d(0,-10vh,0) rotate(0)}50%{transform:translate3d(var(--drift),50vh,0) rotate(240deg)}100%{transform:translate3d(calc(var(--drift)*-.5),112vh,0) rotate(520deg)}}
 .spark{position:absolute;width:3px;height:3px;background:#f7d27b;border-radius:50%;box-shadow:0 0 9px #ffdf82;animation:blink 1.7s infinite alternate;pointer-events:none}@keyframes blink{to{opacity:.15;transform:scale(.5)}}
-body.bloom #orbit{animation:wildBurst 2.4s cubic-bezier(.2,.8,.2,1)}@keyframes wildBurst{0%{scale:1}35%{scale:1.22}68%{scale:.95}100%{scale:1}}
+body.bloom #orbit{animation:wildBurst 2.4s cubic-bezier(.2,.8,.2,1)}@keyframes wildBurst{0%{scale:1}35%{scale:1.12}68%{scale:.97}100%{scale:1}}
 .bottom{position:fixed;z-index:10;bottom:18px;left:0;right:0;text-align:center;color:#cfc5b6;font:11px/1.6 Arial;letter-spacing:.08em;pointer-events:none}.bottom strong{font:15px Georgia,serif;color:#e8c99c;letter-spacing:.11em}
 .super{position:fixed;z-index:12;left:50%;transform:translateX(-50%);bottom:18px;border:1px solid #d6b36d;border-radius:999px;min-width:166px;height:50px;padding:0 20px;background:#101610ee;color:#efce95;font:14px Georgia,serif;letter-spacing:.1em;cursor:pointer}
 #viewer{position:fixed;z-index:30;inset:0;display:none;background:#030403ef;place-items:center;padding:18px;touch-action:auto}#viewer.show{display:grid}#viewer img{max-width:94vw;max-height:86vh;width:auto;height:auto;object-fit:contain;border-radius:18px;box-shadow:0 20px 80px #000}.x{position:absolute;right:18px;top:18px;width:48px;height:48px;border-radius:50%;border:1px solid #fff6;background:#111d;color:#fff;font-size:27px;cursor:pointer}
@@ -36,22 +36,11 @@ body.bloom #orbit{animation:wildBurst 2.4s cubic-bezier(.2,.8,.2,1)}@keyframes w
 #go{height:50px;min-width:112px;border-radius:28px;padding:0 20px;border:0;background:#d0ac70;color:#15120e;font-weight:800;font-size:14px;cursor:pointer!important;-webkit-appearance:none;appearance:none}
 #go:active{transform:scale(.97)}
 .error{min-height:22px;margin-top:9px;color:#f2b2ad;font-size:12px}
-@media(max-width:600px){.flower{width:30px;height:30px;margin:-15px}.petal{left:10px;width:10px;height:16px}.core{left:5px;top:5px;width:20px;height:20px}.brand{max-width:60%;line-height:1.5}.bottom{display:none}.super{bottom:18px}#pw{width:min(58vw,210px)}}
+@media(max-width:600px){.flower{width:58px;height:58px;margin:-29px}.petal{left:22px;top:4px;width:14px;height:24px;transform-origin:7px 26px}.core{left:8px;top:8px;width:42px;height:42px}.brand{max-width:60%;line-height:1.5}.bottom{display:none}.super{bottom:18px}#pw{width:min(58vw,210px)}}
 </style>
 </head>
 <body>
-<div id="lock">
-  <div class="lockCard">
-    <img class="hero" id="lockImg" alt="Beaux with the two dogs">
-    <h1>BEAUX</h1>
-    <div class="tiny">A tiny flower garden made from memories.</div>
-    <form id="lockForm" autocomplete="off">
-      <input id="pw" name="password" type="password" autocomplete="off" placeholder="PASSWORD" aria-label="Password">
-      <button id="go" type="submit">ENTER</button>
-    </form>
-    <div id="error" class="error"></div>
-  </div>
-</div>
+<div id="lock"><div class="lockCard"><img class="hero" id="lockImg" alt="Beaux with the two dogs"><h1>BEAUX</h1><div class="tiny">A tiny flower garden made from memories.</div><form id="lockForm" autocomplete="off"><input id="pw" name="password" type="password" autocomplete="off" placeholder="PASSWORD" aria-label="Password"><button id="go" type="submit">ENTER</button></form><div id="error" class="error"></div></div></div>
 <div class="top"><div class="brand"><b>BEAUX</b> — TINY FLOWER GARDEN</div><button id="motion" class="gesture" type="button">PAUSE MOTION</button></div>
 <div id="world"><div id="orbit"></div></div>
 <div class="bottom"><strong>Every tiny flower holds a memory.</strong><br>Drag the garden • tap a flower to open the photo</div>
@@ -59,56 +48,19 @@ body.bloom #orbit{animation:wildBurst 2.4s cubic-bezier(.2,.8,.2,1)}@keyframes w
 <div id="viewer"><button id="close" class="x" type="button">×</button><img id="big" alt="Memory"></div>
 <script src="assets/dog-password.js?v=10"></script>
 <script>
-(function(){
-  const dog=document.getElementById('lockImg');
-  if(dog && window.BEAUX_DOG) dog.src=window.BEAUX_DOG;
-  const lock=document.getElementById('lock');
-  const form=document.getElementById('lockForm');
-  const pw=document.getElementById('pw');
-  const error=document.getElementById('error');
-  function unlock(){
-    if((pw.value||'').trim().toUpperCase()==='BEAUX'){
-      lock.classList.add('hide');
-      error.textContent='';
-      document.body.style.touchAction='none';
-    }else{
-      error.textContent='Password is BEAUX ✦';
-      pw.focus();
-      pw.select();
-    }
-  }
-  form.addEventListener('submit',function(e){e.preventDefault();unlock();});
-  document.getElementById('go').addEventListener('click',function(e){e.preventDefault();unlock();});
-  pw.addEventListener('keyup',function(e){if(e.key==='Enter'){e.preventDefault();unlock();}});
-  setTimeout(function(){pw.focus();},150);
-})();
+(function(){const dog=document.getElementById('lockImg');if(dog&&window.BEAUX_DOG)dog.src=window.BEAUX_DOG;const lock=document.getElementById('lock'),form=document.getElementById('lockForm'),pw=document.getElementById('pw'),error=document.getElementById('error');function unlock(){if((pw.value||'').trim().toUpperCase()==='BEAUX'){lock.classList.add('hide');error.textContent='';document.body.style.touchAction='none';}else{error.textContent='Password is BEAUX ✦';pw.focus();pw.select();}}form.addEventListener('submit',e=>{e.preventDefault();unlock();});document.getElementById('go').addEventListener('click',e=>{e.preventDefault();unlock();});pw.addEventListener('keyup',e=>{if(e.key==='Enter'){e.preventDefault();unlock();}});})();
 </script>
-<script src="assets/photos.js?v=10"></script>
+<script src="assets/photos.js?v=14"></script>
 <script>
 (function(){
-const photos=window.BEAUX_PHOTOS||[];
-const orbit=document.getElementById('orbit'),world=document.getElementById('world'),viewer=document.getElementById('viewer'),big=document.getElementById('big');
-function makeFlower(src,i){
- const f=document.createElement('div');f.className='flower';
- const ring=3+i%5,a=i*2.399963229728653,r=Math.min(innerWidth,innerHeight)*(0.16+ring*.045)+(i%7)*5;
- const x=Math.cos(a)*r,y=Math.sin(a)*r*.60,z=Math.sin(a*1.7)*120;
- f.style.transform=`translate3d(${x}px,${y}px,${z}px)`;
- for(let p=0;p<7;p++){const pet=document.createElement('span');pet.className='petal';pet.style.transform=`rotate(${p*51.43}deg)`;f.appendChild(pet)}
- const c=document.createElement('span');c.className='core';const im=document.createElement('img');im.src=src;im.loading='lazy';c.appendChild(im);f.appendChild(c);
- f.addEventListener('click',function(e){e.stopPropagation();big.src=src;viewer.classList.add('show')});orbit.appendChild(f);
-}
+const photos=window.BEAUX_PHOTOS||[];const orbit=document.getElementById('orbit'),world=document.getElementById('world'),viewer=document.getElementById('viewer'),big=document.getElementById('big');
+function makeFlower(src,i){const f=document.createElement('div');f.className='flower';const n=photos.length||1;const a=i*2.399963229728653;const base=Math.min(innerWidth,innerHeight);const ring=i%8;const r=base*(0.22+ring*0.045)+(i%5)*10;const x=Math.cos(a)*r,y=Math.sin(a)*r*.72,z=Math.sin(a*1.7)*160;f.style.transform=`translate3d(${x}px,${y}px,${z}px)`;for(let p=0;p<7;p++){const pet=document.createElement('span');pet.className='petal';pet.style.transform=`rotate(${p*51.43}deg)`;f.appendChild(pet)}const c=document.createElement('span');c.className='core';const im=document.createElement('img');im.src=src;im.loading='lazy';im.alt='Memory '+(i+1);c.appendChild(im);f.appendChild(c);f.addEventListener('click',e=>{e.stopPropagation();big.src=src;viewer.classList.add('show')});orbit.appendChild(f);}
 photos.forEach(makeFlower);
-for(let i=0;i<45;i++){const p=document.createElement('i');p.className='wildPetal';p.style.left=Math.random()*100+'vw';p.style.setProperty('--dur',(8+Math.random()*12)+'s');p.style.setProperty('--drift',(Math.random()*160-80)+'px');p.style.animationDelay=(-Math.random()*18)+'s';document.body.appendChild(p)}
-for(let i=0;i<55;i++){const s=document.createElement('i');s.className='spark';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*2+'s';world.appendChild(s)}
-let rx=-8,ry=0,auto=true,drag=false,lx=0,ly=0;
-function render(){if(auto&&!drag)ry+=.075;orbit.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;requestAnimationFrame(render)}render();
-world.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;world.setPointerCapture?.(e.pointerId)});
-world.addEventListener('pointermove',e=>{if(!drag)return;ry+=(e.clientX-lx)*.25;rx-=(e.clientY-ly)*.18;rx=Math.max(-55,Math.min(55,rx));lx=e.clientX;ly=e.clientY});
-const end=()=>drag=false;world.addEventListener('pointerup',end);world.addEventListener('pointercancel',end);
-document.getElementById('motion').addEventListener('click',e=>{auto=!auto;e.currentTarget.textContent=auto?'PAUSE MOTION':'RESUME MOTION';e.currentTarget.classList.toggle('on',!auto)});
-document.getElementById('bloom').addEventListener('click',()=>{document.body.classList.remove('bloom');void document.body.offsetWidth;document.body.classList.add('bloom');setTimeout(()=>document.body.classList.remove('bloom'),2500)});
-document.getElementById('close').addEventListener('click',()=>viewer.classList.remove('show'));
-viewer.addEventListener('click',e=>{if(e.target===viewer)viewer.classList.remove('show')});
+for(let i=0;i<32;i++){const p=document.createElement('i');p.className='wildPetal';p.style.left=Math.random()*100+'vw';p.style.setProperty('--dur',(8+Math.random()*12)+'s');p.style.setProperty('--drift',(Math.random()*160-80)+'px');p.style.animationDelay=(-Math.random()*18)+'s';document.body.appendChild(p)}
+for(let i=0;i<40;i++){const s=document.createElement('i');s.className='spark';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*2+'s';world.appendChild(s)}
+let rx=-8,ry=0,auto=true,drag=false,lx=0,ly=0;function render(){if(auto&&!drag)ry+=.06;orbit.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;requestAnimationFrame(render)}render();
+world.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;world.setPointerCapture?.(e.pointerId)});world.addEventListener('pointermove',e=>{if(!drag)return;ry+=(e.clientX-lx)*.25;rx-=(e.clientY-ly)*.18;rx=Math.max(-55,Math.min(55,rx));lx=e.clientX;ly=e.clientY});const end=()=>drag=false;world.addEventListener('pointerup',end);world.addEventListener('pointercancel',end);
+document.getElementById('motion').addEventListener('click',e=>{auto=!auto;e.currentTarget.textContent=auto?'PAUSE MOTION':'RESUME MOTION';e.currentTarget.classList.toggle('on',!auto)});document.getElementById('bloom').addEventListener('click',()=>{document.body.classList.remove('bloom');void document.body.offsetWidth;document.body.classList.add('bloom');setTimeout(()=>document.body.classList.remove('bloom'),2500)});document.getElementById('close').addEventListener('click',()=>viewer.classList.remove('show'));viewer.addEventListener('click',e=>{if(e.target===viewer)viewer.classList.remove('show')});
 })();
 </script>
 </body>
