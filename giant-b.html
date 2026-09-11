@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>BEAUX — Giant B Memory Sculpture</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050706;color:#f7e6c7;font-family:Arial,sans-serif}
+body{touch-action:manipulation}
+/* SAME BACKGROUND TREATMENT AS CURRENT GITHUB LANDING PAGE */
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 45%,#2a251b55,transparent 38%),radial-gradient(circle at 15% 80%,#5c253833,transparent 26%),linear-gradient(#050706,#07100b);pointer-events:none}
+.stage{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;perspective:1400px}
+.b-shell{position:relative;width:min(68vw,760px);height:min(84vh,900px);transform-style:preserve-3d;animation:breathe 8s ease-in-out infinite;filter:drop-shadow(0 24px 42px #0009)}
+.b-shell:before{content:"";position:absolute;inset:-8px;border-radius:28px;pointer-events:none;filter:blur(24px);background:radial-gradient(circle at 34% 34%,#fff4d51c,transparent 38%),radial-gradient(circle at 46% 70%,#e6bd7230,transparent 48%)}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.014)}}
+.tile{position:absolute;left:50%;top:50%;width:72px;height:58px;border:1px solid #e1bd79;border-radius:10px;overflow:hidden;background:#111;box-shadow:0 4px 14px #0008,0 0 12px #d8b36a33;cursor:pointer;transform-style:preserve-3d;transition:filter .25s,box-shadow .25s,opacity .25s}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.tile:hover,.tile:focus-visible{z-index:90;filter:brightness(1.15);box-shadow:0 8px 24px #000b,0 0 18px #f0ce88aa;outline:none}
+.rim{position:absolute;inset:0;pointer-events:none;filter:drop-shadow(0 0 8px #e6c57e66)}
+.rim svg{width:100%;height:100%;overflow:visible}.rim path{fill:none;stroke:url(#gold);stroke-width:5.2;stroke-linecap:round;stroke-linejoin:round}.rim .inner{stroke:#fff1d5;stroke-width:1.3;opacity:.52}
+.glint{position:absolute;width:8px;height:8px;border-radius:50%;background:#fff6cf;box-shadow:0 0 12px #fff2b0,0 0 26px #d9ae5f;offset-path:path('M 145 60 L 145 830 M145 60 C 470 40 560 180 430 280 C 565 325 570 525 420 560 C 585 615 585 820 420 840 C 300 850 210 840 145 830');animation:glide 11s linear infinite;opacity:.75;pointer-events:none}
+@keyframes glide{to{offset-distance:100%}}
+.counter{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);font:12px Georgia,serif;letter-spacing:.13em;color:#dcc79eaa;z-index:5;pointer-events:none}
+#viewer{position:fixed;z-index:300;inset:0;display:none;place-items:center;background:#030403eb;backdrop-filter:blur(14px);padding:20px;touch-action:pan-y pinch-zoom}#viewer.show{display:grid}
+#viewer img{max-width:92vw;max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:16px;box-shadow:0 24px 90px #000}
+#close,#prev,#next{position:absolute;border:1px solid #ead5ad66;background:#111b;color:#fff;border-radius:50%;width:48px;height:48px;font-size:26px;cursor:pointer}
+#close{right:18px;top:18px}#prev{left:16px;top:50%;transform:translateY(-50%)}#next{right:16px;top:50%;transform:translateY(-50%)}
+#count{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font:13px Georgia,serif;letter-spacing:.12em;color:#ead7b2}
+@media(max-width:760px){
+ .b-shell{width:min(88vw,520px);height:min(77vh,700px);animation:breatheMobile 9s ease-in-out infinite}
+ @keyframes breatheMobile{0%,100%{transform:scale(.98)}50%{transform:scale(.99)}}
+ .tile{width:50px;height:42px;border-radius:8px}
+ .glint{display:none}.counter{bottom:10px;font-size:10px}
+}
+@media(max-width:430px){.b-shell{width:94vw;height:72vh}.tile{width:43px;height:36px}.rim path{stroke-width:4}.rim .inner{stroke-width:1}}
+@media(prefers-reduced-motion:reduce){.b-shell{animation:none}.glint{display:none}.tile{transition:none}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div id="B" class="b-shell" aria-label="Beaux memory sculpture">
+    <div class="rim" aria-hidden="true">
+      <svg viewBox="0 0 600 900" preserveAspectRatio="none">
+        <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0bd"/><stop offset=".32" stop-color="#c99b4c"/><stop offset=".65" stop-color="#f4d99d"/><stop offset="1" stop-color="#9f7434"/></linearGradient></defs>
+        <path d="M150 70 L150 830 M150 70 C410 40 535 120 505 260 C486 340 410 380 340 387 C470 392 545 485 520 620 C493 765 380 830 150 830"/>
+        <path class="inner" d="M171 94 L171 806 M171 94 C383 73 477 131 461 247 C448 318 377 349 313 355 C423 360 494 478 473 603 C451 726 349 800 171 806"/>
+      </svg>
+    </div>
+    <span class="glint"></span>
+  </div>
+</div>
+<div class="counter">100 MEMORIES • ONE B</div>
+<div id="viewer" role="dialog" aria-modal="true" aria-label="Memory viewer">
+  <button id="close" aria-label="Close">×</button><button id="prev" aria-label="Previous">‹</button>
+  <img id="big" alt="Memory"><button id="next" aria-label="Next">›</button><div id="count"></div>
+</div>
+<script src="assets/photos.js?v=14"></script>
+<script>
+(function(){
+const photos=(window.BEAUX_PHOTOS||[]).slice(0,100), B=document.getElementById('B');
+const viewer=document.getElementById('viewer'),big=document.getElementById('big'),count=document.getElementById('count');
+let active=0, sx=0;
+function pt(i){
+  /* 30 spine, 30 upper bowl, 40 lower bowl */
+  if(i<30){const t=i/29;return{x:.235,y:.08+t*.84,z:(i%3-1)*8,s:.9+(i%4)*.045,r:(i%2?-.7:.7)}}
+  if(i<60){const j=i-30,t=j/29,ang=-Math.PI/2+t*Math.PI*2;const cx=.36,cy=.285,rx=.29,ry=.19;return{x:cx+Math.cos(ang)*rx,y:cy+Math.sin(ang)*ry,z:(j%4)*7,s:.84+(j%5)*.04,r:Math.sin(ang)*3}}
+  const j=i-60,t=j/39,ang=-Math.PI/2+t*Math.PI*2,cx=.375,cy=.645,rx=.325,ry=.255;return{x:cx+Math.cos(ang)*rx,y:cy+Math.sin(ang)*ry,z:(j%5)*6,s:.88+(j%4)*.045,r:Math.sin(ang)*3.2};
+}
+function render(){
+ const w=B.clientWidth,h=B.clientHeight;
+ [...B.querySelectorAll('.tile')].forEach((el,i)=>{const p=pt(i);el.style.transform=`translate3d(${(p.x-.5)*w}px,${(p.y-.5)*h}px,${p.z}px) rotate(${p.r}deg) scale(${p.s})`;});
+}
+photos.forEach((src,i)=>{const b=document.createElement('button');b.className='tile';b.type='button';b.setAttribute('aria-label','Open memory '+(i+1));b.innerHTML=`<img loading="lazy" alt="Memory ${i+1}">`;b.querySelector('img').src=src;b.addEventListener('click',()=>open(i));B.appendChild(b)});
+function open(i){active=(i+photos.length)%photos.length;big.src=photos[active];count.textContent=(active+1)+' / '+photos.length;viewer.classList.add('show')}
+function close(){viewer.classList.remove('show')}
+document.getElementById('close').onclick=close;document.getElementById('prev').onclick=()=>open(active-1);document.getElementById('next').onclick=()=>open(active+1);
+viewer.addEventListener('click',e=>{if(e.target===viewer)close()});
+viewer.addEventListener('pointerdown',e=>sx=e.clientX);viewer.addEventListener('pointerup',e=>{const d=e.clientX-sx;if(Math.abs(d)>45)open(active+(d<0?1:-1))});
+addEventListener('keydown',e=>{if(!viewer.classList.contains('show'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')open(active-1);if(e.key==='ArrowRight')open(active+1)});
+addEventListener('resize',render,{passive:true});requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>
