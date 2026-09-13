@@ -3,64 +3,61 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>BEAUX — Tiny Flower Memory Garden</title>
+<title>BEAUX — The Living B</title>
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050706;color:#f7e6c7;font-family:Arial,sans-serif}
-body{touch-action:none}
-body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 45%,#2a251b55,transparent 38%),radial-gradient(circle at 15% 80%,#5c253833,transparent 26%),linear-gradient(#050706,#07100b);pointer-events:none}
-.top{position:fixed;z-index:10;top:18px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-.brand{letter-spacing:.26em;font:600 12px Georgia,serif}.brand b{font-size:18px;font-weight:400}
-.gesture{pointer-events:auto;border:1px solid #c9a86c88;border-radius:30px;padding:11px 14px;background:#121411dd;color:#f4e6d1;font-size:12px;cursor:pointer}.gesture.on{background:#354631}
-#world{position:absolute;inset:74px 0 108px;perspective:1100px;overflow:hidden}
-#orbit{position:absolute;left:50%;top:50%;width:1px;height:1px;transform-style:preserve-3d;will-change:transform}
-.flower{position:absolute;width:82px;height:82px;margin:-41px;transform-style:preserve-3d;cursor:pointer;transition:filter .2s,transform .2s}
-.flower:hover,.flower:active{filter:brightness(1.18) drop-shadow(0 0 16px #ffb8b8)}
-.petal{position:absolute;left:31px;top:5px;width:20px;height:34px;border-radius:60% 60% 45% 45%;background:linear-gradient(#ffe3df,#e99b9e);transform-origin:10px 36px;box-shadow:0 0 8px #ffb5a944;opacity:.72}
-.core{position:absolute;z-index:3;left:11px;top:11px;width:60px;height:60px;border:2px solid #f4d39c;border-radius:50%;overflow:hidden;background:#171916;box-shadow:0 0 18px #efb76aaa}.core img{width:100%;height:100%;object-fit:cover;display:block}
-.wildPetal{position:fixed;z-index:4;top:-8vh;width:9px;height:15px;border-radius:70% 20% 70% 20%;background:linear-gradient(#ffd4d4,#e9929c);opacity:.48;pointer-events:none;animation:fall var(--dur) linear infinite;filter:drop-shadow(0 0 5px #ffb9a866)}
-@keyframes fall{0%{transform:translate3d(0,-10vh,0) rotate(0)}50%{transform:translate3d(var(--drift),50vh,0) rotate(240deg)}100%{transform:translate3d(calc(var(--drift)*-.5),112vh,0) rotate(520deg)}}
-.spark{position:absolute;width:3px;height:3px;background:#f7d27b;border-radius:50%;box-shadow:0 0 9px #ffdf82;animation:blink 1.7s infinite alternate;pointer-events:none}@keyframes blink{to{opacity:.15;transform:scale(.5)}}
-body.bloom #orbit{animation:wildBurst 2.4s cubic-bezier(.2,.8,.2,1)}@keyframes wildBurst{0%{scale:1}35%{scale:1.12}68%{scale:.97}100%{scale:1}}
-.bottom{position:fixed;z-index:10;bottom:18px;left:0;right:0;text-align:center;color:#cfc5b6;font:11px/1.6 Arial;letter-spacing:.08em;pointer-events:none}.bottom strong{font:15px Georgia,serif;color:#e8c99c;letter-spacing:.11em}
-.super{position:fixed;z-index:12;left:50%;transform:translateX(-50%);bottom:18px;border:1px solid #d6b36d;border-radius:999px;min-width:166px;height:50px;padding:0 20px;background:#101610ee;color:#efce95;font:14px Georgia,serif;letter-spacing:.1em;cursor:pointer}
-#viewer{position:fixed;z-index:30;inset:0;display:none;background:#030403ef;place-items:center;padding:18px;touch-action:auto}#viewer.show{display:grid}#viewer img{max-width:94vw;max-height:86vh;width:auto;height:auto;object-fit:contain;border-radius:18px;box-shadow:0 20px 80px #000}.x{position:absolute;right:18px;top:18px;width:48px;height:48px;border-radius:50%;border:1px solid #fff6;background:#111d;color:#fff;font-size:27px;cursor:pointer}
-#lock{position:fixed;z-index:999999;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:radial-gradient(circle,#273126,#080b09 64%,#030403);pointer-events:auto;touch-action:manipulation}
-#lock.hide{display:none!important}
-.lockCard{position:relative;z-index:1000000;pointer-events:auto;width:min(92vw,440px)}
-.hero{width:min(72vw,330px);height:min(42vh,320px);object-fit:cover;border-radius:48% 48% 44% 44%;border:1px solid #d7b778;box-shadow:0 0 50px #e4b86744;pointer-events:none}
-#lock h1{font:clamp(30px,7vw,44px) Georgia,serif;letter-spacing:.17em;margin:17px 0 5px}.tiny{color:#cfc5b6;font-size:13px}
-#lockForm{display:flex;justify-content:center;gap:8px;margin-top:16px;flex-wrap:wrap;position:relative;z-index:1000001;pointer-events:auto;touch-action:manipulation}
-#pw,#go{position:relative;z-index:1000002;pointer-events:auto!important;touch-action:manipulation!important}
-#pw{height:50px;width:200px;border-radius:28px;padding:0 17px;background:#fffdf6;border:2px solid #d1b77d;text-align:center;letter-spacing:.15em;color:#17130f;font-size:16px;cursor:text!important;-webkit-appearance:none;appearance:none;user-select:text}
-#go{height:50px;min-width:112px;border-radius:28px;padding:0 20px;border:0;background:#d0ac70;color:#15120e;font-weight:800;font-size:14px;cursor:pointer!important;-webkit-appearance:none;appearance:none}
-#go:active{transform:scale(.97)}
-.error{min-height:22px;margin-top:9px;color:#f2b2ad;font-size:12px}
-@media(max-width:600px){.flower{width:58px;height:58px;margin:-29px}.petal{left:22px;top:4px;width:14px;height:24px;transform-origin:7px 26px}.core{left:8px;top:8px;width:42px;height:42px}.brand{max-width:60%;line-height:1.5}.bottom{display:none}.super{bottom:18px}#pw{width:min(58vw,210px)}}
+:root{--bg:#090819;--ink:#fff8ef;--muted:#c9c3d8;--gold:#e8c487;--lav:#b9a7ff;--pink:#f4b6cf}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
+button{font:inherit}body{touch-action:manipulation;background:radial-gradient(circle at 50% 42%,#31245c 0,#15102d 31%,#090819 68%)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 18%,#b9a7ff1e,transparent 25%),radial-gradient(circle at 82% 78%,#f4b6cf16,transparent 28%)}
+.star{position:fixed;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.45;box-shadow:0 0 9px #fff;animation:twinkle 2.7s ease-in-out infinite alternate;pointer-events:none}@keyframes twinkle{to{opacity:.12;transform:scale(.55)}}
+#gate{position:fixed;z-index:100;inset:0;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 40%,#34245e,#0b0919 66%,#05040d);transition:opacity .9s,visibility .9s}
+#gate.hide{opacity:0;visibility:hidden;pointer-events:none}.gateCard{text-align:center;width:min(92vw,560px)}
+.gateB{font:900 clamp(150px,45vw,310px)/.7 Georgia,serif;color:transparent;-webkit-text-stroke:1.5px var(--gold);text-shadow:0 0 28px #b9a7ff70,0 0 70px #e8c48734;animation:breathe 3.4s ease-in-out infinite alternate}@keyframes breathe{to{transform:scale(1.035);text-shadow:0 0 42px #b9a7ff9a,0 0 90px #e8c48744}}
+#gate h1{margin:28px 0 8px;font:500 clamp(24px,6vw,42px) Georgia,serif;letter-spacing:.12em}.gateSub{color:var(--muted);font-size:13px;letter-spacing:.12em;margin-bottom:23px}
+#enter{min-width:190px;height:56px;border:1px solid #efd39b;border-radius:999px;background:linear-gradient(135deg,#f0d7a4,#cfa968);color:#18101f;font-weight:800;letter-spacing:.18em;box-shadow:0 14px 40px #0007;cursor:pointer}#enter:active{transform:scale(.97)}
+#app{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 12px 76px;opacity:0;transition:opacity 1s}#app.ready{opacity:1}
+.header{position:fixed;z-index:20;top:16px;left:18px;right:18px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font:500 13px Georgia,serif;letter-spacing:.18em}.brand b{font-size:18px;font-weight:500;color:#fff}
+.pill{height:44px;padding:0 15px;border:1px solid #ffffff33;border-radius:999px;background:#111026cc;color:#fff;cursor:pointer;backdrop-filter:blur(12px)}
+#stage{position:relative;width:min(92vw,700px);height:min(76vh,790px);filter:drop-shadow(0 30px 60px #0008)}
+#letterGlow{position:absolute;inset:4%;font:900 min(72vw,620px)/1 Georgia,serif;color:#ffffff08;display:grid;place-items:center;pointer-events:none;text-shadow:0 0 55px #b9a7ff25;transform:scaleX(.86)}
+#memories{position:absolute;inset:0}.memory{position:absolute;left:0;top:0;border:1px solid #f5d9a958;border-radius:12px;overflow:hidden;padding:0;background:#19142b;box-shadow:0 7px 25px #0008,0 0 13px #b9a7ff24;cursor:pointer;transform-origin:center;transition:filter .25s,box-shadow .25s;will-change:transform}
+.memory:hover,.memory:focus-visible{z-index:5;filter:brightness(1.16);box-shadow:0 10px 30px #000a,0 0 24px #e8c48766;outline:none}.memory img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.hint{position:fixed;z-index:15;bottom:20px;left:16px;right:16px;text-align:center;font-size:12px;color:#d2cce0;letter-spacing:.06em}.hint strong{color:#f1d39d;font:500 14px Georgia,serif}
+#viewer{position:fixed;z-index:60;inset:0;display:none;background:#070713f2;backdrop-filter:blur(18px);align-items:center;justify-content:center;padding:78px 18px 92px;touch-action:pan-y}#viewer.show{display:flex}.frame{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+#big{max-width:92vw;max-height:75vh;width:auto;height:auto;object-fit:contain;border-radius:18px;box-shadow:0 30px 90px #000;border:1px solid #ffffff24;animation:openPhoto .55s cubic-bezier(.2,.8,.2,1)}@keyframes openPhoto{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+.close,.nav{position:absolute;z-index:3;border:1px solid #ffffff35;background:#141226df;color:#fff;backdrop-filter:blur(12px);cursor:pointer}.close{top:18px;right:18px;width:52px;height:52px;border-radius:50%;font-size:27px}.nav{top:50%;transform:translateY(-50%);width:54px;height:72px;border-radius:18px;font-size:27px}.prev{left:12px}.next{right:12px}.counter{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font:500 14px Georgia,serif;letter-spacing:.14em;color:#efd39b}
+#finale{position:fixed;z-index:80;inset:0;display:none;place-items:center;text-align:center;padding:24px;background:radial-gradient(circle at 50% 42%,#4b3178,#140d2f 47%,#070713 78%)}#finale.show{display:grid}.finalB{font:900 clamp(180px,54vw,420px)/.7 Georgia,serif;color:transparent;-webkit-text-stroke:2px #efd39b;text-shadow:0 0 30px #b9a7ff99,0 0 80px #e8c48755;animation:finalPulse 2s ease-in-out infinite alternate}@keyframes finalPulse{to{transform:scale(1.04)}}
+.finalText{margin-top:34px;font:500 clamp(30px,8vw,64px)/1.05 Georgia,serif;letter-spacing:.03em}.finalSmall{margin-top:14px;color:#ddd4eb;font-size:13px;letter-spacing:.1em}.again{margin-top:26px;height:48px;padding:0 20px;border-radius:999px;border:1px solid #efd39b;background:#efd39b;color:#18101f;font-weight:800;cursor:pointer}
+@media(max-width:620px){#app{padding-top:76px;padding-bottom:78px}#stage{width:96vw;height:72vh}.memory{border-radius:8px}.nav{width:48px;height:64px}.brand{max-width:64%;line-height:1.45}.pill{height:42px;padding:0 12px}.hint{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<div id="lock"><div class="lockCard"><img class="hero" id="lockImg" alt="Beaux with the two dogs"><h1>BEAUX</h1><div class="tiny">A tiny flower garden made from memories.</div><form id="lockForm" autocomplete="off"><input id="pw" name="password" type="password" autocomplete="off" placeholder="PASSWORD" aria-label="Password"><button id="go" type="submit">ENTER</button></form><div id="error" class="error"></div></div></div>
-<div class="top"><div class="brand"><b>BEAUX</b> — TINY FLOWER GARDEN</div><button id="motion" class="gesture" type="button">PAUSE MOTION</button></div>
-<div id="world"><div id="orbit"></div></div>
-<div class="bottom"><strong>Every tiny flower holds a memory.</strong><br>Drag the garden • tap a flower to open the photo</div>
-<button id="bloom" class="super" type="button">WILD BLOOM ✦</button>
-<div id="viewer"><button id="close" class="x" type="button">×</button><img id="big" alt="Memory"></div>
-<script src="assets/dog-password.js?v=10"></script>
-<script>
-(function(){const dog=document.getElementById('lockImg');if(dog&&window.BEAUX_DOG)dog.src=window.BEAUX_DOG;const lock=document.getElementById('lock'),form=document.getElementById('lockForm'),pw=document.getElementById('pw'),error=document.getElementById('error');function unlock(){if((pw.value||'').trim().toUpperCase()==='BEAUX'){lock.classList.add('hide');error.textContent='';document.body.style.touchAction='none';}else{error.textContent='Password is BEAUX ✦';pw.focus();pw.select();}}form.addEventListener('submit',e=>{e.preventDefault();unlock();});document.getElementById('go').addEventListener('click',e=>{e.preventDefault();unlock();});pw.addEventListener('keyup',e=>{if(e.key==='Enter'){e.preventDefault();unlock();}});})();
-</script>
+<div id="gate"><div class="gateCard"><div class="gateB">B</div><h1>FOR BEAUX</h1><div class="gateSub">100 MEMORIES • ONE LETTER • ONE SIS</div><button id="enter" type="button">ENTER</button></div></div>
+<div id="app">
+  <div class="header"><div class="brand"><b>BEAUX</b> — THE LIVING B</div><button id="finalBtn" class="pill" type="button">FINAL MESSAGE ✦</button></div>
+  <div id="stage" aria-label="A giant letter B made from 100 memories"><div id="letterGlow">B</div><div id="memories"></div></div>
+  <div class="hint"><strong>Every piece of the B is a memory.</strong><br>Tap any photo • swipe memories • return to the exact B</div>
+</div>
+<div id="viewer" aria-hidden="true"><button id="close" class="close" aria-label="Close">×</button><div class="frame"><button id="prev" class="nav prev" aria-label="Previous photo">‹</button><img id="big" alt="Beaux memory"><button id="next" class="nav next" aria-label="Next photo">›</button><div id="counter" class="counter">01 / 100</div></div></div>
+<div id="finale"><div><div class="finalB">B</div><div class="finalText">HAPPY BIRTHDAY, SIS! 💜</div><div class="finalSmall">100 MEMORIES • ONE BEAUTIFUL LIFE • MORE TO COME</div><button id="again" class="again" type="button">BACK TO THE B</button></div></div>
 <script src="assets/photos.js?v=14"></script>
 <script>
-(function(){
-const photos=window.BEAUX_PHOTOS||[];const orbit=document.getElementById('orbit'),world=document.getElementById('world'),viewer=document.getElementById('viewer'),big=document.getElementById('big');
-function makeFlower(src,i){const f=document.createElement('div');f.className='flower';const n=photos.length||1;const a=i*2.399963229728653;const base=Math.min(innerWidth,innerHeight);const ring=i%8;const r=base*(0.22+ring*0.045)+(i%5)*10;const x=Math.cos(a)*r,y=Math.sin(a)*r*.72,z=Math.sin(a*1.7)*160;f.style.transform=`translate3d(${x}px,${y}px,${z}px)`;for(let p=0;p<7;p++){const pet=document.createElement('span');pet.className='petal';pet.style.transform=`rotate(${p*51.43}deg)`;f.appendChild(pet)}const c=document.createElement('span');c.className='core';const im=document.createElement('img');im.src=src;im.loading='lazy';im.alt='Memory '+(i+1);c.appendChild(im);f.appendChild(c);f.addEventListener('click',e=>{e.stopPropagation();big.src=src;viewer.classList.add('show')});orbit.appendChild(f);}
-photos.forEach(makeFlower);
-for(let i=0;i<32;i++){const p=document.createElement('i');p.className='wildPetal';p.style.left=Math.random()*100+'vw';p.style.setProperty('--dur',(8+Math.random()*12)+'s');p.style.setProperty('--drift',(Math.random()*160-80)+'px');p.style.animationDelay=(-Math.random()*18)+'s';document.body.appendChild(p)}
-for(let i=0;i<40;i++){const s=document.createElement('i');s.className='spark';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*2+'s';world.appendChild(s)}
-let rx=-8,ry=0,auto=true,drag=false,lx=0,ly=0;function render(){if(auto&&!drag)ry+=.06;orbit.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;requestAnimationFrame(render)}render();
-world.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;world.setPointerCapture?.(e.pointerId)});world.addEventListener('pointermove',e=>{if(!drag)return;ry+=(e.clientX-lx)*.25;rx-=(e.clientY-ly)*.18;rx=Math.max(-55,Math.min(55,rx));lx=e.clientX;ly=e.clientY});const end=()=>drag=false;world.addEventListener('pointerup',end);world.addEventListener('pointercancel',end);
-document.getElementById('motion').addEventListener('click',e=>{auto=!auto;e.currentTarget.textContent=auto?'PAUSE MOTION':'RESUME MOTION';e.currentTarget.classList.toggle('on',!auto)});document.getElementById('bloom').addEventListener('click',()=>{document.body.classList.remove('bloom');void document.body.offsetWidth;document.body.classList.add('bloom');setTimeout(()=>document.body.classList.remove('bloom'),2500)});document.getElementById('close').addEventListener('click',()=>viewer.classList.remove('show'));viewer.addEventListener('click',e=>{if(e.target===viewer)viewer.classList.remove('show')});
+(()=>{
+const photos=(window.BEAUX_PHOTOS||[]).slice(0,100), gate=document.getElementById('gate'), app=document.getElementById('app'), stage=document.getElementById('stage'), memories=document.getElementById('memories'), viewer=document.getElementById('viewer'), big=document.getElementById('big'), counter=document.getElementById('counter'), finale=document.getElementById('finale');
+let current=0, tiles=[];
+for(let i=0;i<54;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.animationDelay=(-Math.random()*3)+'s';s.style.transform=`scale(${.55+Math.random()})`;document.body.appendChild(s)}
+function sampleB(count){const c=document.createElement('canvas');c.width=600;c.height=760;const x=c.getContext('2d',{willReadFrequently:true});x.clearRect(0,0,c.width,c.height);x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';x.font='900 700px Georgia,serif';x.fillText('B',290,380);const data=x.getImageData(0,0,c.width,c.height).data, pts=[];for(let yy=42;yy<718;yy+=24){for(let xx=38;xx<562;xx+=24){if(data[(yy*c.width+xx)*4+3]>50)pts.push({x:xx/c.width,y:yy/c.height})}}const out=[];for(let i=0;i<count;i++)out.push(pts[Math.floor(i*pts.length/count)]);return out}
+const points=sampleB(photos.length);
+function build(){memories.innerHTML='';tiles=[];const sw=stage.clientWidth, sh=stage.clientHeight;const size=Math.max(34,Math.min(62,Math.min(sw/9.2,sh/12.4)));photos.forEach((src,i)=>{const b=document.createElement('button');b.className='memory';b.type='button';b.setAttribute('aria-label','Open memory '+(i+1));b.style.width=size+'px';b.style.height=size+'px';const im=document.createElement('img');im.src=src;im.loading=i<25?'eager':'lazy';im.alt='Memory '+(i+1);b.appendChild(im);memories.appendChild(b);tiles.push(b);const p=points[i];const x=p.x*sw-size/2,y=p.y*sh-size/2;b.style.transform=`translate(${sw/2-size/2}px,${sh/2-size/2}px) scale(.05) rotate(${(i%9-4)*2}deg)`;b.style.opacity='0';b.dataset.x=x;b.dataset.y=y;b.addEventListener('click',()=>openViewer(i))});requestAnimationFrame(()=>tiles.forEach((b,i)=>{b.style.transition=`transform 900ms cubic-bezier(.2,.8,.2,1) ${Math.min(i*13,900)}ms, opacity 500ms ease ${Math.min(i*13,900)}ms, filter .25s, box-shadow .25s`;b.style.opacity='1';b.style.transform=`translate(${b.dataset.x}px,${b.dataset.y}px) scale(1) rotate(${(i%9-4)*.7}deg)`}))}
+function openViewer(i){current=(i+photos.length)%photos.length;big.src=photos[current];counter.textContent=String(current+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');viewer.classList.add('show');viewer.setAttribute('aria-hidden','false')}
+function closeViewer(){viewer.classList.remove('show');viewer.setAttribute('aria-hidden','true');tiles[current]?.focus({preventScroll:true})}
+document.getElementById('enter').addEventListener('click',()=>{gate.classList.add('hide');app.classList.add('ready');setTimeout(build,160)});
+document.getElementById('close').addEventListener('click',closeViewer);document.getElementById('prev').addEventListener('click',()=>openViewer(current-1));document.getElementById('next').addEventListener('click',()=>openViewer(current+1));viewer.addEventListener('click',e=>{if(e.target===viewer)closeViewer()});
+let sx=0;viewer.addEventListener('touchstart',e=>sx=e.changedTouches[0].clientX,{passive:true});viewer.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>45)openViewer(current+(dx<0?1:-1))},{passive:true});
+document.addEventListener('keydown',e=>{if(!viewer.classList.contains('show'))return;if(e.key==='ArrowRight')openViewer(current+1);if(e.key==='ArrowLeft')openViewer(current-1);if(e.key==='Escape')closeViewer()});
+document.getElementById('finalBtn').addEventListener('click',()=>finale.classList.add('show'));document.getElementById('again').addEventListener('click',()=>finale.classList.remove('show'));
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,180)});
 })();
 </script>
 </body>
