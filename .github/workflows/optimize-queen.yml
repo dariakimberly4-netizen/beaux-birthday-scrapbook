@@ -1,0 +1,44 @@
+name: Optimize Queen B artwork
+
+on:
+  push:
+    paths:
+      - '.github/workflows/optimize-queen.yml'
+      - 'assets/file_00000000c57882098c9ed7a443f3e459.png'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Create responsive WebP artwork
+        run: |
+          python -m pip install --quiet pillow
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          src = Path('assets/file_00000000c57882098c9ed7a443f3e459.png')
+          im = Image.open(src).convert('RGB')
+          im.save('assets/queen-b-941.webp', 'WEBP', quality=80, method=6)
+          w = 640
+          h = round(im.height * w / im.width)
+          mobile = im.resize((w, h), Image.Resampling.LANCZOS)
+          mobile.save('assets/queen-b-640.webp', 'WEBP', quality=78, method=6)
+          PY
+      - name: Commit optimized artwork
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/queen-b-640.webp assets/queen-b-941.webp
+          if git diff --cached --quiet; then
+            echo 'No changes to commit'
+          else
+            git commit -m 'Add optimized Queen B artwork'
+            git push
+          fi
