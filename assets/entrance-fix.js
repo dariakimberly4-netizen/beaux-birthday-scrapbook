@@ -6,8 +6,8 @@
   if(!gate||!app||!enter)return;
 
   document.title='BEAUX — The Queen B';
-  const desktopBg='assets/queen-b-final-background.jpg?v=20260914-qb-final1';
-  const mobileBg='assets/q.png?v=20260914-mobile-bg1';
+  const desktopBg='assets/queen-b-final-background.jpg?v=20260914-qb-mobilefix2';
+  const mobileBg=desktopBg;
 
   const style=document.createElement('style');
   style.textContent=`
@@ -31,9 +31,14 @@
 
     @media(max-width:760px){
       html,body{width:100vw!important;height:100dvh!important;min-height:100dvh!important;background:#05040c!important}
-      body.entered{background-image:url('${mobileBg}')!important;background-size:cover!important;background-position:26% center!important;background-repeat:no-repeat!important;background-color:#05040c!important}
-      body.entered #app{inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;background-image:url('${mobileBg}')!important;background-size:cover!important;background-position:26% center!important;background-repeat:no-repeat!important;background-color:#05040c!important}
-      body.entered #stage{width:76vw!important;height:60vh!important;margin:12vh 0 0 18vw!important;transform:none!important}
+      body.entered,body.entered #app{
+        background-image:url('${mobileBg}')!important;
+        background-size:auto 100%!important;
+        background-position:left center!important;
+        background-repeat:no-repeat!important;
+        background-color:#05040c!important;
+      }
+      body.entered #stage{width:72vw!important;height:58vh!important;margin:18vh 0 0 24vw!important;transform:none!important}
       #queenFinalHit{top:1.6vh;right:2vw;width:42vw;height:7vh;min-width:0}
     }
     @supports not (height:100dvh){
@@ -46,14 +51,13 @@
   const forceBackground=()=>{
     if(innerWidth<=760){
       const v=`url('${mobileBg}')`;
-      document.body.style.setProperty('background-image',v,'important');
-      document.body.style.setProperty('background-size','cover','important');
-      document.body.style.setProperty('background-position','26% center','important');
-      document.body.style.setProperty('background-repeat','no-repeat','important');
-      app.style.setProperty('background-image',v,'important');
-      app.style.setProperty('background-size','cover','important');
-      app.style.setProperty('background-position','26% center','important');
-      app.style.setProperty('background-repeat','no-repeat','important');
+      for(const el of [document.body,app]){
+        el.style.setProperty('background-image',v,'important');
+        el.style.setProperty('background-size','auto 100%','important');
+        el.style.setProperty('background-position','left center','important');
+        el.style.setProperty('background-repeat','no-repeat','important');
+        el.style.setProperty('background-color','#05040c','important');
+      }
     }
   };
 
