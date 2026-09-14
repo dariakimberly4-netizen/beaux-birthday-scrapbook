@@ -7,12 +7,13 @@ window.BEAUX_PHOTOS=_local.map(n=>_base+n).concat(_drive.map(id=>`https://drive.
   const st=document.createElement('style');
   st.textContent=`
     html,body{background:#05040c!important}
-    body{background-image:linear-gradient(rgba(5,4,12,.30),rgba(5,4,12,.46)),url('${bg}')!important;background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;background-attachment:fixed!important}
-    #gate{background-image:linear-gradient(rgba(5,4,12,.24),rgba(5,4,12,.42)),url('${bg}')!important;background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important}
+    body{background-image:none!important}
+    #gate{background:radial-gradient(circle,#39265f,#100a22 55%,#05040c)!important}
+    #app{background-image:linear-gradient(rgba(5,4,12,.30),rgba(5,4,12,.46)),url('${bg}')!important;background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;background-attachment:fixed!important}
     #stage:before{background:radial-gradient(ellipse,#f4ddb022,#bcaeff12 40%,transparent 70%)!important}
     .brand,.hint{text-shadow:0 2px 10px #000,0 1px 3px #000}
     .pill{background:#100e22bf!important;backdrop-filter:blur(6px)}
-    @media(max-width:760px){body,#gate{background-position:center center!important}.hint{background:linear-gradient(90deg,transparent,#05040c99,transparent);padding:6px 0}}
+    @media(max-width:760px){#app{background-position:38% center!important}.hint{background:linear-gradient(90deg,transparent,#05040c99,transparent);padding:6px 0}}
   `;
   document.head.appendChild(st);
   const s=document.createElement('script');s.src='assets/wild.js?v=20260914-wild1';s.defer=true;document.head.appendChild(s)
