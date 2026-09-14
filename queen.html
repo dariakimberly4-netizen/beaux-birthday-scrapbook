@@ -6,11 +6,11 @@
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
 <title>BEAUX — The Queen B</title>
 <style>
-:root{--ratio:941/1672;--gold:#f4ddb0;--ink:#05040c}
+:root{--ratio:941/1672;--gold:#f4ddb0;--ink:#05040c;--art:url('assets/file_00000000c57882098c9ed7a443f3e459.png?v=portrait-queen-b-1')}
 *{box-sizing:border-box}
 html,body{margin:0;min-width:100%;min-height:100%;background:var(--ink);font-family:Arial,sans-serif}
 body{position:relative;min-height:100svh;overflow-x:hidden;color:#fff}
-body::before{content:"";position:fixed;inset:-7%;z-index:0;background:url('assets/q.png?v=responsive-v3') center/cover no-repeat;filter:blur(30px) brightness(.30);transform:scale(1.08);pointer-events:none}
+body::before{content:"";position:fixed;inset:-7%;z-index:0;background-image:var(--art);background-position:center;background-size:cover;background-repeat:no-repeat;filter:blur(30px) brightness(.30);transform:scale(1.08);pointer-events:none}
 .page{position:relative;z-index:1;width:100%;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:clamp(0px,2vw,28px)}
 .artboard{position:relative;flex:0 0 auto;aspect-ratio:var(--ratio);overflow:hidden;background:var(--ink);box-shadow:0 18px 60px #0009}
 .art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
@@ -30,8 +30,7 @@ body::before{content:"";position:fixed;inset:-7%;z-index:0;background:url('asset
 .finalCard{width:min(720px,92vw);max-height:82vh;overflow:auto;text-align:center;color:#fff;padding:8px}.finalCard h1{font:500 clamp(34px,5vw,58px) Georgia,serif;color:var(--gold);margin:0 0 18px}.finalCard p{font:500 clamp(16px,2vw,20px)/1.6 Georgia,serif}.back{margin-top:18px;min-height:52px;padding:0 24px;border:0;border-radius:999px;background:var(--gold);color:#17101f;font-weight:800;cursor:pointer}
 button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3px}
 
-/* Mobile / portrait: fill the phone width and preserve the original image ratio.
-   If browser chrome makes the viewport shorter, the page scrolls vertically instead of stretching. */
+/* Phones and portrait tablets: use the entire screen width, never stretch the artwork. */
 @media (max-width:899px), (orientation:portrait){
   body{overflow-y:auto}
   .page{min-height:100svh;padding:0;align-items:flex-start}
@@ -42,8 +41,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3p
   .nav{width:46px;height:68px;font-size:28px}.prev{left:6px}.next{right:6px}
 }
 
-/* Desktop / landscape: show the complete portrait artwork at the largest safe size,
-   centered with no crop and no distortion. */
+/* Desktop and landscape tablets: display the complete portrait artwork at maximum safe height. */
 @media (min-width:900px) and (orientation:landscape){
   body{overflow:hidden}
   .page{height:100svh;min-height:100svh}
@@ -57,7 +55,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3p
 <body>
 <div class="page">
   <main class="artboard" id="artboard" aria-label="BEAUX — The Queen B interactive birthday memory artwork">
-    <img class="art" src="assets/q.png?v=responsive-v3" alt="BEAUX — The Queen B birthday artwork with Beaux, a fantasy castle landscape, and a large letter B made from memories">
+    <img class="art" src="assets/file_00000000c57882098c9ed7a443f3e459.png?v=portrait-queen-b-1" alt="BEAUX — The Queen B birthday artwork with Beaux, a fantasy castle landscape, and a large letter B made from memories">
     <div class="hotspots" id="hotspots" aria-label="100 clickable memory photos"></div>
     <button class="finalHit" id="finalHit" aria-label="Open final birthday message"></button>
   </main>
@@ -90,9 +88,7 @@ const big=document.getElementById('big');
 const counter=document.getElementById('counter');
 const photoLink=document.getElementById('photoLink');
 const driveOpen=document.getElementById('driveOpen');
-const closeBtn=document.getElementById('close');
-const finalHit=document.getElementById('finalHit');
-let ids=[],current=0,lastFocus=null;
+let ids=[], current=0;
 
 function points(){
   const p=[];
@@ -102,7 +98,6 @@ function points(){
   return p;
 }
 const pts=points();
-
 function buildHotspots(){
   hotspots.innerHTML='';
   const count=Math.min(100,ids.length||100);
@@ -111,65 +106,42 @@ function buildHotspots(){
     b.className='memory';
     b.style.left=(pts[i][0]*100)+'%';
     b.style.top=(pts[i][1]*100)+'%';
-    b.setAttribute('aria-label','Open memory '+(i+1)+' of '+count);
+    b.setAttribute('aria-label','Open memory '+(i+1)+' of 100');
     b.onclick=()=>openMemory(i);
     hotspots.appendChild(b);
   }
 }
 function driveURL(i){return ids[i]?`https://drive.google.com/file/d/${ids[i]}/view`:''}
 function thumbURL(i){return ids[i]?`https://drive.google.com/thumbnail?id=${ids[i]}&sz=w1600`:''}
+function setModal(el,on){el.classList.toggle('show',on);el.setAttribute('aria-hidden',on?'false':'true')}
 function openMemory(i){
   if(!ids.length)return;
-  lastFocus=document.activeElement;
   current=(i+ids.length)%ids.length;
   big.src=thumbURL(current);
   big.alt='Beaux memory '+(current+1)+' of '+ids.length;
   counter.textContent=String(current+1).padStart(2,'0')+' / '+ids.length;
   photoLink.href=driveURL(current);
   driveOpen.href=driveURL(current);
-  viewer.classList.add('show');
-  viewer.setAttribute('aria-hidden','false');
-  requestAnimationFrame(()=>closeBtn.focus());
+  setModal(viewer,true);
+  document.getElementById('close').focus();
 }
-function closeViewer(){
-  viewer.classList.remove('show');
-  viewer.setAttribute('aria-hidden','true');
-  if(lastFocus&&lastFocus.focus)lastFocus.focus();
-}
-function openFinal(){
-  lastFocus=document.activeElement;
-  finale.classList.add('show');
-  finale.setAttribute('aria-hidden','false');
-  requestAnimationFrame(()=>document.getElementById('closeFinal').focus());
-}
-function closeFinal(){
-  finale.classList.remove('show');
-  finale.setAttribute('aria-hidden','true');
-  if(lastFocus&&lastFocus.focus)lastFocus.focus();
-}
-
-fetch('queen-clean.html?v=ids-responsive-v3').then(r=>r.text()).then(t=>{
+fetch('queen-clean.html?v=ids-portrait-1').then(r=>r.text()).then(t=>{
   const m=t.match(/const ids=\[(.*?)\];/s);
   if(m){try{ids=JSON.parse('['+m[1]+']').slice(0,100)}catch(e){console.error(e)}}
   buildHotspots();
 }).catch(()=>buildHotspots());
 
-closeBtn.onclick=closeViewer;
+document.getElementById('close').onclick=()=>setModal(viewer,false);
 document.getElementById('prev').onclick=()=>openMemory(current-1);
 document.getElementById('next').onclick=()=>openMemory(current+1);
-finalHit.onclick=openFinal;
-document.getElementById('closeFinal').onclick=closeFinal;
-document.getElementById('back').onclick=closeFinal;
-viewer.addEventListener('click',e=>{if(e.target===viewer)closeViewer()});
-finale.addEventListener('click',e=>{if(e.target===finale)closeFinal()});
+document.getElementById('finalHit').onclick=()=>{setModal(finale,true);document.getElementById('closeFinal').focus()};
+document.getElementById('closeFinal').onclick=document.getElementById('back').onclick=()=>setModal(finale,false);
+viewer.addEventListener('click',e=>{if(e.target===viewer)setModal(viewer,false)});
+finale.addEventListener('click',e=>{if(e.target===finale)setModal(finale,false)});
 document.addEventListener('keydown',e=>{
-  if(viewer.classList.contains('show')){
-    if(e.key==='Escape')closeViewer();
-    if(e.key==='ArrowLeft')openMemory(current-1);
-    if(e.key==='ArrowRight')openMemory(current+1);
-  }else if(finale.classList.contains('show')&&e.key==='Escape'){
-    closeFinal();
-  }
+  if(e.key==='Escape'){setModal(viewer,false);setModal(finale,false)}
+  if(viewer.classList.contains('show')&&e.key==='ArrowLeft')openMemory(current-1);
+  if(viewer.classList.contains('show')&&e.key==='ArrowRight')openMemory(current+1);
 });
 </script>
 </body>
