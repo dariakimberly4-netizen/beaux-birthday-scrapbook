@@ -8,11 +8,10 @@
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05040c;font-family:Arial,sans-serif}
-.scene{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 55% 38%,#ffd98b 0 3%,#ef8865 17%,#59467b 43%,#15152f 83%),linear-gradient(180deg,#101a4d 0%,#7b4a81 43%,#f29a6c 62%,#18162f 100%)}
-.scene:before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 31%,#fff9c7 0 2%,transparent 13%),linear-gradient(155deg,transparent 0 49%,#252651aa 50% 57%,transparent 58%),linear-gradient(24deg,transparent 0 44%,#382f62c9 45% 60%,transparent 61%);opacity:.92;pointer-events:none}
+.scene{position:fixed;inset:0;overflow:hidden;background:url('assets/q.png?v=restore-woman') center/100% 100% no-repeat #05040c}
 .scene:after{content:'Every piece of the B is a memory.  •  100 REAL MEMORIES • TAP ONE TO REVISIT';position:absolute;z-index:8;left:50%;bottom:5.2%;transform:translateX(-50%);width:min(760px,88vw);padding:15px 20px;border-radius:18px;background:linear-gradient(90deg,#10112dcc,#24204acc,#10112dcc);color:#fff1b8;text-align:center;font:500 clamp(14px,2vw,24px) Georgia,serif;letter-spacing:.04em;box-shadow:0 8px 28px #08061288;pointer-events:none}
 .cover{display:none}
-.stage{position:absolute;left:32%;top:12%;width:36%;height:72%;z-index:3;border-radius:30px;background:linear-gradient(135deg,#15173355,#4a356544);box-shadow:inset 0 0 70px #09091666}
+.stage{position:absolute;left:32%;top:12%;width:36%;height:72%;z-index:3;border-radius:30px;background:transparent;box-shadow:none}
 .memory{position:absolute;width:66px;height:66px;padding:0;border:0;background:transparent;transform:translate(-50%,-50%);cursor:pointer;touch-action:manipulation}
 .shell{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;overflow:hidden;border:1px solid #f0d6a3b8;border-radius:8px;background:#0b0916;box-shadow:0 4px 14px #000b;transition:transform .18s ease,box-shadow .18s ease}
 .memory:hover .shell,.memory:focus-visible .shell{transform:translate(-50%,-50%) scale(1.08);box-shadow:0 0 0 2px #f4ddb0,0 7px 22px #000c}
