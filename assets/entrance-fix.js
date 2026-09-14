@@ -6,8 +6,8 @@
   if(!gate||!app||!enter)return;
 
   document.title='BEAUX — The Queen B';
-  const desktopBg='assets/queen-b-final-background.jpg?v=20260914-qb-mobilefix4';
-  const mobileBg='assets/file_00000000c57882098c9ed7a443f3e459.png?v=20260914-mobile-reliable1';
+  const desktopBg='assets/queen-b-final-background.jpg?v=20260915-clean1';
+  const mobileBg='assets/q.png?v=20260915-clean1';
 
   const style=document.createElement('style');
   style.textContent=`
@@ -18,33 +18,30 @@
     body.entered #app:before,body.entered #app:after{display:none!important;content:none!important}
     body.entered .header,body.entered .hint,body.entered .star{display:none!important}
 
-    body.entered #stage{display:block!important;position:relative!important;width:min(54vw,900px)!important;height:min(76vh,780px)!important;margin-left:28vw!important;z-index:20!important;pointer-events:auto!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+    body.entered #stage{display:block!important;position:relative!important;width:min(50vw,820px)!important;height:min(72vh,760px)!important;margin-left:32vw!important;z-index:20!important;pointer-events:auto!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
     body.entered #stage:before{display:none!important;content:none!important;background:none!important}
     body.entered #memories{display:block!important;position:absolute!important;inset:0!important;background:transparent!important;pointer-events:auto!important}
     body.entered .memory{z-index:30!important;background:transparent!important;pointer-events:auto!important;cursor:pointer!important}
     body.entered .photoShell{opacity:1!important;visibility:visible!important;border:1px solid #f0d6a3aa!important;box-shadow:0 4px 14px #000a!important;pointer-events:none!important;overflow:hidden!important;background:transparent!important}
     body.entered .photoShell img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;filter:none!important;transform:none!important;background:transparent!important}
-    body.entered .memory:focus-visible{outline:2px solid #f4ddb0!important;outline-offset:2px!important}
 
     #queenFinalHit{position:fixed;z-index:80;top:2.2vh;right:2vw;width:14.5vw;height:6.5vh;min-width:175px;min-height:48px;border:0;background:transparent;cursor:pointer;display:none}
     body.entered #queenFinalHit{display:block}
 
     @media(max-width:760px){
-      html,body{width:100vw!important;height:100dvh!important;min-height:100dvh!important;background:#05040c!important}
       body.entered,body.entered #app{
         background-image:url('${mobileBg}')!important;
         background-size:cover!important;
-        background-position:40% center!important;
+        background-position:center top!important;
         background-repeat:no-repeat!important;
         background-color:#05040c!important;
       }
-      body.entered #stage{width:64vw!important;height:53vh!important;margin:22vh 0 0 30vw!important;transform:none!important}
-      #queenFinalHit{top:1.6vh;right:2vw;width:42vw;height:7vh;min-width:0}
+      body.entered #stage{position:absolute!important;left:57%!important;top:24%!important;width:39vw!important;height:47vh!important;margin:0!important;transform:none!important}
+      body.entered .memory{width:34px!important;height:34px!important}
+      body.entered .photoShell{max-width:30px!important;max-height:24px!important}
+      #queenFinalHit{top:auto!important;bottom:3.5vh!important;left:14vw!important;right:auto!important;width:72vw!important;height:7vh!important;min-width:0!important}
     }
-    @supports not (height:100dvh){
-      body.entered #app{height:100vh!important;min-height:100vh!important}
-      @media(max-width:760px){html,body{height:100vh!important;min-height:100vh!important}body.entered #app{height:100vh!important;min-height:100vh!important}}
-    }
+    @supports not (height:100dvh){body.entered #app{height:100vh!important;min-height:100vh!important}}
   `;
   document.head.appendChild(style);
 
@@ -54,7 +51,7 @@
       for(const el of [document.body,app]){
         el.style.setProperty('background-image',v,'important');
         el.style.setProperty('background-size','cover','important');
-        el.style.setProperty('background-position','40% center','important');
+        el.style.setProperty('background-position','center top','important');
         el.style.setProperty('background-repeat','no-repeat','important');
         el.style.setProperty('background-color','#05040c','important');
       }
