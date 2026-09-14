@@ -6,14 +6,15 @@
   if(!gate||!app||!enter)return;
 
   document.title='BEAUX — The Queen B';
-  const bg='assets/queen-b-final-background.jpg?v=20260914-qb-final1';
+  const desktopBg='assets/queen-b-final-background.jpg?v=20260914-qb-final1';
+  const mobileBg='assets/q.png?v=20260914-mobile-bg1';
 
   const style=document.createElement('style');
   style.textContent=`
-    html,body{margin:0!important;width:100%!important;height:100%!important;overflow:hidden!important;background:#05040c!important}
+    html,body{margin:0!important;width:100%!important;height:100%!important;min-height:100%!important;overflow:hidden!important;background:#05040c!important}
     #gate{background:radial-gradient(circle,#39265f,#100a22 55%,#05040c)!important;background-image:none!important}
     body.entered{background:#05040c!important}
-    body.entered #app{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;padding:0!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important;background-image:url('${bg}')!important;background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;overflow:hidden!important}
+    body.entered #app{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;padding:0!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important;background-image:url('${desktopBg}')!important;background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;background-color:#05040c!important;overflow:hidden!important}
     body.entered #app:before,body.entered #app:after{display:none!important;content:none!important}
     body.entered .header,body.entered .hint,body.entered .star{display:none!important}
 
@@ -29,16 +30,40 @@
     body.entered #queenFinalHit{display:block}
 
     @media(max-width:760px){
-      body.entered #app{background-size:cover!important;background-position:30% center!important}
-      body.entered #stage{width:82vw!important;height:62vh!important;margin-left:12vw!important;margin-top:10vh!important}
+      html,body{width:100vw!important;height:100dvh!important;min-height:100dvh!important;background:#05040c!important}
+      body.entered{background-image:url('${mobileBg}')!important;background-size:cover!important;background-position:26% center!important;background-repeat:no-repeat!important;background-color:#05040c!important}
+      body.entered #app{inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;background-image:url('${mobileBg}')!important;background-size:cover!important;background-position:26% center!important;background-repeat:no-repeat!important;background-color:#05040c!important}
+      body.entered #stage{width:76vw!important;height:60vh!important;margin:12vh 0 0 18vw!important;transform:none!important}
       #queenFinalHit{top:1.6vh;right:2vw;width:42vw;height:7vh;min-width:0}
+    }
+    @supports not (height:100dvh){
+      body.entered #app{height:100vh!important;min-height:100vh!important}
+      @media(max-width:760px){html,body{height:100vh!important;min-height:100vh!important}body.entered #app{height:100vh!important;min-height:100vh!important}}
     }
   `;
   document.head.appendChild(style);
 
+  const forceBackground=()=>{
+    if(innerWidth<=760){
+      const v=`url('${mobileBg}')`;
+      document.body.style.setProperty('background-image',v,'important');
+      document.body.style.setProperty('background-size','cover','important');
+      document.body.style.setProperty('background-position','26% center','important');
+      document.body.style.setProperty('background-repeat','no-repeat','important');
+      app.style.setProperty('background-image',v,'important');
+      app.style.setProperty('background-size','cover','important');
+      app.style.setProperty('background-position','26% center','important');
+      app.style.setProperty('background-repeat','no-repeat','important');
+    }
+  };
+
   enter.addEventListener('click',()=>{
     document.body.classList.add('entered');
+    forceBackground();
+    setTimeout(forceBackground,100);
+    setTimeout(forceBackground,600);
   },{capture:true});
+  window.addEventListener('resize',()=>{if(document.body.classList.contains('entered'))forceBackground()});
 
   const wireFinalHit=()=>{
     if(document.getElementById('queenFinalHit'))return;
