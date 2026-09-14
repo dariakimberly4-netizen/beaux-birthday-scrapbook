@@ -1,0 +1,1 @@
+window.BEAUX_FINAL_PHOTO='https://drive.google.com/thumbnail?id=1nxLSD2dlZ8ltzL_MrK6FyM6EKTFAy22n&sz=w1600';
