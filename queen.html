@@ -2,72 +2,105 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
 <title>BEAUX — The Queen B</title>
 <style>
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05040c}
-iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#05040c}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#05040c;font-family:Arial,sans-serif}
+body{min-height:100dvh;display:grid;place-items:center;overflow:hidden;position:relative}
+body:before{content:"";position:fixed;inset:-4%;background:url('assets/q.png?v=direct-v1') center/cover no-repeat;filter:blur(26px) brightness(.38);transform:scale(1.08);z-index:0}
+.artboard{position:relative;z-index:1;width:min(100vw,calc(100dvh * 941 / 1672));aspect-ratio:941/1672;max-height:100dvh;overflow:hidden;background:#05040c;box-shadow:0 0 50px #0008}
+.art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
+.hotspots{position:absolute;left:49%;top:36.5%;width:42%;height:34.5%;z-index:5;pointer-events:none}
+.memory{position:absolute;width:12%;height:10%;transform:translate(-50%,-50%);border:0;background:transparent;opacity:0;pointer-events:auto;cursor:pointer;touch-action:manipulation}
+.memory:focus-visible{opacity:1;outline:2px solid #ffe39a;border-radius:8px;background:#ffe39a18}
+.finalHit{position:absolute;right:2%;top:1%;width:31%;height:5.2%;z-index:7;border:0;background:transparent;cursor:pointer;touch-action:manipulation}
+.viewer,.finale{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:#05040cf2;padding:72px 54px 92px}
+.viewer.show{display:flex}.finale.show{display:flex}
+.viewer img{display:block;max-width:88vw;max-height:68vh;object-fit:contain;border-radius:12px;box-shadow:0 18px 60px #000b}
+.close{position:absolute;right:14px;top:max(14px,env(safe-area-inset-top));width:52px;height:52px;border-radius:50%;border:1px solid #ffffff55;background:#171224;color:#fff;font-size:28px;cursor:pointer}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:68px;border:1px solid #ffffff44;border-radius:14px;background:#171224;color:#fff;font-size:28px;cursor:pointer}.prev{left:8px}.next{right:8px}
+.counter{position:absolute;bottom:62px;color:#f4ddb0;font:600 15px Georgia,serif}.driveOpen{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);min-height:44px;padding:0 20px;border-radius:999px;background:#f4ddb0;color:#17101f;text-decoration:none;display:flex;align-items:center;justify-content:center;font:800 12px Arial,sans-serif;white-space:nowrap}
+.finalCard{max-width:720px;text-align:center;color:#fff}.finalCard h1{font:500 clamp(34px,7vw,58px) Georgia,serif;color:#f4ddb0;margin:0 0 18px}.finalCard p{font:500 clamp(16px,3.8vw,20px)/1.6 Georgia,serif}.back{margin-top:18px;min-height:52px;padding:0 24px;border:0;border-radius:999px;background:#f4ddb0;color:#17101f;font-weight:800}
+@media(min-width:900px){.memory{width:10%;height:9%}.viewer img{max-height:76vh}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<iframe id="queenFrame" src="queen-clean.html?v=20260915-mobile-proportion-fix" title="BEAUX — The Queen B"></iframe>
+<main class="artboard" id="artboard">
+  <img class="art" src="assets/q.png?v=direct-v1" alt="BEAUX — The Queen B birthday memory artwork">
+  <div class="hotspots" id="hotspots" aria-label="100 memory photos"></div>
+  <button class="finalHit" id="finalHit" aria-label="Open final message"></button>
+</main>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Memory photo viewer">
+  <button class="close" id="close" aria-label="Close">×</button>
+  <button class="nav prev" id="prev" aria-label="Previous memory">‹</button>
+  <a id="photoLink" target="_blank" rel="noopener"><img id="big" alt="Beaux memory"></a>
+  <button class="nav next" id="next" aria-label="Next memory">›</button>
+  <div class="counter" id="counter"></div>
+  <a class="driveOpen" id="driveOpen" target="_blank" rel="noopener">OPEN ORIGINAL PHOTO ✦</a>
+</div>
+
+<div class="finale" id="finale" role="dialog" aria-modal="true" aria-label="Final birthday message">
+  <button class="close" id="closeFinal" aria-label="Close">×</button>
+  <div class="finalCard">
+    <h1>Happy Birthday, Sis! 💜</h1>
+    <p>No matter how many years, places, or memories fill our lives, one thing will always stay the same—you’ll always be my sister, my safe place, and one of my favorite parts of home.<br><br>I hope this year gives you back all the love, laughter, and light you give so freely. Here’s to everything we’ve already shared—and all the beautiful memories still waiting for us.</p>
+    <p style="color:#f4ddb0">Love you always,<br>Kimmy</p>
+    <button class="back" id="back">BACK TO OUR MEMORIES ✦</button>
+  </div>
+</div>
+
 <script>
-const f=document.getElementById('queenFrame');
-f.addEventListener('load',()=>{
-  try{
-    const w=f.contentWindow;
-    const d=f.contentDocument;
-    if(!d)return;
+const hotspots=document.getElementById('hotspots');
+const viewer=document.getElementById('viewer');
+const big=document.getElementById('big');
+const counter=document.getElementById('counter');
+const photoLink=document.getElementById('photoLink');
+const driveOpen=document.getElementById('driveOpen');
+let ids=[], current=0;
 
-    const style=d.createElement('style');
-    style.id='exactArtworkMode';
-    style.textContent=`
-      html,body{background:#05040c!important}
-      .scene{background:url('assets/q.png?v=mobile-proportion-fix') center/100% 100% no-repeat #05040c!important}
-      .scene:before{display:none!important}
-      .scene:after{display:none!important}
-      .cover{display:none!important}
-      .stage{left:46%!important;top:36.5%!important;width:46%!important;height:36%!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;z-index:6!important}
-      .shell{opacity:0!important;box-shadow:none!important;border:0!important;background:transparent!important}
-      .memory{opacity:1!important;background:transparent!important;touch-action:manipulation!important}
-      .memory:focus-visible{outline:2px solid rgba(255,224,139,.9)!important;outline-offset:2px!important;border-radius:8px!important}
-      .finalHit{right:2.5%!important;top:1%!important;width:31%!important;height:5.2%!important;z-index:12!important}
+function points(){
+  const p=[];
+  for(let i=0;i<28;i++){const t=i/27;p.push([.18,.05+.90*t])}
+  for(let i=0;i<34;i++){const t=i/33;p.push([.18+.62*Math.sin(Math.PI*t),.05+.41*t])}
+  for(let i=0;i<38;i++){const t=i/37;p.push([.18+.66*Math.sin(Math.PI*t),.50+.45*t])}
+  return p;
+}
+const pts=points();
+function buildHotspots(){
+  hotspots.innerHTML='';
+  const count=Math.min(100,ids.length||100);
+  for(let i=0;i<count;i++){
+    const b=document.createElement('button');
+    b.className='memory'; b.style.left=(pts[i][0]*100)+'%'; b.style.top=(pts[i][1]*100)+'%';
+    b.setAttribute('aria-label','Open memory '+(i+1)+' of 100');
+    b.onclick=()=>openMemory(i); hotspots.appendChild(b);
+  }
+}
+function driveURL(i){return ids[i]?`https://drive.google.com/file/d/${ids[i]}/view`:''}
+function thumbURL(i){return ids[i]?`https://drive.google.com/thumbnail?id=${ids[i]}&sz=w1600`:''}
+function openMemory(i){
+  if(!ids.length)return;
+  current=(i+ids.length)%ids.length;
+  big.src=thumbURL(current); counter.textContent=String(current+1).padStart(2,'0')+' / '+ids.length;
+  photoLink.href=driveURL(current); driveOpen.href=driveURL(current); viewer.classList.add('show');
+}
+fetch('queen-clean.html?v=ids-direct-v1').then(r=>r.text()).then(t=>{
+  const m=t.match(/const ids=\[(.*?)\];/s);
+  if(m){try{ids=JSON.parse('['+m[1]+']').slice(0,100)}catch(e){console.error(e)}}
+  buildHotspots();
+}).catch(()=>buildHotspots());
 
-      @media(max-width:760px) and (orientation:portrait){
-        .scene{
-          position:fixed!important;
-          inset:auto!important;
-          left:0!important;
-          top:50%!important;
-          width:100vw!important;
-          height:177.6833vw!important;
-          max-height:none!important;
-          transform:translateY(-50%)!important;
-          background-size:100% 100%!important;
-          background-position:center!important;
-        }
-        .stage{left:46%!important;top:36.5%!important;width:46%!important;height:36%!important}
-        .memory{width:46px!important;height:46px!important}
-        .finalHit{right:2.5%!important;top:1%!important;width:31%!important;height:5.2%!important}
-      }
-
-      @media(max-width:760px) and (orientation:landscape){
-        .scene{background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important}
-      }
-    `;
-    d.head.appendChild(style);
-
-    const old=d.getElementById('cleanPatch');
-    if(old)old.remove();
-
-    const stage=d.getElementById('stage');
-    if(stage && typeof w.build==='function'){
-      stage.innerHTML='';
-      requestAnimationFrame(()=>w.build());
-    }
-  }catch(e){console.error('Queen artwork patch:',e)}
-});
+document.getElementById('close').onclick=()=>viewer.classList.remove('show');
+document.getElementById('prev').onclick=()=>openMemory(current-1);
+document.getElementById('next').onclick=()=>openMemory(current+1);
+document.getElementById('finalHit').onclick=()=>document.getElementById('finale').classList.add('show');
+document.getElementById('closeFinal').onclick=document.getElementById('back').onclick=()=>document.getElementById('finale').classList.remove('show');
+viewer.addEventListener('click',e=>{if(e.target===viewer)viewer.classList.remove('show')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){viewer.classList.remove('show');document.getElementById('finale').classList.remove('show')}});
 </script>
 </body>
 </html>
