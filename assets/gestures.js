@@ -1,27 +1,52 @@
 (()=>{
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+
   function init(){
     const stage=document.getElementById('stage');
     const memories=document.getElementById('memories');
-    if(!stage||!memories)return;
+    const header=document.querySelector('.header');
+    if(!stage||!memories||!header)return;
 
     const style=document.createElement('style');
     style.textContent=`
       #stage{touch-action:none;user-select:none;-webkit-user-select:none}
       #stage.gesture-hold:before{opacity:1!important;filter:blur(22px) brightness(1.12)!important}
-      #stage.gesture-drag .photoShell{box-shadow:0 7px 22px #000b,0 0 12px #e8c78b22}
-      @media(prefers-reduced-motion:reduce){#stage{touch-action:manipulation}.memory{translate:0 0!important}}
+      #stage.gesture-drag .photoShell,#stage.hand-live .photoShell{box-shadow:0 7px 22px #000b,0 0 12px #e8c78b22}
+      .handControl{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid #f4ddb066;background:#100e22dd;color:#fff;cursor:pointer;letter-spacing:.04em}
+      .handControl.on{border-color:#f4ddb0;background:#24183e;box-shadow:0 0 16px #bcaeff33}
+      .handHud{position:fixed;z-index:45;left:16px;bottom:52px;width:220px;max-width:46vw;border:1px solid #ffffff26;border-radius:16px;background:#090713e8;padding:9px;box-shadow:0 14px 44px #0009;display:none}
+      .handHud.show{display:block}.handHud video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;transform:scaleX(-1);background:#05040c}
+      .handStatus{margin-top:7px;font-size:11px;line-height:1.3;color:#f4eef9;text-align:center}.handStatus b{color:#f4ddb0}
+      .handDot{position:fixed;z-index:46;width:20px;height:20px;border:2px solid #f4ddb0;border-radius:50%;pointer-events:none;display:none;box-shadow:0 0 16px #f4ddb088;transform:translate(-50%,-50%)}
+      .handDot.show{display:block}
+      @media(max-width:760px){.handControl{font-size:11px;padding:0 11px}.handHud{width:160px;left:8px;bottom:58px}.brand{max-width:48%!important}}
+      @media(prefers-reduced-motion:reduce){#stage{touch-action:manipulation}.memory{translate:0 0!important}.handControl{display:none!important}}
     `;
     document.head.appendChild(style);
 
-    let active=false,startX=0,startY=0,lastX=0,lastY=0,startT=0,dragged=false,holdTimer=null,suppressClick=false;
+    const btn=document.createElement('button');
+    btn.className='handControl';
+    btn.type='button';
+    btn.textContent='ENABLE HAND CONTROL';
+    btn.setAttribute('aria-pressed','false');
+    header.insertBefore(btn,header.lastElementChild);
+
+    const hud=document.createElement('div');
+    hud.className='handHud';
+    hud.innerHTML='<video playsinline muted></video><div class="handStatus">Camera off</div>';
+    document.body.appendChild(hud);
+    const video=hud.querySelector('video');
+    const status=hud.querySelector('.handStatus');
+    const dot=document.createElement('div');dot.className='handDot';document.body.appendChild(dot);
+
     const bowls=()=>Array.from(memories.querySelectorAll('.memory'));
+    let active=false,startX=0,startY=0,lastX=0,lastY=0,startT=0,dragged=false,holdTimer=null,suppressClick=false;
+    let cameraOn=false,stream=null,recognizer=null,raf=0,lastVideoTime=-1,lastDetect=0,lastHandX=null,smoothX=null,slowState=false;
 
     function apply(dx,dy){
       if(reduced.matches)return;
-      const list=bowls();
-      list.forEach((el,i)=>{
-        if(i<28)return; // spine remains stable
+      bowls().forEach((el,i)=>{
+        if(i<28)return;
         const upper=i<62;
         const x=upper?dx*.18:-dx*.18;
         const y=dy*.06;
@@ -38,10 +63,7 @@
         if(!reduced.matches&&boost){
           el.style.transition='translate 150ms ease-out';
           el.style.translate=`${(upper?1:-1)*boost}px 0px`;
-          setTimeout(()=>{
-            el.style.transition='translate 520ms cubic-bezier(.2,.8,.2,1)';
-            el.style.translate='0px 0px';
-          },150);
+          setTimeout(()=>{el.style.transition='translate 520ms cubic-bezier(.2,.8,.2,1)';el.style.translate='0px 0px'},150);
         }else{
           el.style.transition='translate 420ms cubic-bezier(.2,.8,.2,1)';
           el.style.translate='0px 0px';
@@ -51,47 +73,107 @@
     }
 
     stage.addEventListener('pointerdown',e=>{
+      if(cameraOn)return;
       if(e.pointerType==='mouse'&&e.button!==0)return;
       active=true;dragged=false;suppressClick=false;
       startX=lastX=e.clientX;startY=lastY=e.clientY;startT=performance.now();
       try{stage.setPointerCapture(e.pointerId)}catch(_){ }
-      stage.classList.add('gesture-hold');
       holdTimer=setTimeout(()=>stage.classList.add('gesture-hold'),280);
     },{passive:true});
-
     stage.addEventListener('pointermove',e=>{
-      if(!active)return;
+      if(!active||cameraOn)return;
       lastX=e.clientX;lastY=e.clientY;
       const dx=lastX-startX,dy=lastY-startY;
-      if(Math.hypot(dx,dy)>10){
-        dragged=true;suppressClick=true;
-        stage.classList.add('gesture-drag');
-        apply(Math.max(-90,Math.min(90,dx)),Math.max(-50,Math.min(50,dy)));
-      }
+      if(Math.hypot(dx,dy)>10){dragged=true;suppressClick=true;stage.classList.add('gesture-drag');apply(Math.max(-90,Math.min(90,dx)),Math.max(-50,Math.min(50,dy)))}
     },{passive:true});
-
     function end(e){
-      if(!active)return;
-      active=false;clearTimeout(holdTimer);
-      stage.classList.remove('gesture-hold','gesture-drag');
-      const dx=lastX-startX,dt=Math.max(1,performance.now()-startT);
-      const velocity=Math.abs(dx)/dt;
-      let boost=0;
-      if(dragged&&Math.abs(dx)>42&&velocity>.12&&!reduced.matches){
-        boost=Math.sign(dx)*Math.min(24,10+velocity*22);
-      }
-      settle(boost);
-      try{stage.releasePointerCapture(e.pointerId)}catch(_){ }
-      setTimeout(()=>suppressClick=false,220);
+      if(!active||cameraOn)return;
+      active=false;clearTimeout(holdTimer);stage.classList.remove('gesture-hold','gesture-drag');
+      const dx=lastX-startX,dt=Math.max(1,performance.now()-startT),velocity=Math.abs(dx)/dt;
+      let boost=0;if(dragged&&Math.abs(dx)>42&&velocity>.12&&!reduced.matches)boost=Math.sign(dx)*Math.min(24,10+velocity*22);
+      settle(boost);try{stage.releasePointerCapture(e.pointerId)}catch(_){ }setTimeout(()=>suppressClick=false,220);
     }
-    stage.addEventListener('pointerup',end,{passive:true});
-    stage.addEventListener('pointercancel',end,{passive:true});
+    stage.addEventListener('pointerup',end,{passive:true});stage.addEventListener('pointercancel',end,{passive:true});
+    stage.addEventListener('click',e=>{if(suppressClick&&e.target.closest('.memory')){e.preventDefault();e.stopImmediatePropagation()}},true);
 
-    stage.addEventListener('click',e=>{
-      if(suppressClick&&e.target.closest('.memory')){
-        e.preventDefault();e.stopImmediatePropagation();
+    function setSlow(on){
+      if(on===slowState)return;slowState=on;
+      stage.classList.toggle('gesture-hold',on);
+      try{stage.dispatchEvent(new PointerEvent(on?'pointerenter':'pointerleave',{bubbles:false}))}catch(_){ }
+    }
+
+    function gestureName(result){
+      try{return result.gestures?.[0]?.[0]?.categoryName||'None'}catch(_){return'None'}
+    }
+
+    function reactToHand(result){
+      const hands=result.landmarks||result.handLandmarks||[];
+      if(!hands.length){status.textContent='Show one hand to the camera';dot.classList.remove('show');lastHandX=null;setSlow(false);settle();return}
+      const lm=hands[0];
+      const palm=lm[9]||lm[0];
+      const x=1-palm.x; // mirrored control feels natural
+      const y=palm.y;
+      smoothX=smoothX==null?x:(smoothX*.72+x*.28);
+      const rect=stage.getBoundingClientRect();
+      dot.style.left=(rect.left+smoothX*rect.width)+'px';dot.style.top=(rect.top+y*rect.height)+'px';dot.classList.add('show');
+      const g=gestureName(result);
+      const open=(g==='Open_Palm');
+      setSlow(open);
+      if(lastHandX!=null&&!open){
+        const delta=(smoothX-lastHandX)*420;
+        if(Math.abs(delta)>.45)apply(Math.max(-72,Math.min(72,delta)),0);
       }
-    },true);
+      lastHandX=smoothX;
+      status.innerHTML=open?'<b>OPEN PALM:</b> slow / hold':'<b>HAND LIVE:</b> move left or right';
+    }
+
+    async function loadRecognizer(){
+      if(recognizer)return recognizer;
+      status.textContent='Loading hand tracking…';
+      const vision=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/+esm');
+      const resolver=await vision.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm');
+      recognizer=await vision.GestureRecognizer.createFromOptions(resolver,{
+        baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task',delegate:'GPU'},
+        runningMode:'VIDEO',numHands:1,minHandDetectionConfidence:.55,minHandPresenceConfidence:.5,minTrackingConfidence:.5
+      });
+      return recognizer;
+    }
+
+    async function loop(t){
+      if(!cameraOn)return;
+      raf=requestAnimationFrame(loop);
+      if(video.readyState<2||video.currentTime===lastVideoTime||t-lastDetect<70)return;
+      lastDetect=t;lastVideoTime=video.currentTime;
+      try{
+        const r=recognizer.recognizeForVideo(video,performance.now());
+        reactToHand(r);
+      }catch(e){status.textContent='Hand tracking is restarting…'}
+    }
+
+    async function startCamera(){
+      if(reduced.matches)return;
+      if(!navigator.mediaDevices?.getUserMedia){status.textContent='Camera is not supported in this browser';hud.classList.add('show');return}
+      btn.disabled=true;hud.classList.add('show');status.textContent='Requesting camera permission…';
+      try{
+        stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480}},audio:false});
+        video.srcObject=stream;await video.play();await loadRecognizer();
+        cameraOn=true;btn.disabled=false;btn.classList.add('on');btn.textContent='STOP HAND CONTROL';btn.setAttribute('aria-pressed','true');stage.classList.add('hand-live');status.innerHTML='<b>HAND LIVE:</b> move left or right';
+        lastHandX=null;smoothX=null;raf=requestAnimationFrame(loop);
+      }catch(e){
+        btn.disabled=false;btn.classList.remove('on');btn.textContent='ENABLE HAND CONTROL';btn.setAttribute('aria-pressed','false');
+        status.innerHTML=e?.name==='NotAllowedError'?'<b>CAMERA BLOCKED.</b> Click the camera icon in Chrome address bar and choose Allow.':'Could not start camera. Try Chrome and reload.';
+        if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
+      }
+    }
+
+    function stopCamera(){
+      cameraOn=false;cancelAnimationFrame(raf);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;video.srcObject=null;
+      btn.classList.remove('on');btn.textContent='ENABLE HAND CONTROL';btn.setAttribute('aria-pressed','false');stage.classList.remove('hand-live','gesture-hold');dot.classList.remove('show');hud.classList.remove('show');setSlow(false);settle();lastHandX=null;smoothX=null;
+    }
+
+    btn.addEventListener('click',()=>cameraOn?stopCamera():startCamera());
+    window.addEventListener('pagehide',stopCamera,{once:true});
   }
+
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
