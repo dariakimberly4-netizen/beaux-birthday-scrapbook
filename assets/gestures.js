@@ -16,11 +16,11 @@
       .handControl{min-height:46px;padding:0 14px;border-radius:999px;border:1px solid #f4ddb066;background:#100e22ee;color:#fff;cursor:pointer;letter-spacing:.04em;font-weight:700}
       .handControl.on{border-color:#f4ddb0;background:#24183e;box-shadow:0 0 16px #bcaeff33}
       .handControl:disabled{opacity:.65;cursor:wait}
-      .handHud{position:fixed;z-index:45;left:16px;bottom:52px;width:220px;max-width:46vw;border:1px solid #ffffff26;border-radius:16px;background:#090713f2;padding:9px;box-shadow:0 14px 44px #0009;display:none}
-      .handHud.show{display:block}.handHud video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;transform:scaleX(-1);background:#05040c}
-      .handStatus{margin-top:7px;font-size:11px;line-height:1.35;color:#f4eef9;text-align:center}.handStatus b{color:#f4ddb0}
+      .handHud{position:fixed;z-index:45;left:16px;bottom:52px;width:210px;max-width:42vw;border:1px solid #ffffff26;border-radius:14px;background:#090713f2;padding:8px;box-shadow:0 14px 44px #0009;display:none}
+      .handHud.show{display:block}.handHud video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:9px;display:block;transform:scaleX(-1);background:#05040c}
+      .handStatus{margin-top:6px;font-size:11px;line-height:1.35;color:#f4eef9;text-align:center;word-break:break-word}.handStatus b{color:#f4ddb0}
       .handDot{position:fixed;z-index:46;width:20px;height:20px;border:2px solid #f4ddb0;border-radius:50%;pointer-events:none;display:none;box-shadow:0 0 16px #f4ddb088;transform:translate(-50%,-50%)}.handDot.show{display:block}
-      @media(max-width:760px){.header{gap:6px;align-items:center}.handControl{font-size:10px;padding:0 9px;min-height:44px}.handHud{width:145px;max-width:42vw;left:8px;bottom:58px}.brand{max-width:38%!important;font-size:9px!important}.brand b{font-size:14px!important}.pill{font-size:10px!important;padding:0 9px!important}.handStatus{font-size:10px}}
+      @media(max-width:760px){.header{gap:6px;align-items:center}.handControl{font-size:10px;padding:0 9px;min-height:44px}.handHud{width:118px;max-width:34vw;left:8px;bottom:74px;padding:6px;border-radius:12px}.handHud video{border-radius:7px}.brand{max-width:38%!important;font-size:9px!important}.brand b{font-size:14px!important}.pill{font-size:10px!important;padding:0 9px!important}.handStatus{font-size:9px;line-height:1.25}}
       @media(prefers-reduced-motion:reduce){#stage{touch-action:manipulation}.memory{translate:0 0!important}}
     `;
     document.head.appendChild(style);
@@ -58,12 +58,12 @@
     function gestureName(result){try{return result.gestures?.[0]?.[0]?.categoryName||'None'}catch(_){return'None'}}
     function reactToHand(result){
       const hands=result.landmarks||result.handLandmarks||[];
-      if(!hands.length){status.textContent='Show one hand to the camera';dot.classList.remove('show');lastHandX=null;setSlow(false);settle();return}
+      if(!hands.length){status.textContent='Show one hand';dot.classList.remove('show');lastHandX=null;setSlow(false);settle();return}
       const lm=hands[0],palm=lm[9]||lm[0],x=1-palm.x,y=palm.y;smoothX=smoothX==null?x:(smoothX*.72+x*.28);
       const rect=stage.getBoundingClientRect();dot.style.left=(rect.left+smoothX*rect.width)+'px';dot.style.top=(rect.top+y*rect.height)+'px';dot.classList.add('show');
       const open=gestureName(result)==='Open_Palm';setSlow(open);
       if(lastHandX!=null&&!open&&!reduced.matches){const delta=(smoothX-lastHandX)*420;if(Math.abs(delta)>.45)apply(Math.max(-72,Math.min(72,delta)),0)}
-      lastHandX=smoothX;status.innerHTML=open?'<b>OPEN PALM:</b> hold':'<b>HAND LIVE:</b> move left / right';
+      lastHandX=smoothX;status.innerHTML=open?'<b>OPEN PALM:</b> hold':'<b>HAND LIVE</b>';
     }
 
     async function buildRecognizer(delegate){
@@ -73,38 +73,62 @@
     }
     async function loadRecognizer(){
       if(recognizer)return recognizer;status.textContent='Loading hand tracking…';
-      try{recognizer=await buildRecognizer(isMobile?'CPU':'GPU')}catch(e){status.textContent='Trying compatibility mode…';recognizer=await buildRecognizer('CPU')}
+      try{recognizer=await buildRecognizer(isMobile?'CPU':'GPU')}catch(e){status.textContent='Compatibility mode…';recognizer=await buildRecognizer('CPU')}
       return recognizer;
     }
-    async function loop(t){if(!cameraOn)return;raf=requestAnimationFrame(loop);if(video.readyState<2||video.currentTime===lastVideoTime||t-lastDetect<(isMobile?95:70))return;lastDetect=t;lastVideoTime=video.currentTime;try{reactToHand(recognizer.recognizeForVideo(video,performance.now()))}catch(e){status.textContent='Tracking… keep your hand visible'}}
+    async function loop(t){if(!cameraOn)return;raf=requestAnimationFrame(loop);if(video.readyState<2||video.currentTime===lastVideoTime||t-lastDetect<(isMobile?110:70))return;lastDetect=t;lastVideoTime=video.currentTime;try{reactToHand(recognizer.recognizeForVideo(video,performance.now()))}catch(e){status.textContent='Tracking…'}}
 
-    async function getCamera(){
-      const preferred={video:{facingMode:{ideal:'user'},width:{ideal:isMobile?320:640,max:640},height:{ideal:isMobile?240:480,max:480},frameRate:{ideal:24,max:30}},audio:false};
-      try{return await navigator.mediaDevices.getUserMedia(preferred)}catch(first){
-        if(first?.name==='NotAllowedError'||first?.name==='SecurityError')throw first;
-        return navigator.mediaDevices.getUserMedia({video:true,audio:false});
+    async function requestCamera(){
+      let lastErr=null;
+      const attempts=isMobile?[
+        {video:{facingMode:'user'},audio:false},
+        {video:{facingMode:{ideal:'user'}},audio:false},
+        {video:true,audio:false}
+      ]:[
+        {video:{facingMode:{ideal:'user'},width:{ideal:640},height:{ideal:480}},audio:false},
+        {video:true,audio:false}
+      ];
+      for(const constraints of attempts){
+        try{return await navigator.mediaDevices.getUserMedia(constraints)}catch(e){
+          lastErr=e;
+          if(e?.name==='NotAllowedError'||e?.name==='PermissionDeniedError'||e?.name==='SecurityError')throw e;
+        }
       }
+      throw lastErr||new Error('Camera could not start');
     }
 
-    function mobileHelp(err){
+    function errorHelp(err){
       const name=err?.name||'CameraError';
-      if(name==='NotAllowedError'||name==='PermissionDeniedError')return '<b>CAMERA BLOCKED.</b><br>Open this page in Safari or Chrome, then allow Camera in the browser site settings.';
-      if(name==='NotFoundError'||name==='DevicesNotFoundError')return '<b>NO CAMERA FOUND.</b><br>Check that another app is not using the camera.';
-      if(name==='NotReadableError'||name==='TrackStartError')return '<b>CAMERA BUSY.</b><br>Close other camera/video apps, then try again.';
-      return `<b>CAMERA ERROR:</b> ${name}<br>Open in Safari/Chrome and reload.`;
+      const msg=(err?.message||'').replace(/[<>]/g,'');
+      if(name==='NotAllowedError'||name==='PermissionDeniedError')return `<b>CAMERA BLOCKED</b><br>${name}${msg?': '+msg:''}<br>Chrome ⋮ → Settings → Site settings → Camera → Allow`;
+      if(name==='SecurityError')return `<b>CAMERA SECURITY ERROR</b><br>${name}${msg?': '+msg:''}`;
+      if(name==='NotFoundError'||name==='DevicesNotFoundError')return `<b>NO CAMERA FOUND</b><br>${name}${msg?': '+msg:''}`;
+      if(name==='NotReadableError'||name==='TrackStartError')return `<b>CAMERA BUSY</b><br>${name}${msg?': '+msg:''}<br>Close Camera/Meet/Messenger video, then retry.`;
+      if(name==='OverconstrainedError'||name==='ConstraintNotSatisfiedError')return `<b>CAMERA CONSTRAINT ERROR</b><br>${name}${msg?': '+msg:''}`;
+      return `<b>CAMERA ERROR</b><br>${name}${msg?': '+msg:''}`;
     }
 
     async function startCamera(){
-      if(!window.isSecureContext){hud.classList.add('show');status.innerHTML='<b>CAMERA NEEDS HTTPS.</b>';return}
-      if(!navigator.mediaDevices?.getUserMedia){hud.classList.add('show');status.innerHTML='<b>CAMERA NOT AVAILABLE.</b><br>Open this link directly in Safari or Chrome, not inside Facebook/Messenger/ChatGPT.';return}
-      btn.disabled=true;hud.classList.add('show');status.textContent='Requesting camera permission…';
+      if(!window.isSecureContext){hud.classList.add('show');status.innerHTML='<b>CAMERA NEEDS HTTPS</b>';return}
+      if(!navigator.mediaDevices?.getUserMedia){hud.classList.add('show');status.innerHTML='<b>CAMERA API UNAVAILABLE</b><br>Open directly in Chrome or Safari.';return}
+      btn.disabled=true;hud.classList.add('show');status.textContent='Starting front camera…';
       try{
-        stream=await getCamera();video.srcObject=stream;
-        await new Promise(resolve=>{if(video.readyState>=1)return resolve();const done=()=>{video.removeEventListener('loadedmetadata',done);resolve()};video.addEventListener('loadedmetadata',done);setTimeout(resolve,1800)});
-        try{await video.play()}catch(_){video.muted=true;await video.play()}
-        await loadRecognizer();cameraOn=true;btn.disabled=false;btn.classList.add('on');btn.textContent='STOP HAND CONTROL';btn.setAttribute('aria-pressed','true');stage.classList.add('hand-live');status.innerHTML='<b>HAND LIVE:</b> move left / right';lastHandX=null;smoothX=null;raf=requestAnimationFrame(loop);
+        stream=await requestCamera();
+        video.srcObject=stream;
+        await new Promise((resolve,reject)=>{
+          let finished=false;
+          const ok=()=>{if(finished)return;finished=true;cleanup();resolve()};
+          const bad=()=>{if(finished)return;finished=true;cleanup();reject(new Error('Video metadata failed'))};
+          const cleanup=()=>{video.removeEventListener('loadedmetadata',ok);video.removeEventListener('error',bad)};
+          video.addEventListener('loadedmetadata',ok,{once:true});video.addEventListener('error',bad,{once:true});setTimeout(ok,2200);
+        });
+        video.muted=true;
+        try{await video.play()}catch(playErr){throw playErr}
+        status.textContent='Camera ready. Loading hand tracking…';
+        await loadRecognizer();
+        cameraOn=true;btn.disabled=false;btn.classList.add('on');btn.textContent='STOP HAND CONTROL';btn.setAttribute('aria-pressed','true');stage.classList.add('hand-live');status.innerHTML='<b>HAND LIVE</b>';lastHandX=null;smoothX=null;raf=requestAnimationFrame(loop);
       }catch(e){
-        console.error('Hand camera error',e);btn.disabled=false;btn.classList.remove('on');btn.textContent='ENABLE HAND CONTROL';btn.setAttribute('aria-pressed','false');status.innerHTML=mobileHelp(e);if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}video.srcObject=null;
+        console.error('Hand camera error',e);btn.disabled=false;btn.classList.remove('on');btn.textContent='ENABLE HAND CONTROL';btn.setAttribute('aria-pressed','false');status.innerHTML=errorHelp(e);if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}video.srcObject=null;
       }
     }
     function stopCamera(){cameraOn=false;cancelAnimationFrame(raf);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;video.srcObject=null;btn.classList.remove('on');btn.textContent='ENABLE HAND CONTROL';btn.setAttribute('aria-pressed','false');stage.classList.remove('hand-live','gesture-hold');dot.classList.remove('show');hud.classList.remove('show');setSlow(false);settle();lastHandX=null;smoothX=null}
