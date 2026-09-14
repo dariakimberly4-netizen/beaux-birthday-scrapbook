@@ -6,7 +6,7 @@
   if(!gate||!app||!enter)return;
 
   document.title='BEAUX — The Queen B';
-  const desktopBg='assets/queen-b-final-background.jpg?v=20260914-qb-mobilefix2';
+  const desktopBg='assets/queen-b-final-background.jpg?v=20260914-qb-mobilefix3';
   const mobileBg=desktopBg;
 
   const style=document.createElement('style');
@@ -33,12 +33,12 @@
       html,body{width:100vw!important;height:100dvh!important;min-height:100dvh!important;background:#05040c!important}
       body.entered,body.entered #app{
         background-image:url('${mobileBg}')!important;
-        background-size:auto 100%!important;
+        background-size:auto 132%!important;
         background-position:left center!important;
         background-repeat:no-repeat!important;
         background-color:#05040c!important;
       }
-      body.entered #stage{width:72vw!important;height:58vh!important;margin:18vh 0 0 24vw!important;transform:none!important}
+      body.entered #stage{width:62vw!important;height:54vh!important;margin:20vh 0 0 34vw!important;transform:none!important}
       #queenFinalHit{top:1.6vh;right:2vw;width:42vw;height:7vh;min-width:0}
     }
     @supports not (height:100dvh){
@@ -53,7 +53,7 @@
       const v=`url('${mobileBg}')`;
       for(const el of [document.body,app]){
         el.style.setProperty('background-image',v,'important');
-        el.style.setProperty('background-size','auto 100%','important');
+        el.style.setProperty('background-size','auto 132%','important');
         el.style.setProperty('background-position','left center','important');
         el.style.setProperty('background-repeat','no-repeat','important');
         el.style.setProperty('background-color','#05040c','important');
