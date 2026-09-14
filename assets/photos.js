@@ -9,22 +9,16 @@ window.BEAUX_PHOTOS=_local.map(n=>_base+n).concat(_drive.map(id=>`https://drive.
     html,body{background:#05040c!important}
     body{background-image:none!important}
     #gate{background:radial-gradient(circle,#39265f,#100a22 55%,#05040c)!important;background-image:none!important}
-    #app{background-image:none!important;background-repeat:no-repeat!important;background-color:#05040c!important}
-    body.entered #app{
-      background-image:linear-gradient(rgba(5,4,12,.24),rgba(5,4,12,.40)),url('${bg}')!important;
-      background-size:auto 96vh!important;
-      background-position:22% 2vh!important;
-      background-repeat:no-repeat!important;
-      background-color:#05040c!important;
-    }
+    #app{background:none!important;overflow:hidden!important}
+    #app:before,#app:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .7s ease}
+    #app:before{background:url('${bg}') center center/cover no-repeat;filter:blur(16px) brightness(.38);transform:scale(1.05);z-index:-2}
+    #app:after{background:url('${bg}') left top/auto 100% no-repeat;z-index:-1}
+    body.entered #app:before,body.entered #app:after{opacity:1}
     #stage:before{background:radial-gradient(ellipse,#f4ddb022,#bcaeff12 40%,transparent 70%)!important}
     .brand,.hint{text-shadow:0 2px 10px #000,0 1px 3px #000}
     .pill{background:#100e22bf!important;backdrop-filter:blur(6px)}
     @media(max-width:760px){
-      body.entered #app{
-        background-size:auto 92vh!important;
-        background-position:18% 4vh!important;
-      }
+      #app:after{background-size:auto 100%!important;background-position:18% top!important}
       .hint{background:linear-gradient(90deg,transparent,#05040c99,transparent);padding:6px 0}
     }
   `;
