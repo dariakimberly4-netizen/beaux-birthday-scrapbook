@@ -3,6 +3,9 @@ const _local=["IMG-20260705-WA0002.jpg","IMG-20260710-WA0001.jpg","IMG-20260710-
 const _drive=["161zln6dYkrk5dJRkI1TnGOsO0TMOE8YC","1D114VqDItbkf4YVfl8XVLUd-FumLnbCF","1FQrogNrEZ2ni1LFhrYa72pmIO3iJ2iMf","1TvoH1YPp49JCldXLtxcf-ZR0nRnxegdC","1R0dkJ0G8Nxo7VsPzlcMGOVDJaRJU1AkE","1YyCgGaViXyoenuliOf9bIC28ryJqZscL","1YuPUYR09uk_M1VTWzHvXJTTFoUsJl_Bj","19EWg9GUZTpz5ZnrkQpURfUWYxhesDc7-","1qElNG1PjUdHg5DIS533lsTd7cExzROf2","1qNRLfVatqTZXURoG6cBXVYESiQaIc-p1","1i_xIxHDXyB-8u_CmqiuurxaDgzJz_9ia","198f3i9MCQhh3Pqt_qbpXOQ8prCyPU6H4","1_RGI7qEd-6hAL60EghKdR97J67RK87TS","1v4sH-bbRofRMLsWKsIe3GrRkiA0b68oE","1xfCQyACJs5W_1Jpr6e4bk2CarA6739bl","1YYue4sgu3RA9N9CR6GgnbivANttdIHcY","1COxnI3JAJ77mmeDA9v38ztukjqSW7qOl"];
 window.BEAUX_PHOTOS=_local.map(n=>_base+n).concat(_drive.map(id=>`https://drive.google.com/thumbnail?id=${id}&sz=w1200`));
 (()=>{
+  document.title='BEAUX — The Queen B';
+  const rename=()=>{const brand=document.querySelector('.brand');if(brand)brand.innerHTML='<b>BEAUX</b> — THE QUEEN B'};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',rename);else rename();
   const bg='file_0000000013c481f5966a9b404b093318.png';
   const st=document.createElement('style');
   st.textContent=`
