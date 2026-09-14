@@ -74,14 +74,20 @@ const photoLink=document.getElementById('photoLink');
 const driveOpen=document.getElementById('driveOpen');
 let ids=[],current=0;
 
-const portraitParts=Array.from({length:8},(_,i)=>`assets/queen-b-data/part${String(i).padStart(2,'0')}.txt?v=portrait-correct-v2`);
-Promise.all(portraitParts.map(url=>fetch(url).then(r=>{if(!r.ok)throw new Error(url);return r.text()})))
+queenArt.decoding='async';
+const portraitParts=Array.from({length:11},(_,i)=>`assets/queen-webp/part${String(i).padStart(2,'0')}.bin?v=webp-safe-1`);
+Promise.all(portraitParts.map(url=>fetch(url,{cache:'force-cache'}).then(r=>{if(!r.ok)throw new Error(url);return r.text()})))
   .then(parts=>{
     queenArt.onload=()=>{if(loading)loading.remove()};
-    queenArt.src='data:image/avif;base64,'+parts.join('');
+    queenArt.onerror=()=>{
+      loading.textContent='Image failed to load. Tap to retry.';
+      loading.style.cursor='pointer';
+      loading.onclick=()=>location.reload();
+    };
+    queenArt.src='data:image/webp;base64,'+parts.join('');
   })
   .catch(()=>{
-    loading.textContent='Tap to retry';
+    loading.textContent='Tap to retry image';
     loading.style.cursor='pointer';
     loading.onclick=()=>location.reload();
   });
