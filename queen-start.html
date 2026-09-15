@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090613">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>B for Beaux</title>
+<style>
+:root{--gold:#e9c77a;--deep:#07040f;--violet:#2a1847}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--deep);color:#fff;font-family:Arial,sans-serif}
+body{min-height:100dvh}
+.gate{position:fixed;inset:0;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 42%,#3a255f 0%,#24153f 30%,#120b25 58%,#07040f 82%)}
+.card{width:min(92vw,560px);text-align:center;transform:translateY(-2vh)}
+.bigB{font:700 clamp(210px,45vw,360px)/.74 Georgia,serif;color:transparent;-webkit-text-stroke:1.5px #e9c77a;text-shadow:0 0 42px rgba(181,151,255,.20);margin-bottom:18px}
+.title{font:500 clamp(34px,7vw,54px)/1 Georgia,serif;letter-spacing:.18em;margin:0 0 18px;color:#fff;text-transform:uppercase}
+.sub{font:500 clamp(12px,2.8vw,16px)/1.4 Arial,sans-serif;letter-spacing:.16em;color:#ddd3e7;white-space:nowrap}
+.enter{margin-top:46px;width:min(74vw,385px);height:106px;border:1px solid rgba(255,239,194,.7);border-radius:999px;background:linear-gradient(135deg,#f1d796,#d9b865);color:#111;font-weight:900;font-size:clamp(22px,5vw,30px);letter-spacing:.15em;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 12px 34px rgba(0,0,0,.22);cursor:pointer;touch-action:manipulation}
+.enter:active{transform:scale(.985)}
+.enter:focus-visible{outline:3px solid #fff2b5;outline-offset:5px}
+.fade{animation:fadeOut .42s ease forwards}@keyframes fadeOut{to{opacity:0;transform:scale(1.015)}}
+@media(min-width:900px){.card{transform:none}.bigB{font-size:280px}.title{font-size:46px}.sub{font-size:14px}.enter{height:72px;width:300px;margin-top:34px;font-size:20px}}
+@media(max-height:720px){.bigB{font-size:180px}.enter{height:74px;margin-top:28px}.card{transform:none}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none!important}.enter{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="gate" id="gate" aria-label="B for Beaux entrance">
+  <div class="card">
+    <div class="bigB" aria-hidden="true">B</div>
+    <h1 class="title">FOR BEAUX</h1>
+    <div class="sub">100 MEMORIES • ONE LETTER • ONE SIS</div>
+    <button class="enter" id="enter">ENTER</button>
+  </div>
+</main>
+<script>
+const gate=document.getElementById('gate');
+document.getElementById('enter').addEventListener('click',()=>{
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches) gate.classList.add('fade');
+  setTimeout(()=>location.href='queen.html?v=message-photo-1',300);
+});
+</script>
+</body>
+</html>
