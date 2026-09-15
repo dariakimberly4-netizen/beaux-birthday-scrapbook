@@ -1,43 +1,46 @@
+---
+layout: null
+---
+{% capture queen_image %}{% include queen-jpeg-final/part00.txt %}{% include queen-jpeg-final/part01.txt %}{% include queen-jpeg-final/part02.txt %}{% include queen-jpeg-final/part03.txt %}{% include queen-jpeg-final/part04.txt %}{% include queen-jpeg-final/part05.txt %}{% include queen-jpeg-final/part06a.txt %}{% include queen-jpeg-final/part06b.txt %}{% include queen-jpeg-final/part07.txt %}{% include queen-jpeg-final/part08.txt %}{% include queen-jpeg-final/part09.txt %}{% endcapture %}
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05040c">
 <title>BEAUX — The Queen B</title>
 <style>
 :root{--ratio:941/1672;--gold:#f4ddb0;--ink:#05040c}
 *{box-sizing:border-box}
-html,body{margin:0;min-width:100%;min-height:100%;background:var(--ink);font-family:Arial,sans-serif;color:#fff}
+html,body{margin:0;width:100%;min-height:100%;background:var(--ink);font-family:Arial,sans-serif;color:#fff}
 body{min-height:100svh;overflow-x:hidden}
-.page{width:100%;min-height:100svh;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 22%,#221835 0,#0a0712 52%,#05040c 100%)}
-.artboard{position:relative;flex:0 0 auto;aspect-ratio:var(--ratio);overflow:hidden;background:linear-gradient(180deg,#151027,#07050d);box-shadow:0 18px 60px #0009}
+.page{width:100%;min-height:100svh;display:flex;align-items:center;justify-content:center;background:#05040c}
+.artboard{position:relative;flex:0 0 auto;aspect-ratio:var(--ratio);overflow:hidden;background:#05040c;box-shadow:0 18px 60px #0009}
 .art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
-.loading{position:absolute;inset:0;display:grid;place-items:center;z-index:1;color:#f4ddb0;font:600 clamp(14px,3vw,20px) Georgia,serif;letter-spacing:.05em;text-align:center;padding:24px;background:radial-gradient(circle at 50% 35%,#291d42,#080610 70%)}
 .hotspots{position:absolute;left:49%;top:36.5%;width:42%;height:34.5%;z-index:5;pointer-events:none}
 .memory{position:absolute;width:12%;height:10%;min-width:18px;min-height:18px;transform:translate(-50%,-50%);border:0;border-radius:8px;background:transparent;opacity:0;pointer-events:auto;cursor:pointer;touch-action:manipulation}
 .memory:hover,.memory:focus-visible{opacity:1;outline:2px solid #ffe39a;outline-offset:1px;background:#ffe39a22}
-.finalHit{position:absolute;right:2%;top:1%;width:31%;height:5.5%;min-height:34px;z-index:7;border:0;border-radius:999px;background:transparent;cursor:pointer;touch-action:manipulation}
+.finalHit{position:absolute;right:1.5%;top:.5%;width:33%;height:6.5%;min-height:34px;z-index:7;border:0;border-radius:999px;background:transparent;cursor:pointer;touch-action:manipulation}
 .finalHit:hover,.finalHit:focus-visible{outline:2px solid #ffe39a;outline-offset:2px;background:#ffe39a12}
-.viewer,.finale{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:#05040cf2;padding:max(72px,env(safe-area-inset-top)) 64px max(92px,env(safe-area-inset-bottom))}
+.viewer,.finale{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:#05040cf2;padding:max(72px,env(safe-area-inset-top)) 58px max(92px,env(safe-area-inset-bottom))}
 .viewer.show,.finale.show{display:flex}
 .photoLink{display:flex;align-items:center;justify-content:center;max-width:90vw;max-height:78vh;outline:none}
-.viewer img{display:block;max-width:min(88vw,1200px);max-height:76vh;object-fit:contain;border-radius:12px;box-shadow:0 18px 60px #000b}
+.viewer img{display:block;max-width:min(88vw,1200px);max-height:76vh;object-fit:contain;border-radius:12px;box-shadow:0 18px 60px #000b;background:#0a0712}
 .close{position:absolute;right:max(14px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));width:52px;height:52px;border-radius:50%;border:1px solid #ffffff55;background:#171224;color:#fff;font-size:28px;cursor:pointer}
 .nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:76px;border:1px solid #ffffff44;border-radius:14px;background:#171224;color:#fff;font-size:30px;cursor:pointer}.prev{left:max(10px,env(safe-area-inset-left))}.next{right:max(10px,env(safe-area-inset-right))}
 .counter{position:absolute;bottom:max(64px,calc(env(safe-area-inset-bottom) + 58px));color:var(--gold);font:600 15px Georgia,serif}
 .driveOpen{position:absolute;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);min-height:44px;padding:0 20px;border-radius:999px;background:var(--gold);color:#17101f;text-decoration:none;display:flex;align-items:center;justify-content:center;font:800 12px Arial,sans-serif;white-space:nowrap}
 .finalCard{width:min(720px,92vw);max-height:82vh;overflow:auto;text-align:center;color:#fff;padding:8px}.finalCard h1{font:500 clamp(34px,5vw,58px) Georgia,serif;color:var(--gold);margin:0 0 18px}.finalCard p{font:500 clamp(16px,2vw,20px)/1.6 Georgia,serif}.back{margin-top:18px;min-height:52px;padding:0 24px;border:0;border-radius:999px;background:var(--gold);color:#17101f;font-weight:800;cursor:pointer}
 button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3px}
-@media(max-width:899px),(orientation:portrait){body{overflow-y:auto}.page{min-height:100svh;align-items:flex-start}.artboard{width:100vw;height:auto;max-width:none;max-height:none}.memory{width:13%;height:11%;min-width:24px;min-height:24px}.viewer,.finale{padding-left:54px;padding-right:54px}.viewer img{max-width:88vw;max-height:68vh}.nav{width:46px;height:68px;font-size:28px}.prev{left:6px}.next{right:6px}}
+@media(max-width:899px),(orientation:portrait){body{overflow-y:auto}.page{min-height:100svh;align-items:flex-start}.artboard{width:100vw;height:auto;max-width:none;max-height:none;box-shadow:none}.memory{width:14%;height:12%;min-width:26px;min-height:26px}.viewer,.finale{padding-left:52px;padding-right:52px}.viewer img{max-width:88vw;max-height:68vh}.nav{width:44px;height:66px;font-size:28px}.prev{left:5px}.next{right:5px}}
 @media(min-width:900px) and (orientation:landscape){body{overflow:hidden}.page{height:100svh;min-height:100svh;padding:2vh 2vw}.artboard{height:min(96svh,1200px);width:auto;max-width:92vw}.memory{width:10%;height:9%;min-width:28px;min-height:28px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="page">
-  <main class="artboard" id="artboard" aria-label="BEAUX — The Queen B interactive birthday memory artwork">
-    <div class="loading" id="loading">Loading memories…</div>
-    <img id="queenArt" class="art" alt="BEAUX — The Queen B birthday artwork with Beaux, fantasy castle scenery, and a large photo-filled letter B">
+  <main class="artboard" aria-label="BEAUX — The Queen B interactive birthday memory artwork">
+    <img class="art" src="data:image/jpeg;base64,{{ queen_image | strip_newlines | strip }}" width="941" height="1672" alt="BEAUX — The Queen B birthday artwork with a fantasy castle scene and a large photo-filled letter B">
     <div class="hotspots" id="hotspots" aria-label="100 clickable memory photos"></div>
     <button class="finalHit" id="finalHit" aria-label="Open final birthday message"></button>
   </main>
@@ -46,7 +49,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3p
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Memory photo viewer" aria-hidden="true">
   <button class="close" id="close" aria-label="Close memory viewer">×</button>
   <button class="nav prev" id="prev" aria-label="Previous memory">‹</button>
-  <a id="photoLink" class="photoLink" target="_blank" rel="noopener" aria-label="Open this original photo in Google Drive"><img id="big" alt="Beaux memory"></a>
+  <a id="photoLink" class="photoLink" target="_blank" rel="noopener" aria-label="Open this original photo in Google Drive"><img id="big" alt="Birthday memory"></a>
   <button class="nav next" id="next" aria-label="Next memory">›</button>
   <div class="counter" id="counter" aria-live="polite"></div>
   <a class="driveOpen" id="driveOpen" target="_blank" rel="noopener">OPEN ORIGINAL PHOTO ✦</a>
@@ -63,8 +66,6 @@ button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3p
 </div>
 
 <script>
-const queenArt=document.getElementById('queenArt');
-const loading=document.getElementById('loading');
 const hotspots=document.getElementById('hotspots');
 const viewer=document.getElementById('viewer');
 const finale=document.getElementById('finale');
@@ -73,24 +74,6 @@ const counter=document.getElementById('counter');
 const photoLink=document.getElementById('photoLink');
 const driveOpen=document.getElementById('driveOpen');
 let ids=[],current=0;
-
-queenArt.decoding='async';
-const portraitParts=Array.from({length:11},(_,i)=>`assets/queen-webp/part${String(i).padStart(2,'0')}.bin?v=webp-safe-1`);
-Promise.all(portraitParts.map(url=>fetch(url,{cache:'force-cache'}).then(r=>{if(!r.ok)throw new Error(url);return r.text()})))
-  .then(parts=>{
-    queenArt.onload=()=>{if(loading)loading.remove()};
-    queenArt.onerror=()=>{
-      loading.textContent='Image failed to load. Tap to retry.';
-      loading.style.cursor='pointer';
-      loading.onclick=()=>location.reload();
-    };
-    queenArt.src='data:image/webp;base64,'+parts.join('');
-  })
-  .catch(()=>{
-    loading.textContent='Tap to retry image';
-    loading.style.cursor='pointer';
-    loading.onclick=()=>location.reload();
-  });
 
 function points(){
   const p=[];
@@ -102,7 +85,7 @@ function points(){
 const pts=points();
 function buildHotspots(){
   hotspots.innerHTML='';
-  const count=Math.min(100,ids.length||100);
+  const count=100;
   for(let i=0;i<count;i++){
     const b=document.createElement('button');
     b.className='memory';
@@ -114,29 +97,29 @@ function buildHotspots(){
   }
 }
 function driveURL(i){return ids[i]?`https://drive.google.com/file/d/${ids[i]}/view`:''}
-function thumbURL(i){return ids[i]?`https://drive.google.com/thumbnail?id=${ids[i]}&sz=w1600`:''}
+function thumbURL(i){return ids[i]?`https://drive.google.com/thumbnail?id=${ids[i]}&sz=w1200`:''}
 function setModal(el,on){el.classList.toggle('show',on);el.setAttribute('aria-hidden',on?'false':'true')}
 function openMemory(i){
   if(!ids.length)return;
   current=(i+ids.length)%ids.length;
   big.src=thumbURL(current);
-  big.alt='Beaux memory '+(current+1)+' of '+ids.length;
+  big.alt='Birthday memory '+(current+1)+' of '+ids.length;
   counter.textContent=String(current+1).padStart(2,'0')+' / '+ids.length;
   photoLink.href=driveURL(current);
   driveOpen.href=driveURL(current);
   setModal(viewer,true);
-  document.getElementById('close').focus();
 }
-fetch('queen-clean.html?v=ids-portrait-2').then(r=>r.text()).then(t=>{
+
+buildHotspots();
+fetch('queen-clean.html?v=memory-ids-1',{cache:'force-cache'}).then(r=>r.text()).then(t=>{
   const m=t.match(/const ids=\[(.*?)\];/s);
-  if(m){try{ids=JSON.parse('['+m[1]+']').slice(0,100)}catch(e){console.error(e)}}
-  buildHotspots();
-}).catch(()=>buildHotspots());
+  if(m){try{ids=JSON.parse('['+m[1]+']').slice(0,100)}catch(e){}}
+}).catch(()=>{});
 
 document.getElementById('close').onclick=()=>setModal(viewer,false);
 document.getElementById('prev').onclick=()=>openMemory(current-1);
 document.getElementById('next').onclick=()=>openMemory(current+1);
-document.getElementById('finalHit').onclick=()=>{setModal(finale,true);document.getElementById('closeFinal').focus()};
+document.getElementById('finalHit').onclick=()=>setModal(finale,true);
 document.getElementById('closeFinal').onclick=document.getElementById('back').onclick=()=>setModal(finale,false);
 viewer.addEventListener('click',e=>{if(e.target===viewer)setModal(viewer,false)});
 finale.addEventListener('click',e=>{if(e.target===finale)setModal(finale,false)});
