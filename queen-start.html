@@ -32,7 +32,6 @@ button{-webkit-tap-highlight-color:transparent}
 @keyframes breathe{from{filter:brightness(.94);transform:scale(.985)}to{filter:brightness(1.13);transform:scale(1.018)}}
 .title{font:500 clamp(34px,7vw,58px)/1 Georgia,serif;letter-spacing:.18em;margin:6px 0 16px;color:#fff5da;text-transform:uppercase;text-shadow:0 2px 12px #000,0 0 16px #f6ca7955}
 .rule{display:flex;align-items:center;gap:10px;width:min(76vw,430px);margin:0 auto 16px}.rule span{height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold))}.rule span:last-child{background:linear-gradient(90deg,var(--gold),transparent)}.rule b{font-size:18px;color:var(--gold);text-shadow:0 0 10px #ffc04d}
-.sub{font:500 clamp(12px,2.8vw,17px)/1.5 Arial,sans-serif;letter-spacing:.17em;color:#f1e7f5;white-space:nowrap;text-shadow:0 2px 8px #000}
 .enter{position:relative;overflow:hidden;margin-top:42px;width:min(76vw,410px);height:104px;border:1px solid rgba(255,242,196,.92);border-radius:999px;background:linear-gradient(135deg,#ffe9ad 0%,#e7bf67 48%,#b8862c 100%);color:#17101f;font-weight:900;font-size:clamp(22px,5vw,31px);letter-spacing:.15em;box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 0 0 2px rgba(244,212,138,.13),0 0 28px #ffc14b88,0 18px 42px rgba(0,0,0,.34);cursor:pointer;touch-action:manipulation;animation:buttonPulse 3.8s ease-in-out infinite alternate}
 .enter::before{content:"";position:absolute;top:-80%;left:-34%;width:24%;height:250%;background:linear-gradient(90deg,transparent,#fff9dcdd,transparent);transform:rotate(21deg);animation:sweep 4.8s ease-in-out infinite}
 @keyframes sweep{0%,58%{left:-34%}82%,100%{left:125%}}
@@ -42,8 +41,8 @@ button{-webkit-tap-highlight-color:transparent}
 .butterfly{position:absolute;width:38px;height:28px;animation:fly var(--fd) ease-in-out infinite alternate;animation-delay:var(--fdelay);filter:drop-shadow(0 0 7px #ffc760)}.butterfly::before,.butterfly::after{content:"";position:absolute;top:4px;width:19px;height:21px;background:linear-gradient(135deg,#fff4c6,#f6b940 72%);border-radius:75% 22% 75% 20%;transform-origin:100% 60%;animation:wing 1.2s ease-in-out infinite alternate}.butterfly::before{left:0;transform:rotate(-24deg)}.butterfly::after{right:0;transform:scaleX(-1) rotate(-24deg)}@keyframes wing{to{transform:rotate(13deg) scaleX(.72)}}@keyframes fly{from{transform:translate3d(-12px,7px,0) rotate(-5deg)}to{transform:translate3d(22px,-18px,0) rotate(8deg)}}
 .water{position:absolute;left:0;right:0;bottom:-3%;height:19%;z-index:-1;background:radial-gradient(ellipse at 50% 0,#f7c05c44,transparent 48%),linear-gradient(180deg,#130b22aa,#04030a);overflow:hidden}.water::before,.water::after{content:"";position:absolute;left:50%;top:8%;width:72%;height:42%;border:1px solid #f5ca784f;border-radius:50%;transform:translateX(-50%) scaleY(.28);animation:ripple 5.5s ease-out infinite}.water::after{animation-delay:2.6s}@keyframes ripple{from{opacity:.8;transform:translateX(-50%) scale(.35,.12)}to{opacity:0;transform:translateX(-50%) scale(1.25,.42)}}
 .fade{animation:fadeOut .52s ease forwards}@keyframes fadeOut{to{opacity:0;filter:brightness(1.45);transform:scale(1.025)}}
-@media(min-width:900px){.card{transform:none}.crown{font-size:44px}.bigB{font-size:300px}.title{font-size:50px}.sub{font-size:14px}.enter{height:78px;width:330px;margin-top:32px;font-size:21px}.moon{top:5%}.water{height:15%}}
-@media(max-height:760px){.crown{font-size:29px}.bigB{font-size:175px}.title{font-size:30px;margin-top:0}.sub{font-size:11px}.enter{height:72px;margin-top:22px}.rule{margin-bottom:10px}.moon{display:none}}
+@media(min-width:900px){.card{transform:none}.crown{font-size:44px}.bigB{font-size:300px}.title{font-size:50px}.enter{height:78px;width:330px;margin-top:32px;font-size:21px}.moon{top:5%}.water{height:15%}}
+@media(max-height:760px){.crown{font-size:29px}.bigB{font-size:175px}.title{font-size:30px;margin-top:0}.enter{height:72px;margin-top:22px}.rule{margin-bottom:10px}.moon{display:none}}
 @media(max-width:520px){.frame{inset:2.5% 3%;}.butterfly{transform:scale(.78)}.enter{height:92px;margin-top:34px}.water{height:16%}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.sparkField,.butterflies{display:none}.gate::before{display:none}.fade{opacity:0!important}.bigB,.crown{transform:none!important}}
 </style>
@@ -57,7 +56,6 @@ button{-webkit-tap-highlight-color:transparent}
     <div class="bigB" aria-hidden="true">B</div>
     <h1 class="title">FOR BEAUX</h1>
     <div class="rule" aria-hidden="true"><span></span><b>✦</b><span></span></div>
-    <div class="sub">100 MEMORIES • ONE LETTER • ONE SIS</div>
     <button class="enter" id="enter">ENTER</button>
   </div>
 </main>
@@ -72,7 +70,7 @@ if(!reduced){
 }
 document.getElementById('enter').addEventListener('click',()=>{
   if(!reduced)gate.classList.add('fade');
-  setTimeout(()=>location.href='queen.html?v=message-photo-1',reduced?0:420);
+  setTimeout(()=>location.href='queen.html?v=repo-only-1',reduced?0:420);
 });
 </script>
 </body>
