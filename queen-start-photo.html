@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#23052f">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>BEAUX — The Queen B</title>
+<style>
+:root{--purple:#260633;--purple2:#3d0c4f;--ink:#100216;--gold:#f3d27b;--cream:#fff7e8;--muted:#d7c6d8}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:var(--ink);color:#fff;font-family:Arial,Helvetica,sans-serif}body{overflow:hidden}button{font:inherit}
+.hero{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,58%) minmax(340px,42%);background:linear-gradient(110deg,#16031e 0%,#2d073b 54%,#17031f 100%);isolation:isolate;overflow:hidden}
+.photoSide{position:relative;min-width:0;overflow:hidden;background:#260633}
+.photoSide:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 66%,rgba(22,3,30,.88) 100%),linear-gradient(180deg,transparent 68%,rgba(22,3,30,.42));pointer-events:none}
+.photo{width:100%;height:100%;display:block;object-fit:contain;object-position:center bottom;background:#260633;filter:saturate(.98) contrast(1.02)}
+.photoFrame{position:absolute;inset:24px;border:1px solid rgba(243,210,123,.55);pointer-events:none;z-index:3}.photoFrame:before,.photoFrame:after{content:"";position:absolute;width:44px;height:44px;border-color:var(--gold);opacity:.8}.photoFrame:before{left:-1px;top:-1px;border-left:3px solid;border-top:3px solid}.photoFrame:after{right:-1px;bottom:-1px;border-right:3px solid;border-bottom:3px solid}
+.photoTag{position:absolute;left:42px;bottom:40px;z-index:4;color:#fff7e8;font:600 12px/1.4 Arial,sans-serif;letter-spacing:.28em;text-transform:uppercase;text-shadow:0 2px 12px #000}.photoTag b{display:block;color:var(--gold);font:500 clamp(28px,3vw,48px)/1.05 Georgia,serif;letter-spacing:.04em;text-transform:none;margin-top:8px}
+.copySide{position:relative;display:flex;align-items:center;padding:74px clamp(34px,5vw,88px) 58px clamp(32px,4.4vw,74px);overflow:hidden}
+.copySide:before{content:"B";position:absolute;right:-.06em;top:50%;transform:translateY(-51%);font:500 min(78vh,650px)/.7 Georgia,serif;color:rgba(243,210,123,.035);-webkit-text-stroke:1px rgba(243,210,123,.09);pointer-events:none}
+.copy{position:relative;z-index:2;max-width:560px}.eyebrow{margin:0 0 18px;color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.43em;text-transform:uppercase}.crown{color:var(--gold);font:400 31px/1 Georgia,serif;margin-bottom:22px;text-shadow:0 0 20px rgba(243,210,123,.35)}
+h1{margin:0;color:var(--cream);font:500 clamp(54px,6vw,94px)/.86 Georgia,'Times New Roman',serif;letter-spacing:.02em}.queen{display:block;margin-top:20px;color:var(--gold);font:500 clamp(22px,2.3vw,34px)/1.05 Georgia,serif;letter-spacing:.19em;text-transform:uppercase}
+.lead{margin:30px 0 0;max-width:470px;color:#eadfeb;font:400 clamp(16px,1.35vw,19px)/1.62 Georgia,serif}.lead strong{color:#fff4c7;font-weight:500}
+.line{width:min(360px,80%);height:1px;margin:31px 0 24px;background:linear-gradient(90deg,var(--gold),rgba(243,210,123,.25),transparent)}
+.stats{display:flex;align-items:center;gap:16px;color:#cdbfd0;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.stats b{color:var(--gold);font-size:18px;letter-spacing:.04em}.sep{opacity:.5}
+.enter{margin-top:34px;min-width:300px;min-height:68px;padding:0 34px;border:1px solid #ffe6a0;border-radius:999px;background:linear-gradient(135deg,#ffefb5 0%,#e0af50 52%,#bb7f2b 100%);color:#20081f;font-weight:900;font-size:16px;letter-spacing:.18em;cursor:pointer;touch-action:manipulation;box-shadow:0 14px 36px rgba(0,0,0,.3),0 0 30px rgba(243,210,123,.12);transition:transform .18s ease,box-shadow .18s ease}.enter:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(0,0,0,.34),0 0 38px rgba(243,210,123,.2)}.enter:active{transform:scale(.98)}.enter:focus-visible{outline:3px solid #fff;outline-offset:5px}
+.corner{position:absolute;right:26px;top:26px;color:#d8bd79;font-size:9px;letter-spacing:.28em;text-transform:uppercase;writing-mode:vertical-rl}
+@media(max-width:820px){
+ body{overflow:auto}.hero{position:relative;min-height:100dvh;display:flex;flex-direction:column;background:linear-gradient(180deg,#2e083b 0%,#1b0524 100%);overflow:hidden}.photoSide{height:56dvh;min-height:360px;flex:0 0 auto;background:#260633}.photoSide:after{background:linear-gradient(180deg,transparent 58%,rgba(27,5,36,.96) 100%)}.photo{object-fit:contain;object-position:center bottom}.photoFrame{inset:14px}.photoTag{left:26px;bottom:18px;font-size:9px;letter-spacing:.22em}.photoTag b{font-size:30px;margin-top:4px}.copySide{min-height:44dvh;display:block;padding:18px 24px max(28px,env(safe-area-inset-bottom));text-align:center;overflow:visible}.copySide:before{right:50%;top:5%;transform:translateX(50%);font-size:260px;color:rgba(243,210,123,.025)}.copy{max-width:520px;margin:0 auto;display:flex;flex-direction:column;align-items:center}.eyebrow{font-size:9px;margin:0 0 8px;letter-spacing:.32em}.crown{display:none}h1{font-size:clamp(42px,13vw,60px);line-height:.84}.queen{font-size:clamp(17px,5vw,22px);margin-top:11px;letter-spacing:.14em}.lead{font-size:14px;line-height:1.45;margin-top:14px;max-width:340px}.line{margin:16px auto 13px;width:65%}.stats{gap:10px;font-size:8px;letter-spacing:.12em}.stats b{font-size:13px}.enter{margin-top:18px;min-width:min(82vw,330px);min-height:60px;font-size:14px}.corner{display:none}
+}
+@media(max-width:820px) and (max-height:720px){.photoSide{height:49dvh;min-height:300px}.copySide{min-height:51dvh;padding-top:10px}.lead{display:none}.line{margin:12px auto}.enter{min-height:54px;margin-top:13px}.photoTag{display:none}}
+@media(prefers-reduced-motion:reduce){.enter{transition:none}}
+</style>
+</head>
+<body>
+<main class="hero" aria-label="Birthday entrance for Beaux">
+ <section class="photoSide" aria-label="Beaux portrait">
+  <img class="photo" src="assets/queen-b-portrait-direct.jpg?v=photo-first-20260916" alt="Beaux">
+  <div class="photoFrame" aria-hidden="true"></div>
+  <div class="photoTag">A birthday experience<b>For Beaux</b></div>
+ </section>
+ <section class="copySide">
+  <div class="corner">100 real memories</div>
+  <div class="copy">
+   <p class="eyebrow">For my sister</p>
+   <div class="crown" aria-hidden="true">♕</div>
+   <h1>BEAUX<span class="queen">The Queen B</span></h1>
+   <p class="lead">Her photo comes first. Then the letter opens into <strong>100 real memories</strong> collected just for her.</p>
+   <div class="line" aria-hidden="true"></div>
+   <div class="stats"><span><b>100</b> memories</span><span class="sep">•</span><span><b>1</b> sister</span></div>
+   <button class="enter" id="enter" type="button">OPEN THE MEMORIES</button>
+  </div>
+ </section>
+</main>
+<script>
+const enter=document.getElementById('enter');
+function go(){enter.disabled=true;location.href='queen.html?v=photo-first-20260916&t='+Date.now()}
+enter.addEventListener('click',go);
+enter.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
+</script>
+</body>
+</html>
