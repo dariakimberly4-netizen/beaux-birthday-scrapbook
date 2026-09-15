@@ -4,15 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#05040c">
-<link rel="preload" as="image" href="assets/queen-b-portrait-direct.jpg?v=auto-fit-1">
+<link rel="preload" as="image" href="assets/queen-b-portrait-direct.jpg?v=adaptive-3">
 <title>BEAUX — The Queen B</title>
 <style>
-:root{--ratio:941/1672;--gold:#f4ddb0;--ink:#05040c}
+:root{--ratio:941/1672;--gold:#f4ddb0;--ink:#05040c;--art:url('assets/queen-b-portrait-direct.jpg?v=adaptive-3')}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;background:var(--ink);font-family:Arial,sans-serif;color:#fff}
 body{overflow:hidden}
-.page{width:100vw;height:100vh;height:100dvh;display:grid;place-items:center;background:var(--ink)}
-.artboard{position:relative;overflow:hidden;background:var(--ink);box-shadow:0 18px 60px #0009;aspect-ratio:var(--ratio);width:min(100vw,calc(100vh * 941 / 1672));height:min(100vh,calc(100vw * 1672 / 941));width:min(100vw,calc(100dvh * 941 / 1672));height:min(100dvh,calc(100vw * 1672 / 941))}
+.page{position:relative;isolation:isolate;width:100vw;height:100vh;height:100dvh;display:grid;place-items:center;overflow:hidden;background:var(--ink)}
+.page::before,.page::after{content:"";position:absolute;inset:0;pointer-events:none}
+.page::before{z-index:0;background-image:var(--art);background-size:cover;background-position:center;filter:blur(34px) brightness(.46) saturate(1.18);transform:scale(1.12);opacity:.9}
+.page::after{z-index:1;background:radial-gradient(circle at 50% 48%,transparent 0 28%,rgba(5,4,12,.22) 55%,rgba(5,4,12,.64) 100%)}
+.artboard{position:relative;z-index:2;overflow:hidden;background:var(--ink);box-shadow:0 22px 74px #000c;aspect-ratio:var(--ratio);width:min(100vw,calc(100dvh * 941 / 1672));height:min(100dvh,calc(100vw * 1672 / 941))}
 .art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
 .hotspots{position:absolute;left:49%;top:36.5%;width:42%;height:34.5%;z-index:5;pointer-events:none}
 .memory{position:absolute;width:12%;height:10%;min-width:24px;min-height:24px;transform:translate(-50%,-50%);border:0;border-radius:8px;background:transparent;opacity:0;pointer-events:auto;cursor:pointer;touch-action:manipulation}
@@ -29,14 +32,38 @@ body{overflow:hidden}
 .driveOpen{position:absolute;bottom:max(12px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);min-height:44px;padding:0 18px;border-radius:999px;background:var(--gold);color:#17101f;text-decoration:none;display:flex;align-items:center;justify-content:center;font:800 12px Arial,sans-serif;white-space:nowrap}
 .finalCard{width:min(720px,92vw);max-height:82vh;overflow:auto;text-align:center;color:#fff;padding:8px}.finalCard h1{font:500 clamp(32px,5vw,58px) Georgia,serif;color:var(--gold);margin:0 0 18px}.finalCard p{font:500 clamp(16px,2vw,20px)/1.6 Georgia,serif}.back{margin-top:18px;min-height:50px;padding:0 22px;border:0;border-radius:999px;background:var(--gold);color:#17101f;font-weight:800;cursor:pointer}
 button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3px}
-@media(max-width:600px){.memory{min-width:28px;min-height:28px}.viewer,.finale{padding-left:46px;padding-right:46px}.viewer img{max-width:90vw;max-height:66vh}.nav{width:42px;height:62px;font-size:27px}.finalCard{width:94vw}}
+
+/* Automatic phone/tablet presentation: clean portrait, no decorative side fill. */
+@media(max-width:899px){
+  .page::before,.page::after{display:none}
+  .page{background:var(--ink)}
+  .artboard{box-shadow:none}
+  .memory{min-width:28px;min-height:28px}
+  .viewer,.finale{padding-left:46px;padding-right:46px}
+  .viewer img{max-width:90vw;max-height:66vh}
+  .nav{width:42px;height:62px;font-size:27px}
+  .finalCard{width:94vw}
+}
+
+/* Portrait phones automatically use full screen width; landscape phones fit by height. */
+@media(max-width:899px) and (orientation:portrait){
+  .artboard{width:100vw;height:calc(100vw * 1672 / 941);max-height:100dvh}
+}
+@media(max-width:899px) and (orientation:landscape){
+  .artboard{height:100dvh;width:calc(100dvh * 941 / 1672);max-width:100vw}
+}
+
+/* Desktop automatically maximizes the portrait while preserving every pixel. */
+@media(min-width:900px){
+  .artboard{height:100dvh;width:calc(100dvh * 941 / 1672);max-width:96vw}
+}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="page">
   <main class="artboard" aria-label="BEAUX — The Queen B interactive birthday memory artwork">
-    <img class="art" src="assets/queen-b-portrait-direct.jpg?v=auto-fit-1" width="941" height="1672" decoding="async" fetchpriority="high" alt="BEAUX — The Queen B birthday artwork with Beaux, fantasy castle scenery, and a large photo-filled letter B">
+    <img class="art" src="assets/queen-b-portrait-direct.jpg?v=adaptive-3" width="941" height="1672" decoding="async" fetchpriority="high" alt="BEAUX — The Queen B birthday artwork with Beaux, fantasy castle scenery, and a large photo-filled letter B">
     <div class="hotspots" id="hotspots" aria-label="100 clickable memory photos"></div>
     <button class="finalHit" id="finalHit" aria-label="Open final birthday message"></button>
   </main>
@@ -78,7 +105,7 @@ function thumbURL(i){return ids[i]?`https://drive.google.com/thumbnail?id=${ids[
 function setModal(el,on){el.classList.toggle('show',on);el.setAttribute('aria-hidden',on?'false':'true')}
 function openMemory(i){if(!ids.length)return;current=(i+ids.length)%ids.length;big.src=thumbURL(current);big.alt='Birthday memory '+(current+1)+' of '+ids.length;counter.textContent=String(current+1).padStart(2,'0')+' / '+ids.length;photoLink.href=driveURL(current);driveOpen.href=driveURL(current);setModal(viewer,true)}
 buildHotspots();
-fetch('queen-clean.html?v=memory-ids-auto-fit-1',{cache:'force-cache'}).then(r=>r.text()).then(t=>{const m=t.match(/const ids=\[(.*?)\];/s);if(m){try{ids=JSON.parse('['+m[1]+']').slice(0,100)}catch(e){}}}).catch(()=>{});
+fetch('queen-clean.html?v=memory-ids-adaptive-3',{cache:'force-cache'}).then(r=>r.text()).then(t=>{const m=t.match(/const ids=\[(.*?)\];/s);if(m){try{ids=JSON.parse('['+m[1]+']').slice(0,100)}catch(e){}}}).catch(()=>{});
 document.getElementById('close').onclick=()=>setModal(viewer,false);
 document.getElementById('prev').onclick=()=>openMemory(current-1);
 document.getElementById('next').onclick=()=>openMemory(current+1);
