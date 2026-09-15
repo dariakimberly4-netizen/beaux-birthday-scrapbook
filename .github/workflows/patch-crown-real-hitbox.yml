@@ -16,36 +16,29 @@ jobs:
           from pathlib import Path
           p = Path('crown-100-fixed.html')
           s = p.read_text(encoding='utf-8')
-
           css_old = '.crown:focus-visible{outline:2px solid var(--gold);outline-offset:6px;border-radius:24px}'
           css_new = '.crownTap{position:absolute;inset:0;z-index:25;width:100%;height:100%;border:0;background:transparent;padding:0;margin:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.crownTap:focus-visible{outline:2px solid var(--gold);outline-offset:6px;border-radius:24px}'
           if css_old in s:
               s = s.replace(css_old, css_new)
-
           old_section = '<section class="crown" id="crown" role="button" tabindex="0" aria-label="Restore next crown piece"><svg'
           new_section = '<section class="crown" id="crown"><button type="button" class="crownTap" id="crownTap" aria-label="Open crown memory"></button><svg'
           if old_section in s:
               s = s.replace(old_section, new_section)
           elif 'id="crownTap"' not in s:
               raise SystemExit('Could not insert crownTap button')
-
           old_bind = "crown=$('crown'),memoryModal"
           new_bind = "crown=$('crown'),crownTap=$('crownTap'),memoryModal"
           if old_bind in s:
               s = s.replace(old_bind, new_bind)
-
           s = s.replace("crown.setAttribute('aria-label',progress>=100?'Revisit crown photos':'Restore next crown piece')", "crownTap.setAttribute('aria-label',progress>=100?'Open crown memory photo':'Restore next crown piece')")
-
           old_listeners = "restore.addEventListener('click',e=>{e.stopPropagation();activate()});crown.addEventListener('click',activate);crown.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}});"
           new_listeners = "function crownTapMemory(e){if(progress<100){activate();return}if(memoryModal.classList.contains('show'))return;const r=crown.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*100,y=(e.clientY-r.top)/r.height*100;let best=0,bestD=Infinity;targets.forEach((p,i)=>{const dx=p.x-x,dy=p.y-y,d=dx*dx+dy*dy;if(d<bestD){bestD=d;best=i}});showMemory(best)}restore.addEventListener('click',e=>{e.stopPropagation();activate()});crownTap.addEventListener('click',crownTapMemory);"
           if old_listeners in s:
               s = s.replace(old_listeners, new_listeners)
           elif "crownTap.addEventListener('click',crownTapMemory)" not in s:
               raise SystemExit('Could not replace crown listeners')
-
           s = s.replace('Tap the crown to restore each memory. At 100 pieces, tap the completed crown to revisit your photos. Use FINAL VIDEO only for the video.', 'Tap the crown to restore each memory. At 100 pieces, tap any part of the completed crown to reopen the nearest memory photo. FINAL VIDEO opens only the video.')
           s = s.replace('THE CROWN IS COMPLETE — TAP CROWN TO REVISIT PHOTOS', 'THE CROWN IS COMPLETE — TAP ANY CROWN PIECE FOR ITS PHOTO')
-
           p.write_text(s, encoding='utf-8')
           PY
           git config user.name "github-actions[bot]"
