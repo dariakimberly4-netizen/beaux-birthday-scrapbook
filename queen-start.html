@@ -7,38 +7,72 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>B for Beaux</title>
 <style>
-:root{--gold:#e9c77a;--deep:#07040f;--violet:#2a1847}
+:root{--gold:#f4d48a;--gold2:#ffb84e;--deep:#05030c;--violet:#25123f;--violet2:#5c2c86}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--deep);color:#fff;font-family:Arial,sans-serif}
 body{min-height:100dvh}
-.gate{position:fixed;inset:0;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 42%,#3a255f 0%,#24153f 30%,#120b25 58%,#07040f 82%)}
-.card{width:min(92vw,560px);text-align:center;transform:translateY(-2vh)}
-.bigB{font:700 clamp(210px,45vw,360px)/.74 Georgia,serif;color:transparent;-webkit-text-stroke:1.5px #e9c77a;text-shadow:0 0 42px rgba(181,151,255,.20);margin-bottom:18px}
-.title{font:500 clamp(34px,7vw,54px)/1 Georgia,serif;letter-spacing:.18em;margin:0 0 18px;color:#fff;text-transform:uppercase}
-.sub{font:500 clamp(12px,2.8vw,16px)/1.4 Arial,sans-serif;letter-spacing:.16em;color:#ddd3e7;white-space:nowrap}
-.enter{margin-top:46px;width:min(74vw,385px);height:106px;border:1px solid rgba(255,239,194,.7);border-radius:999px;background:linear-gradient(135deg,#f1d796,#d9b865);color:#111;font-weight:900;font-size:clamp(22px,5vw,30px);letter-spacing:.15em;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 12px 34px rgba(0,0,0,.22);cursor:pointer;touch-action:manipulation}
-.enter:active{transform:scale(.985)}
-.enter:focus-visible{outline:3px solid #fff2b5;outline-offset:5px}
-.fade{animation:fadeOut .42s ease forwards}@keyframes fadeOut{to{opacity:0;transform:scale(1.015)}}
-@media(min-width:900px){.card{transform:none}.bigB{font-size:280px}.title{font-size:46px}.sub{font-size:14px}.enter{height:72px;width:300px;margin-top:34px;font-size:20px}}
-@media(max-height:720px){.bigB{font-size:180px}.enter{height:74px;margin-top:28px}.card{transform:none}}
-@media(prefers-reduced-motion:reduce){.fade{animation:none!important}.enter{transition:none!important}}
+button{-webkit-tap-highlight-color:transparent}
+.gate{position:fixed;inset:0;display:grid;place-items:center;padding:24px;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 50% 37%,#5c2c86 0%,#2d174d 25%,#160b2a 52%,#07040f 78%,#030208 100%)}
+.gate::before{content:"";position:absolute;inset:-20%;z-index:-4;background:conic-gradient(from 0deg at 50% 45%,transparent 0 7%,#8c5ad818 9% 12%,transparent 15% 25%,#ffbd5715 29% 33%,transparent 36% 53%,#9259d618 56% 59%,transparent 63% 78%,#ffbf5a16 82% 86%,transparent 90%);animation:skyTurn 28s linear infinite}
+.gate::after{content:"";position:absolute;inset:0;z-index:-3;background:radial-gradient(circle at 50% 64%,rgba(255,194,91,.18),transparent 18%),radial-gradient(circle at 50% 40%,rgba(153,91,238,.16),transparent 42%);pointer-events:none}
+@keyframes skyTurn{to{transform:rotate(360deg)}}
+.frame{position:absolute;inset:3.5% 4.5%;border:1px solid rgba(244,212,138,.34);border-radius:48% 48% 5% 5%/13% 13% 3% 3%;box-shadow:inset 0 0 34px rgba(255,190,75,.05),0 0 26px rgba(255,190,75,.06);pointer-events:none}
+.frame::before,.frame::after{content:"";position:absolute;top:-1px;width:18%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 12px var(--gold2)}
+.frame::before{left:9%}.frame::after{right:9%}
+.curtain{position:absolute;top:-9%;bottom:-7%;width:31%;z-index:-2;filter:blur(.4px);opacity:.55;pointer-events:none}
+.curtain.left{left:-14%;background:linear-gradient(93deg,#160722 10%,#54256e 50%,transparent 100%);transform:rotate(6deg)}
+.curtain.right{right:-14%;background:linear-gradient(-93deg,#160722 10%,#54256e 50%,transparent 100%);transform:rotate(-6deg)}
+.moon{position:absolute;top:7%;left:50%;width:56px;height:56px;border-radius:50%;transform:translateX(-50%);background:#ffe7b8;box-shadow:0 0 18px #ffd786,0 0 52px #ffc95a55}
+.moon::after{content:"";position:absolute;width:58px;height:58px;left:-12px;top:-7px;border-radius:50%;background:#1f1037}
+.card{position:relative;z-index:8;width:min(94vw,650px);text-align:center;transform:translateY(-1vh)}
+.crown{font:500 clamp(34px,7vw,56px)/1 Georgia,serif;color:var(--gold);text-shadow:0 0 18px #ffc95a,0 0 38px #ffae3a77;animation:crownFloat 4.5s ease-in-out infinite alternate;margin-bottom:-8px}
+@keyframes crownFloat{from{transform:translateY(1px) scale(.98)}to{transform:translateY(-7px) scale(1.05)}}
+.bigB{position:relative;display:inline-block;font:700 clamp(220px,50vw,395px)/.72 Georgia,serif;color:rgba(15,8,26,.56);-webkit-text-stroke:2px var(--gold);text-shadow:0 0 9px #fff1bb,0 0 24px #ffc050,0 0 56px #ff9e247c,0 0 92px #8c56dc55;margin-bottom:10px;animation:breathe 4.6s ease-in-out infinite alternate}
+.bigB::before{content:"";position:absolute;inset:9% 0 5%;border-radius:45%;background:radial-gradient(circle,#ffd5682d,transparent 60%);filter:blur(18px);z-index:-1}
+@keyframes breathe{from{filter:brightness(.94);transform:scale(.985)}to{filter:brightness(1.13);transform:scale(1.018)}}
+.title{font:500 clamp(34px,7vw,58px)/1 Georgia,serif;letter-spacing:.18em;margin:6px 0 16px;color:#fff5da;text-transform:uppercase;text-shadow:0 2px 12px #000,0 0 16px #f6ca7955}
+.rule{display:flex;align-items:center;gap:10px;width:min(76vw,430px);margin:0 auto 16px}.rule span{height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold))}.rule span:last-child{background:linear-gradient(90deg,var(--gold),transparent)}.rule b{font-size:18px;color:var(--gold);text-shadow:0 0 10px #ffc04d}
+.sub{font:500 clamp(12px,2.8vw,17px)/1.5 Arial,sans-serif;letter-spacing:.17em;color:#f1e7f5;white-space:nowrap;text-shadow:0 2px 8px #000}
+.enter{position:relative;overflow:hidden;margin-top:42px;width:min(76vw,410px);height:104px;border:1px solid rgba(255,242,196,.92);border-radius:999px;background:linear-gradient(135deg,#ffe9ad 0%,#e7bf67 48%,#b8862c 100%);color:#17101f;font-weight:900;font-size:clamp(22px,5vw,31px);letter-spacing:.15em;box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 0 0 2px rgba(244,212,138,.13),0 0 28px #ffc14b88,0 18px 42px rgba(0,0,0,.34);cursor:pointer;touch-action:manipulation;animation:buttonPulse 3.8s ease-in-out infinite alternate}
+.enter::before{content:"";position:absolute;top:-80%;left:-34%;width:24%;height:250%;background:linear-gradient(90deg,transparent,#fff9dcdd,transparent);transform:rotate(21deg);animation:sweep 4.8s ease-in-out infinite}
+@keyframes sweep{0%,58%{left:-34%}82%,100%{left:125%}}
+@keyframes buttonPulse{from{box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 0 18px #ffc14b5c,0 16px 38px rgba(0,0,0,.32)}to{box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 0 42px #ffc14bb0,0 18px 44px rgba(0,0,0,.36)}}
+.enter:active{transform:scale(.975)}.enter:focus-visible{outline:3px solid #fff5c3;outline-offset:6px}
+.sparkField,.butterflies{position:absolute;inset:0;pointer-events:none;overflow:hidden}.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:#ffeab0;box-shadow:0 0 7px #ffc455,0 0 15px #ff9f27;animation:rise var(--d) linear infinite;animation-delay:var(--delay);opacity:.8}@keyframes rise{0%{transform:translate3d(0,20px,0) scale(.5);opacity:0}12%{opacity:.85}75%{opacity:.55}100%{transform:translate3d(var(--x),-120px,0) scale(1.25);opacity:0}}
+.butterfly{position:absolute;width:38px;height:28px;animation:fly var(--fd) ease-in-out infinite alternate;animation-delay:var(--fdelay);filter:drop-shadow(0 0 7px #ffc760)}.butterfly::before,.butterfly::after{content:"";position:absolute;top:4px;width:19px;height:21px;background:linear-gradient(135deg,#fff4c6,#f6b940 72%);border-radius:75% 22% 75% 20%;transform-origin:100% 60%;animation:wing 1.2s ease-in-out infinite alternate}.butterfly::before{left:0;transform:rotate(-24deg)}.butterfly::after{right:0;transform:scaleX(-1) rotate(-24deg)}@keyframes wing{to{transform:rotate(13deg) scaleX(.72)}}@keyframes fly{from{transform:translate3d(-12px,7px,0) rotate(-5deg)}to{transform:translate3d(22px,-18px,0) rotate(8deg)}}
+.water{position:absolute;left:0;right:0;bottom:-3%;height:19%;z-index:-1;background:radial-gradient(ellipse at 50% 0,#f7c05c44,transparent 48%),linear-gradient(180deg,#130b22aa,#04030a);overflow:hidden}.water::before,.water::after{content:"";position:absolute;left:50%;top:8%;width:72%;height:42%;border:1px solid #f5ca784f;border-radius:50%;transform:translateX(-50%) scaleY(.28);animation:ripple 5.5s ease-out infinite}.water::after{animation-delay:2.6s}@keyframes ripple{from{opacity:.8;transform:translateX(-50%) scale(.35,.12)}to{opacity:0;transform:translateX(-50%) scale(1.25,.42)}}
+.fade{animation:fadeOut .52s ease forwards}@keyframes fadeOut{to{opacity:0;filter:brightness(1.45);transform:scale(1.025)}}
+@media(min-width:900px){.card{transform:none}.crown{font-size:44px}.bigB{font-size:300px}.title{font-size:50px}.sub{font-size:14px}.enter{height:78px;width:330px;margin-top:32px;font-size:21px}.moon{top:5%}.water{height:15%}}
+@media(max-height:760px){.crown{font-size:29px}.bigB{font-size:175px}.title{font-size:30px;margin-top:0}.sub{font-size:11px}.enter{height:72px;margin-top:22px}.rule{margin-bottom:10px}.moon{display:none}}
+@media(max-width:520px){.frame{inset:2.5% 3%;}.butterfly{transform:scale(.78)}.enter{height:92px;margin-top:34px}.water{height:16%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.sparkField,.butterflies{display:none}.gate::before{display:none}.fade{opacity:0!important}.bigB,.crown{transform:none!important}}
 </style>
 </head>
 <body>
 <main class="gate" id="gate" aria-label="B for Beaux entrance">
+  <div class="curtain left"></div><div class="curtain right"></div><div class="moon" aria-hidden="true"></div><div class="frame" aria-hidden="true"></div>
+  <div class="sparkField" id="sparkField" aria-hidden="true"></div><div class="butterflies" id="butterflies" aria-hidden="true"></div><div class="water" aria-hidden="true"></div>
   <div class="card">
+    <div class="crown" aria-hidden="true">♕</div>
     <div class="bigB" aria-hidden="true">B</div>
     <h1 class="title">FOR BEAUX</h1>
+    <div class="rule" aria-hidden="true"><span></span><b>✦</b><span></span></div>
     <div class="sub">100 MEMORIES • ONE LETTER • ONE SIS</div>
     <button class="enter" id="enter">ENTER</button>
   </div>
 </main>
 <script>
-const gate=document.getElementById('gate');
+const gate=document.getElementById('gate'),sparkField=document.getElementById('sparkField'),butterflies=document.getElementById('butterflies');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduced){
+  const sparkCount=innerWidth<600?24:46;
+  for(let i=0;i<sparkCount;i++){const s=document.createElement('i');s.className='spark';s.style.left=(4+Math.random()*92)+'%';s.style.top=(20+Math.random()*76)+'%';s.style.setProperty('--d',(7+Math.random()*8)+'s');s.style.setProperty('--delay',(-Math.random()*12)+'s');s.style.setProperty('--x',(-28+Math.random()*56)+'px');sparkField.appendChild(s)}
+  const bf=innerWidth<600?5:9;
+  for(let i=0;i<bf;i++){const b=document.createElement('i');b.className='butterfly';b.style.left=(7+Math.random()*86)+'%';b.style.top=(13+Math.random()*66)+'%';b.style.setProperty('--fd',(5+Math.random()*5)+'s');b.style.setProperty('--fdelay',(-Math.random()*8)+'s');butterflies.appendChild(b)}
+}
 document.getElementById('enter').addEventListener('click',()=>{
-  if(!matchMedia('(prefers-reduced-motion: reduce)').matches) gate.classList.add('fade');
-  setTimeout(()=>location.href='queen.html?v=message-photo-1',300);
+  if(!reduced)gate.classList.add('fade');
+  setTimeout(()=>location.href='queen.html?v=message-photo-1',reduced?0:420);
 });
 </script>
 </body>
