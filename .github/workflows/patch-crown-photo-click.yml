@@ -1,0 +1,40 @@
+name: Patch crown photo click
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-crown-photo-click.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make completed crown reopen photos only
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('crown-100-fixed.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('Tap the crown to restore each memory. At 100 pieces, tap the completed crown to open the final video.', 'Tap the crown to restore each memory. At 100 pieces, tap the completed crown to revisit your photos. Use FINAL VIDEO only for the video.')
+          s = s.replace('THE CROWN IS COMPLETE — TAP THE CROWN OR BUTTON', 'THE CROWN IS COMPLETE — TAP CROWN TO REVISIT PHOTOS')
+          s = s.replace("crown.setAttribute('aria-label',progress>=100?'Open final video':'Restore next crown piece')", "crown.setAttribute('aria-label',progress>=100?'Revisit crown photos':'Restore next crown piece')")
+          s = s.replace("let progress=Math.max(0,Math.min(TOTAL,Number(localStorage.getItem(KEY))||0)),busy=false;", "let progress=Math.max(0,Math.min(TOTAL,Number(localStorage.getItem(KEY))||0)),busy=false,revisitIndex=0;")
+          old = "function activate(){if(progress>=100){openPortal();return}if(busy||memoryModal.classList.contains('show'))return;busy=true;let i=progress++;localStorage.setItem(KEY,String(progress));pieces[i].classList.add('on','new');setTimeout(()=>pieces[i].classList.remove('new'),950);burst(pieces[i]);render();setTimeout(()=>{showMemory(i);busy=false},260)}"
+          new = "function activate(){if(progress>=100){if(memoryModal.classList.contains('show'))return;showMemory(revisitIndex%TOTAL);revisitIndex=(revisitIndex+1)%TOTAL;return}if(busy||memoryModal.classList.contains('show'))return;busy=true;let i=progress++;localStorage.setItem(KEY,String(progress));pieces[i].classList.add('on','new');setTimeout(()=>pieces[i].classList.remove('new'),950);burst(pieces[i]);render();setTimeout(()=>{showMemory(i);busy=false},260)}"
+          if old not in s:
+              raise SystemExit('activate() pattern not found')
+          s = s.replace(old, new)
+          s = s.replace("restore.addEventListener('click',e=>{e.stopPropagation();activate()});crown.addEventListener('click',activate);crown.addEventListener('pointerup',e=>{if(e.pointerType==='touch'){e.preventDefault();activate()}});", "restore.addEventListener('click',e=>{e.stopPropagation();activate()});crown.addEventListener('click',activate);")
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add crown-100-fixed.html
+          git commit -m "Make completed crown clickable for photos only"
+          git push
