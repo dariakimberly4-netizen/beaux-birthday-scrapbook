@@ -36,7 +36,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3p
 .nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:70px;border:1px solid #ffffff44;border-radius:14px;background:#171224;color:#fff;font-size:30px;cursor:pointer}.prev{left:max(6px,env(safe-area-inset-left))}.next{right:max(6px,env(safe-area-inset-right))}
 .counter{position:absolute;bottom:max(62px,calc(env(safe-area-inset-bottom) + 56px));color:var(--gold);font:600 15px Georgia,serif}
 .driveOpen{position:absolute;bottom:max(12px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);min-height:44px;padding:0 18px;border-radius:999px;background:var(--gold);color:#17101f;text-decoration:none;display:flex;align-items:center;justify-content:center;font:800 12px Arial,sans-serif;white-space:nowrap}
-.finalCard{width:min(720px,92vw);max-height:82vh;overflow:auto;text-align:center;color:#fff;padding:8px}.finalCard h1{font:500 clamp(32px,5vw,58px) Georgia,serif;color:var(--gold);margin:0 0 18px}.finalCard p{font:500 clamp(16px,2vw,20px)/1.6 Georgia,serif}.back{margin-top:18px;min-height:50px;padding:0 22px;border:0;border-radius:999px;background:var(--gold);color:#17101f;font-weight:800;cursor:pointer}
+.finalCard{width:min(720px,92vw);max-height:82vh;overflow:auto;text-align:center;color:#fff;padding:8px}.finalCard h1{font:500 clamp(32px,5vw,58px) Georgia,serif;color:var(--gold);margin:0 0 18px}.finalCard p{font:500 clamp(16px,2vw,20px)/1.6 Georgia,serif}.finalPhoto{display:block;width:min(360px,78vw);max-height:42vh;object-fit:cover;aspect-ratio:3/4;margin:0 auto 20px;border-radius:18px;border:1px solid #f4ddb055;box-shadow:0 14px 38px #0008}.back{margin-top:18px;min-height:50px;padding:0 22px;border:0;border-radius:999px;background:var(--gold);color:#17101f;font-weight:800;cursor:pointer}
 @media(min-width:900px){
   body{overflow:hidden}
   .desktopScene{display:block}
@@ -50,6 +50,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3p
   .viewer img{max-width:90vw;max-height:66vh}
   .nav{width:42px;height:62px;font-size:27px}
   .finalCard{width:94vw}
+  .finalPhoto{width:min(300px,76vw);max-height:36vh}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
@@ -81,6 +82,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #fff3b0;outline-offset:3p
 <div class="finale" id="finale" role="dialog" aria-modal="true" aria-label="Final birthday message" aria-hidden="true">
   <button class="close" id="closeFinal" aria-label="Close final message">×</button>
   <div class="finalCard">
+    <img class="finalPhoto" src="assets/beaux-final-message-photo.jpg?v=final-message-photo-1" alt="A special photo for Beaux's final birthday message">
     <h1>Happy Birthday, Sis! 💜</h1>
     <p>No matter how many years, places, or memories fill our lives, one thing will always stay the same—you’ll always be my sister, my safe place, and one of my favorite parts of home.<br><br>I hope this year gives you back all the love, laughter, and light you give so freely. Here’s to everything we’ve already shared—and all the beautiful memories still waiting for us.</p>
     <p style="color:#f4ddb0">Love you always,<br>Kimmy</p>
