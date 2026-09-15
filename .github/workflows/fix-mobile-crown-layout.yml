@@ -19,35 +19,35 @@ jobs:
           s=p.read_text()
           marker='/* MOBILE_VIEWPORT_REPAIR_V1 */'
           if marker not in s:
-              css=r'''
-/* MOBILE_VIEWPORT_REPAIR_V1 */
-html,body{height:100dvh;min-height:100dvh;max-height:100dvh}
-.stage{height:100dvh;min-height:100dvh;max-height:100dvh}
-@media(max-width:760px){
-  .top{top:max(8px,env(safe-area-inset-top));left:12px;right:12px}
-  .brand{font-size:8px;letter-spacing:.18em}
-  .count{font-size:12px}
-  .bar{top:36px;width:76vw}
-  .copy{top:52px;width:94vw;max-width:94vw}
-  .copy small{font-size:7.5px;letter-spacing:.22em;margin-bottom:6px;white-space:normal}
-  .copy h1{font-size:clamp(27px,8.2vw,37px);line-height:.92}
-  .copy p{font-size:11.5px;line-height:1.32;max-width:90vw;margin:8px auto 0;padding:0 4px}
-  .crown{top:50%;width:94vw;height:37dvh;min-height:220px;max-height:355px}
-  .ghost{inset:0 2% 4%;width:96%;height:94%;opacity:.34}
-  .piece{opacity:.23}
-  .controls{bottom:max(10px,env(safe-area-inset-bottom));width:94vw}
-  .restore{width:min(390px,90vw);min-height:56px;font-size:11px}
-  .hint{margin-top:6px}
-  .reset{margin-top:3px;min-height:26px}
-}
-@media(max-width:760px) and (max-height:720px){
-  .copy{top:48px}
-  .copy p{font-size:10.5px;line-height:1.25}
-  .crown{top:49%;height:34dvh;min-height:190px}
-  .restore{min-height:50px}
-  .hint{display:none}
-}
-'''
+              css=(
+                  "/* MOBILE_VIEWPORT_REPAIR_V1 */\n"
+                  "html,body{height:100dvh;min-height:100dvh;max-height:100dvh}\n"
+                  ".stage{height:100dvh;min-height:100dvh;max-height:100dvh}\n"
+                  "@media(max-width:760px){\n"
+                  ".top{top:max(8px,env(safe-area-inset-top));left:12px;right:12px}\n"
+                  ".brand{font-size:8px;letter-spacing:.18em}\n"
+                  ".count{font-size:12px}\n"
+                  ".bar{top:36px;width:76vw}\n"
+                  ".copy{top:52px;width:94vw;max-width:94vw}\n"
+                  ".copy small{font-size:7.5px;letter-spacing:.22em;margin-bottom:6px;white-space:normal}\n"
+                  ".copy h1{font-size:clamp(27px,8.2vw,37px);line-height:.92}\n"
+                  ".copy p{font-size:11.5px;line-height:1.32;max-width:90vw;margin:8px auto 0;padding:0 4px}\n"
+                  ".crown{top:50%;width:94vw;height:37dvh;min-height:220px;max-height:355px}\n"
+                  ".ghost{inset:0 2% 4%;width:96%;height:94%;opacity:.34}\n"
+                  ".piece{opacity:.23}\n"
+                  ".controls{bottom:max(10px,env(safe-area-inset-bottom));width:94vw}\n"
+                  ".restore{width:min(390px,90vw);min-height:56px;font-size:11px}\n"
+                  ".hint{margin-top:6px}\n"
+                  ".reset{margin-top:3px;min-height:26px}\n"
+                  "}\n"
+                  "@media(max-width:760px) and (max-height:720px){\n"
+                  ".copy{top:48px}\n"
+                  ".copy p{font-size:10.5px;line-height:1.25}\n"
+                  ".crown{top:49%;height:34dvh;min-height:190px}\n"
+                  ".restore{min-height:50px}\n"
+                  ".hint{display:none}\n"
+                  "}\n"
+              )
               s=s.replace('</style>',css+'\n</style>',1)
               p.write_text(s)
           PY
@@ -56,4 +56,3 @@ html,body{height:100dvh;min-height:100dvh;max-height:100dvh}
           git add crown-100-fixed.html
           git diff --cached --quiet || git commit -m "Fit crown experience to mobile viewport"
           git push
-# trigger v2
