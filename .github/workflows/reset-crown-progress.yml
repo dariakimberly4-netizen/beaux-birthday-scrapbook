@@ -1,0 +1,30 @@
+name: Reset crown progress
+on:
+  push:
+    paths:
+      - '.github/workflows/reset-crown-progress.yml'
+permissions:
+  contents: write
+jobs:
+  reset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reset saved crown progress to a fresh key
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('crown-100-fixed.html')
+          s = p.read_text(encoding='utf-8')
+          old = "KEY='beauxCrown100ProgressV1'"
+          new = "KEY='beauxCrown100ProgressV2'"
+          if old not in s and new not in s:
+              raise SystemExit('Progress key not found')
+          s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add crown-100-fixed.html
+          git diff --cached --quiet || git commit -m "Reset crown progress to 0 of 100"
+          git push
