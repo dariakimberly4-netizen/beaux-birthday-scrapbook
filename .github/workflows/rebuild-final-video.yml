@@ -15,13 +15,57 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Rebuild MP4 from stored Base64 parts
+      - name: Rebuild MP4 safely from stored Base64 parts
         shell: bash
         run: |
           set -euo pipefail
-          cat assets/fall-video/part*.txt | tr -d '\r\n\t ' | base64 --decode > assets/final-video.mp4
-          test "$(dd if=assets/final-video.mp4 bs=1 skip=4 count=4 2>/dev/null)" = "ftyp"
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, re
+
+          files = sorted(Path('assets/fall-video').glob('part*.txt'))
+          if not files:
+              raise SystemExit('No video parts found')
+
+          alphabet = set('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=')
+          chunks = []
+          internal_padding = False
+
+          for path in files:
+              raw = path.read_text(encoding='utf-8', errors='ignore')
+              cleaned = re.sub(r'\s+', '', raw)
+              bad = sorted(set(cleaned) - alphabet)
+              if bad:
+                  print(f'{path.name}: removing non-base64 chars {bad!r}')
+                  cleaned = ''.join(c for c in cleaned if c in alphabet)
+              if '=' in cleaned.rstrip('='):
+                  internal_padding = True
+              chunks.append(cleaned)
+              print(f'{path.name}: {len(cleaned)} base64 chars, padding={cleaned.count("=")}')
+
+          if internal_padding or any('=' in c for c in chunks[:-1]):
+              print('Detected independently padded segments; decoding each segment separately.')
+              data = bytearray()
+              for path, chunk in zip(files, chunks):
+                  core = chunk.rstrip('=')
+                  padded = core + '=' * ((4 - len(core) % 4) % 4)
+                  data.extend(base64.b64decode(padded, validate=False))
+              data = bytes(data)
+          else:
+              joined = ''.join(chunks)
+              joined = joined.rstrip('=') + '=' * ((4 - len(joined.rstrip('=')) % 4) % 4)
+              data = base64.b64decode(joined, validate=False)
+
+          if len(data) < 12 or data[4:8] != b'ftyp':
+              raise SystemExit(f'Output is not a valid MP4 header: first bytes={data[:16]!r}')
+
+          out = Path('assets/final-video.mp4')
+          out.write_bytes(data)
+          print(f'Wrote {out} ({len(data)} bytes)')
+          print('Contains moov:', b'moov' in data, 'Contains mdat:', b'mdat' in data)
+          PY
           test -s assets/final-video.mp4
+          file assets/final-video.mp4
           ls -lh assets/final-video.mp4
 
       - name: Commit rebuilt video
