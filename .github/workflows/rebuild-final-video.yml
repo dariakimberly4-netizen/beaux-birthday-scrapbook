@@ -15,58 +15,66 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Rebuild MP4 safely from stored Base64 parts
+      - name: Rebuild and validate MP4
         shell: bash
         run: |
           set -euo pipefail
+          command -v ffmpeg >/dev/null 2>&1 || (sudo apt-get update -y && sudo apt-get install -y ffmpeg)
           python3 - <<'PY'
           from pathlib import Path
-          import base64, re
+          import base64, re, subprocess, itertools
 
           files = sorted(Path('assets/fall-video').glob('part*.txt'))
-          if not files:
-              raise SystemExit('No video parts found')
-
           alphabet = set('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=')
-          chunks = []
-          internal_padding = False
-
+          chunks=[]
           for path in files:
-              raw = path.read_text(encoding='utf-8', errors='ignore')
-              cleaned = re.sub(r'\s+', '', raw)
-              bad = sorted(set(cleaned) - alphabet)
-              if bad:
-                  print(f'{path.name}: removing non-base64 chars {bad!r}')
-                  cleaned = ''.join(c for c in cleaned if c in alphabet)
-              if '=' in cleaned.rstrip('='):
-                  internal_padding = True
-              chunks.append(cleaned)
-              print(f'{path.name}: {len(cleaned)} base64 chars, padding={cleaned.count("=")}')
+              s=re.sub(r'\s+','',path.read_text(encoding='utf-8',errors='ignore'))
+              s=''.join(c for c in s if c in alphabet)
+              chunks.append(s)
+              print(path.name, len(s))
 
-          if internal_padding or any('=' in c for c in chunks[:-1]):
-              print('Detected independently padded segments; decoding each segment separately.')
-              data = bytearray()
-              for path, chunk in zip(files, chunks):
-                  core = chunk.rstrip('=')
-                  padded = core + '=' * ((4 - len(core) % 4) % 4)
-                  data.extend(base64.b64decode(padded, validate=False))
-              data = bytes(data)
-          else:
-              joined = ''.join(chunks)
-              joined = joined.rstrip('=') + '=' * ((4 - len(joined.rstrip('=')) % 4) % 4)
-              data = base64.b64decode(joined, validate=False)
+          odd=[i for i,c in enumerate(chunks) if i != len(chunks)-1 and len(c)%4]
+          print('Odd-length chunks:', odd)
+          if odd != [10,15]:
+              raise SystemExit(f'Unexpected malformed chunks: {odd}')
 
-          if len(data) < 12 or data[4:8] != b'ftyp':
-              raise SystemExit(f'Output is not a valid MP4 header: first bytes={data[:16]!r}')
+          candidates=[]
+          for cut10,cut15 in itertools.product(('first','last'), repeat=2):
+              cc=chunks.copy()
+              for idx,where in ((10,cut10),(15,cut15)):
+                  cc[idx]=cc[idx][1:] if where=='first' else cc[idx][:-1]
+              joined=''.join(cc)
+              if len(joined)%4:
+                  continue
+              try:
+                  data=base64.b64decode(joined, validate=True)
+              except Exception as e:
+                  print('decode failed',cut10,cut15,e)
+                  continue
+              if len(data)<12 or data[4:8] != b'ftyp':
+                  continue
+              p=Path(f'/tmp/candidate-{cut10}-{cut15}.mp4')
+              p.write_bytes(data)
+              proc=subprocess.run(['ffmpeg','-v','error','-i',str(p),'-f','null','-'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+              err=proc.stderr.decode('utf-8','ignore')
+              score=len(err)+(0 if proc.returncode==0 else 1000000)
+              print(f'candidate {cut10}/{cut15}: bytes={len(data)} return={proc.returncode} error_chars={len(err)}')
+              if err:
+                  print(err[:1200])
+              candidates.append((score,cut10,cut15,data,err))
 
-          out = Path('assets/final-video.mp4')
+          if not candidates:
+              raise SystemExit('No decodable repair candidates')
+          candidates.sort(key=lambda x:x[0])
+          score,cut10,cut15,data,err=candidates[0]
+          print(f'Chosen repair: part10={cut10}, part15={cut15}, score={score}')
+          out=Path('assets/final-video.mp4')
           out.write_bytes(data)
-          print(f'Wrote {out} ({len(data)} bytes)')
-          print('Contains moov:', b'moov' in data, 'Contains mdat:', b'mdat' in data)
+          print(f'Wrote {out} ({len(data)} bytes); moov={b"moov" in data}; mdat={b"mdat" in data}')
           PY
           test -s assets/final-video.mp4
           file assets/final-video.mp4
-          ls -lh assets/final-video.mp4
+          ffprobe -v error -show_entries format=duration,size -of default=noprint_wrappers=1 assets/final-video.mp4
 
       - name: Commit rebuilt video
         shell: bash
