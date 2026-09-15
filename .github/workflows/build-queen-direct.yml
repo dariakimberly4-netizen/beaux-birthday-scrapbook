@@ -1,0 +1,43 @@
+name: Build direct Queen B portrait
+
+on:
+  push:
+    paths:
+      - '.github/workflows/build-queen-direct.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild portrait and create standard JPEG
+        run: |
+          cat assets/queen-webp/part*.bin | tr -d '\r\n\t ' | base64 --decode > /tmp/queen-portrait.webp
+          python -m pip install --quiet pillow
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          src = Path('/tmp/queen-portrait.webp')
+          im = Image.open(src).convert('RGB')
+          print('decoded portrait:', im.size)
+          if im.width >= im.height:
+              raise SystemExit(f'Expected portrait artwork, got {im.size}')
+          im.save('assets/queen-b-portrait-direct.jpg', 'JPEG', quality=84, optimize=True, progressive=True)
+          PY
+      - name: Commit direct portrait file
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/queen-b-portrait-direct.jpg
+          if git diff --cached --quiet; then
+            echo 'No changes to commit'
+          else
+            git commit -m 'Add direct Queen B portrait JPEG'
+            git push
+          fi
