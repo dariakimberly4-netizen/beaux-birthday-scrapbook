@@ -1,0 +1,34 @@
+name: Enable wild crown
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/enable-wild-crown.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inject wild crown assets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('crown-100-fixed.html')
+          s = p.read_text(encoding='utf-8')
+          css = '<link rel="stylesheet" href="assets/crown-wild.css?v=queen-b-wild-1">'
+          js = '<script src="assets/crown-wild.js?v=queen-b-wild-1"></script>'
+          if css not in s:
+              s = s.replace('</head>', css + '\n</head>', 1)
+          if js not in s:
+              s = s.replace('</body>', js + '\n</body>', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add crown-100-fixed.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Make Queen B crown wilder"
+            git push
+          fi
