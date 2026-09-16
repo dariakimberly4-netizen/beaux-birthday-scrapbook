@@ -9,24 +9,24 @@ window.addEventListener('DOMContentLoaded',()=>{
     #memoryModal .memoryCopy{display:none!important}
     #memoryModal .memoryPhoto{width:100%!important;height:min(84vh,760px)!important;max-height:84vh!important;object-fit:contain!important}
     .stage{background:radial-gradient(circle at 50% 22%,rgba(170,80,255,.38),transparent 24%),radial-gradient(circle at 18% 18%,rgba(255,105,206,.18),transparent 20%),radial-gradient(circle at 82% 30%,rgba(130,116,255,.2),transparent 22%),radial-gradient(circle at 50% 40%,#4b1362 0,#22052f 36%,#0b0111 100%)!important}
-    .stage:before{background:conic-gradient(from 30deg,transparent 0 10%,rgba(255,222,154,.08) 14%,transparent 18% 38%,rgba(242,88,212,.08) 44%,transparent 50% 72%,rgba(146,74,255,.1) 78%,transparent 84%)!important;animation:wildSpin 28s linear infinite!important}
-    .wildBeams,.wildStars,.wildRain{position:absolute;inset:0;pointer-events:none}
-    .wildBeams:before,.wildBeams:after{content:"";position:absolute;left:50%;top:50%;width:110vmax;height:110vmax;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 90deg,transparent 0 12%,rgba(255,221,150,.06) 15%,transparent 18% 40%,rgba(255,96,206,.05) 44%,transparent 48% 70%,rgba(161,72,255,.08) 74%,transparent 78%);animation:wildSpin 21s linear infinite}
-    .wildBeams:after{width:85vmax;height:85vmax;filter:blur(14px);opacity:.6;animation-duration:14s;animation-direction:reverse}
+    .wildStars,.wildRain{position:absolute;inset:0;pointer-events:none}
     .wildStars{background-image:radial-gradient(circle at 10% 12%,#fff 0 1px,transparent 1.4px),radial-gradient(circle at 24% 77%,#fff 0 1px,transparent 1.4px),radial-gradient(circle at 83% 15%,#ffeccb 0 1.4px,transparent 2px),radial-gradient(circle at 71% 64%,#e6bcff 0 1px,transparent 1.5px),radial-gradient(circle at 55% 23%,#fff 0 1px,transparent 1.5px),radial-gradient(circle at 15% 55%,#ffd889 0 1px,transparent 1.5px);animation:wildTwinkle 4s ease-in-out infinite alternate}
     .wildRain i{position:absolute;top:-5vh;width:2px;height:18px;border-radius:999px;background:linear-gradient(180deg,#fff6ca,#ff77d7 58%,transparent);opacity:.45;animation:wildRain linear infinite}.wildRain i:nth-child(1){left:8%;animation-duration:7s;animation-delay:-2s}.wildRain i:nth-child(2){left:19%;animation-duration:8s;animation-delay:-5s}.wildRain i:nth-child(3){left:31%;animation-duration:6.5s;animation-delay:-1s}.wildRain i:nth-child(4){left:48%;animation-duration:9s;animation-delay:-3s}.wildRain i:nth-child(5){left:63%;animation-duration:7.8s;animation-delay:-4s}.wildRain i:nth-child(6){left:76%;animation-duration:8.7s;animation-delay:-2s}.wildRain i:nth-child(7){left:89%;animation-duration:6.9s;animation-delay:-6s}
-    .crownZone{filter:drop-shadow(0 0 34px rgba(175,80,255,.3))!important}.ghost{filter:drop-shadow(0 0 22px rgba(255,213,126,.22))!important}.piece.restored{filter:drop-shadow(0 0 10px rgba(255,235,161,.95)) drop-shadow(0 0 24px rgba(236,169,61,.5))!important}.piece.light.restored{filter:drop-shadow(0 0 14px #fff2b0) drop-shadow(0 0 36px rgba(247,203,93,.9))!important}.portalRing{background:radial-gradient(circle,#fff9cf 0 2%,#ffd97b 4%,#f26fe0 16%,#8a3dff 34%,#28083c 55%,#09010d 78%)!important;box-shadow:0 0 38px rgba(248,215,128,.4),0 0 120px rgba(175,77,255,.6)!important;animation:wildPulse 3s ease-in-out infinite!important}
-    .wildBurst,.wildWave,.wildSpark{position:fixed;pointer-events:none}.wildBurst{z-index:90;left:var(--x);top:var(--y);width:8px;height:8px;border-radius:50%;background:#ffe596;box-shadow:0 0 18px #ffd066;animation:wildBurst .95s ease-out forwards}.wildWave{z-index:89;left:var(--x);top:var(--y);width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,222,153,.85);transform:translate(-50%,-50%) scale(.2);box-shadow:0 0 28px rgba(249,111,214,.26);animation:wildWave 1s ease-out forwards}.wildSpark{z-index:88;left:var(--x);top:var(--y);width:3px;height:18px;border-radius:999px;background:linear-gradient(180deg,#fff5c6,#ff75d6 60%,rgba(255,255,255,0));transform:translate(-50%,-50%) rotate(var(--r));animation:wildSpark .8s ease-out forwards}.stage.wildShock{animation:wildShock .24s linear 1}
-    @keyframes wildSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}@keyframes wildTwinkle{50%{opacity:.7}}@keyframes wildPulse{50%{transform:scale(1.06)}}@keyframes wildRain{0%{transform:translateY(-5vh) rotate(10deg);opacity:0}15%{opacity:.5}100%{transform:translateY(110vh) rotate(10deg);opacity:0}}@keyframes wildBurst{to{transform:translate(var(--dx),var(--dy)) scale(.1);opacity:0}}@keyframes wildWave{to{transform:translate(-50%,-50%) scale(9);opacity:0}}@keyframes wildSpark{to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--r));opacity:0}}@keyframes wildShock{0%,100%{transform:translate(0)}25%{transform:translate(2px,-1px)}50%{transform:translate(-2px,1px)}75%{transform:translate(1px,2px)}}
+    .crownZone{filter:drop-shadow(0 0 34px rgba(175,80,255,.3))!important}.piece.restored{filter:drop-shadow(0 0 10px rgba(255,235,161,.95)) drop-shadow(0 0 24px rgba(236,169,61,.5))!important}.portalRing{background:radial-gradient(circle,#fff9cf 0 2%,#ffd97b 4%,#f26fe0 16%,#8a3dff 34%,#28083c 55%,#09010d 78%)!important;box-shadow:0 0 38px rgba(248,215,128,.4),0 0 120px rgba(175,77,255,.6)!important}
+    .memoryNav{position:absolute;left:18px;right:18px;bottom:18px;z-index:12;display:flex;justify-content:space-between;gap:14px;pointer-events:none}
+    .memoryNav button{pointer-events:auto;min-width:122px;min-height:56px;border:1px solid rgba(255,235,171,.88);border-radius:999px;background:rgba(20,5,30,.82);backdrop-filter:blur(9px);color:#fff4d2;font-weight:900;font-size:12px;letter-spacing:.13em;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35),0 0 22px rgba(180,84,255,.18)}
+    .memoryNav button:active{transform:scale(.97)}
+    .memoryCounter{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:13;padding:7px 12px;border-radius:999px;background:rgba(8,1,13,.7);color:#f6dda0;font:700 11px/1 Arial,sans-serif;letter-spacing:.12em;pointer-events:none}
+    @media(max-width:760px){.memoryNav{left:12px;right:12px;bottom:12px}.memoryNav button{min-width:108px;min-height:54px;font-size:11px}.memoryCounter{bottom:76px}}
+    @keyframes wildTwinkle{50%{opacity:.7}}@keyframes wildRain{0%{transform:translateY(-5vh) rotate(10deg);opacity:0}15%{opacity:.5}100%{transform:translateY(110vh) rotate(10deg);opacity:0}}
   `;
   document.head.appendChild(style);
 
   const stage=document.getElementById('stage');
   if(stage){
-    const beams=document.createElement('div'); beams.className='wildBeams';
     const stars=document.createElement('div'); stars.className='wildStars';
     const rain=document.createElement('div'); rain.className='wildRain'; rain.innerHTML='<i></i><i></i><i></i><i></i><i></i><i></i><i></i>';
-    stage.prepend(rain); stage.prepend(stars); stage.prepend(beams);
+    stage.prepend(rain); stage.prepend(stars);
   }
   const h1=document.querySelector('.copy h1'); if(h1) h1.innerHTML='THE <em>WILDER</em> 100-PIECE CROWN';
   const cp=document.querySelector('.copy p:last-child'); if(cp) cp.textContent='Every tap unleashes a memory burst. Restore all 100 pieces to awaken the final cosmic portal.';
@@ -34,15 +34,24 @@ window.addEventListener('DOMContentLoaded',()=>{
   const complete=document.querySelector('.completeText'); if(complete) complete.textContent='THE CROWN HAS GONE SUPERNOVA';
   const portal=document.getElementById('portalBtn'); if(portal) portal.textContent='ENTER THE FINAL PORTAL';
 
-  function explode(el){
-    if(!el)return; const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-    for(let i=0;i<16;i++){const b=document.createElement('i'),a=Math.PI*2*i/16,d=55+(i%4)*18;b.className='wildBurst';b.style.cssText=`--x:${cx}px;--y:${cy}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px`;document.body.appendChild(b);setTimeout(()=>b.remove(),1000)}
-    const w=document.createElement('i');w.className='wildWave';w.style.cssText=`--x:${cx}px;--y:${cy}px`;document.body.appendChild(w);setTimeout(()=>w.remove(),1050);
-    for(let i=0;i<12;i++){const s=document.createElement('i'),a=Math.PI*2*i/12,d=42+(i%3)*18;s.className='wildSpark';s.style.cssText=`--x:${cx}px;--y:${cy}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;--r:${(a*180/Math.PI)+90}deg`;document.body.appendChild(s);setTimeout(()=>s.remove(),850)}
-    if(stage){stage.classList.remove('wildShock');void stage.offsetWidth;stage.classList.add('wildShock');setTimeout(()=>stage.classList.remove('wildShock'),260)}
+  const modal=document.getElementById('memoryModal');
+  const card=modal&&modal.querySelector('.memoryCard');
+  const photo=document.getElementById('memoryPhoto');
+  if(card&&photo){
+    const nav=document.createElement('div'); nav.className='memoryNav';
+    const back=document.createElement('button'); back.type='button'; back.textContent='← BACK'; back.setAttribute('aria-label','Previous photo');
+    const next=document.createElement('button'); next.type='button'; next.textContent='NEXT →'; next.setAttribute('aria-label','Next photo');
+    const counter=document.createElement('div'); counter.className='memoryCounter';
+    nav.append(back,next); card.append(nav,counter);
+    let current=0;
+    const setPhoto=i=>{current=(i+window.BEAUX_PHOTOS.length)%window.BEAUX_PHOTOS.length;photo.src=window.BEAUX_PHOTOS[current];counter.textContent=String(current+1).padStart(2,'0')+' / '+window.BEAUX_PHOTOS.length;};
+    const syncCurrent=()=>{const src=photo.getAttribute('src')||'';const idx=window.BEAUX_PHOTOS.findIndex(x=>x===src);if(idx>=0){current=idx;counter.textContent=String(current+1).padStart(2,'0')+' / '+window.BEAUX_PHOTOS.length;}};
+    new MutationObserver(syncCurrent).observe(photo,{attributes:true,attributeFilter:['src']});
+    back.onclick=e=>{e.stopPropagation();setPhoto(current-1)};
+    next.onclick=e=>{e.stopPropagation();setPhoto(current+1)};
+    let touchX=0;
+    card.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true});
+    card.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45){dx<0?setPhoto(current+1):setPhoto(current-1)}},{passive:true});
+    document.addEventListener('keydown',e=>{if(!modal.classList.contains('show'))return;if(e.key==='ArrowLeft')setPhoto(current-1);if(e.key==='ArrowRight')setPhoto(current+1)});
   }
-
-  const crown=document.getElementById('crownZone');
-  if(crown){crown.addEventListener('click',()=>setTimeout(()=>{const restored=[...document.querySelectorAll('.piece.restored')].at(-1);explode(restored||crown)},60),true)}
-  if(restore){restore.addEventListener('click',()=>setTimeout(()=>{const restored=[...document.querySelectorAll('.piece.restored')].at(-1);explode(restored||restore)},60),true)}
 });
