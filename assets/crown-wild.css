@@ -1,0 +1,21 @@
+/* QUEEN B — WILD CROWN FX. Visual only; never intercepts taps. */
+.wildFX{position:fixed;inset:0;z-index:14;pointer-events:none;overflow:hidden}
+.wildAura{position:absolute;left:50%;top:50%;width:min(92vw,820px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,226,137,.17) 0 2%,rgba(158,62,194,.14) 18%,rgba(86,20,115,.08) 36%,transparent 67%);filter:blur(4px);animation:wildAura 5.5s ease-in-out infinite}
+@keyframes wildAura{50%{filter:blur(7px) brightness(1.45);opacity:.74}}
+.wildMote{position:absolute;width:var(--sz);height:var(--sz);left:var(--x);top:110%;border-radius:50%;background:radial-gradient(circle,#fff7ca 0 25%,#f4c95d 40%,#9b47c7 70%,transparent 72%);box-shadow:0 0 10px #ffd66c,0 0 22px rgba(150,64,194,.75);opacity:.68;animation:wildRise var(--dur) linear var(--delay) infinite}
+@keyframes wildRise{0%{transform:translate3d(0,0,0) scale(.6);opacity:0}12%{opacity:.8}55%{transform:translate3d(var(--drift),-58vh,0) scale(1.15)}100%{transform:translate3d(calc(var(--drift)*-.4),-118vh,0) scale(.35);opacity:0}}
+.wildRing{position:fixed;z-index:90;width:18px;height:18px;margin:-9px;border:2px solid #ffe49a;border-radius:50%;box-shadow:0 0 18px #ffd56d,0 0 42px #9e4cc2;pointer-events:none;animation:wildRing .78s cubic-bezier(.1,.7,.2,1) forwards}
+@keyframes wildRing{to{transform:scale(18);opacity:0;border-width:.3px}}
+.wildSpark{position:fixed;z-index:91;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:linear-gradient(135deg,#fff7c5,#e9ae35 55%,#9c42c6);box-shadow:0 0 14px #f6c755;pointer-events:none;animation:wildSpark .82s cubic-bezier(.1,.75,.2,1) forwards}
+@keyframes wildSpark{to{transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.08);opacity:0}}
+.crown.wildHit{filter:drop-shadow(0 0 18px rgba(255,219,118,.9)) drop-shadow(0 0 46px rgba(167,72,201,.8));animation:wildCrownHit .72s ease-out}
+@keyframes wildCrownHit{0%{filter:drop-shadow(0 0 8px rgba(255,219,118,.35))}28%{filter:drop-shadow(0 0 36px #ffe39a) drop-shadow(0 0 85px #a74bc9)}100%{filter:drop-shadow(0 0 10px rgba(255,219,118,.28))}}
+.wildFlash{position:fixed;inset:0;z-index:89;pointer-events:none;background:radial-gradient(circle at var(--fx) var(--fy),rgba(255,242,190,.45),rgba(174,71,209,.16) 20%,transparent 58%);animation:wildFlash .55s ease-out forwards}
+@keyframes wildFlash{to{opacity:0}}
+.wildMilestone{position:fixed;z-index:95;left:50%;top:45%;transform:translate(-50%,-50%) scale(.55);width:min(92vw,720px);text-align:center;pointer-events:none;color:#fff7d2;text-shadow:0 0 14px #ffd96f,0 0 38px #ad55d0,0 8px 28px #000;font:800 clamp(31px,8vw,78px)/.9 Georgia,serif;letter-spacing:.04em;opacity:0;animation:wildMilestone 1.35s cubic-bezier(.16,.8,.2,1) forwards}
+.wildMilestone small{display:block;margin-top:12px;color:#efcd74;font:900 clamp(9px,2.4vw,16px)/1.2 Arial,sans-serif;letter-spacing:.28em;text-transform:uppercase}
+@keyframes wildMilestone{0%{opacity:0;transform:translate(-50%,-50%) scale(.4) rotate(-3deg)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.08) rotate(1deg)}72%{opacity:1;transform:translate(-50%,-50%) scale(.98)}100%{opacity:0;transform:translate(-50%,-56%) scale(1.08)}}
+.complete .crown{filter:drop-shadow(0 0 18px rgba(255,220,119,.72)) drop-shadow(0 0 54px rgba(159,68,193,.5))}
+.complete .ring{box-shadow:0 0 55px rgba(255,222,129,.72),0 0 135px rgba(156,63,191,.78)}
+@media(max-width:760px){.wildAura{width:118vw;top:51%}.wildMote{opacity:.58}.wildMilestone{top:43%}}
+@media(prefers-reduced-motion:reduce){.wildAura,.wildMote{animation:none}.wildAura{opacity:.38}.wildRing,.wildSpark,.wildFlash,.wildMilestone,.crown.wildHit{animation-duration:.01ms!important}}
