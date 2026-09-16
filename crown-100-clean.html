@@ -7,78 +7,49 @@
 <title>BEAUX — THE QUEEN B</title>
 <style>
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#09020e}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#09020e}
+#navOverlay{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:999999;display:none;align-items:center;justify-content:space-between;gap:16px;width:min(760px,88vw);pointer-events:none}
+#navOverlay button{pointer-events:auto;min-width:150px;min-height:58px;border:1px solid #ffe39a;border-radius:999px;background:rgba(12,2,18,.9);color:#fff4c7;font-weight:900;font-size:13px;letter-spacing:.13em;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 26px rgba(255,214,118,.18)}
+#navCount{color:#ffe39a;font:700 13px/1 Georgia,serif;letter-spacing:.14em;text-shadow:0 2px 12px #000;pointer-events:none}
+@media(max-width:620px){#navOverlay{bottom:18px;width:94vw;gap:8px}#navOverlay button{min-width:112px;min-height:54px;font-size:11px}#navCount{font-size:11px}}
 </style>
 </head>
 <body>
-<iframe id="crownFrame" src="crown-100.html?viewer=nav4" title="Beaux 100-Piece Crown"></iframe>
+<iframe id="crownFrame" src="crown-100.html?viewer=nav5" title="Beaux 100-Piece Crown"></iframe>
+<div id="navOverlay"><button id="backBtn" type="button">← BACK</button><div id="navCount">01 / 100</div><button id="nextBtn" type="button">NEXT →</button></div>
 <script>
-const frame=document.getElementById('crownFrame');
+const frame=document.getElementById('crownFrame'),nav=document.getElementById('navOverlay'),back=document.getElementById('backBtn'),next=document.getElementById('nextBtn'),count=document.getElementById('navCount');
+let d=null,w=null,modal=null,photo=null,photos=[],index=0;
+function sync(){
+  if(!d||!modal||!photo)return;
+  const open=modal.classList.contains('show');
+  nav.style.display=open?'flex':'none';
+  if(!open)return;
+  const src=photo.getAttribute('src')||'';
+  const found=photos.findIndex(p=>src===p||src.includes(p));
+  if(found>=0)index=found;
+  count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length||100).padStart(2,'0');
+}
+function show(i){
+  if(!photos.length||!photo)return;
+  index=(i+photos.length)%photos.length;
+  photo.src=photos[index];
+  count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');
+}
 frame.addEventListener('load',()=>{
-  const w=frame.contentWindow,d=frame.contentDocument;
-  if(!d)return;
-  const modal=d.getElementById('memoryModal');
-  const card=d.querySelector('#memoryModal .memoryCard');
-  const photo=d.getElementById('memoryPhoto');
-  if(!modal||!card||!photo)return;
-
-  const oldCopy=card.querySelector('.memoryCopy');
-  if(oldCopy)oldCopy.remove();
-
-  const style=d.createElement('style');
-  style.textContent=`
-    #memoryModal .memoryCard{grid-template-columns:1fr!important;width:min(940px,95vw)!important;background:#070109!important;position:relative!important;overflow:hidden!important}
-    #memoryModal .memoryPhoto{display:block!important;width:100%!important;height:min(82vh,760px)!important;max-height:82vh!important;object-fit:contain!important;background:#070109!important}
-    .memoryNav{position:absolute;left:0;right:0;bottom:14px;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:0 16px;pointer-events:none}
-    .memoryNav button{pointer-events:auto;min-width:118px;min-height:52px;border:1px solid rgba(255,229,161,.9);border-radius:999px;background:rgba(10,2,16,.82);backdrop-filter:blur(10px);color:#fff3c6;font-weight:900;font-size:12px;letter-spacing:.12em;cursor:pointer;box-shadow:0 0 24px rgba(255,210,105,.18)}
-    .memoryNav button:active{transform:scale(.97)}
-    .memoryCounter{pointer-events:none;color:#ffe29a;font:700 12px/1 Georgia,serif;letter-spacing:.14em;text-shadow:0 0 18px rgba(0,0,0,.8)}
-    @media(max-width:620px){#memoryModal .memoryPhoto{height:78vh!important;max-height:78vh!important}.memoryNav{padding:0 10px;bottom:10px}.memoryNav button{min-width:104px;min-height:50px;font-size:11px}.memoryCounter{font-size:11px}}
-  `;
-  d.head.appendChild(style);
-
-  const nav=d.createElement('div');
-  nav.className='memoryNav';
-  nav.innerHTML='<button type="button" id="memoryBack">← BACK</button><div class="memoryCounter" id="memoryCounter">01 / 100</div><button type="button" id="memoryNext">NEXT →</button>';
-  card.appendChild(nav);
-
-  const back=nav.querySelector('#memoryBack');
-  const next=nav.querySelector('#memoryNext');
-  const counter=nav.querySelector('#memoryCounter');
-  const photos=(w.BEAUX_PHOTOS||[]).slice(0,100);
-  let index=0;
-
-  function findCurrent(){
-    const src=photo.getAttribute('src')||'';
-    const found=photos.findIndex(p=>src===p||src.includes(p));
-    if(found>=0)index=found;
-  }
-  function show(i){
-    if(!photos.length)return;
-    index=(i+photos.length)%photos.length;
-    photo.src=photos[index];
-    counter.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');
-  }
-  back.addEventListener('click',e=>{e.stopPropagation();findCurrent();show(index-1)});
-  next.addEventListener('click',e=>{e.stopPropagation();findCurrent();show(index+1)});
-
-  const observer=new MutationObserver(()=>{if(modal.classList.contains('show')){findCurrent();counter.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length||100).padStart(2,'0')}});
-  observer.observe(modal,{attributes:true,attributeFilter:['class']});
-
-  d.addEventListener('keydown',e=>{
-    if(!modal.classList.contains('show'))return;
-    if(e.key==='ArrowLeft'){e.preventDefault();findCurrent();show(index-1)}
-    if(e.key==='ArrowRight'){e.preventDefault();findCurrent();show(index+1)}
-  });
-
-  let x0=null;
-  photo.addEventListener('touchstart',e=>{x0=e.touches[0]?.clientX??null},{passive:true});
-  photo.addEventListener('touchend',e=>{
-    if(x0==null)return;
-    const x1=e.changedTouches[0]?.clientX??x0,dx=x1-x0;
-    if(Math.abs(dx)>45){findCurrent();show(index+(dx<0?1:-1))}
-    x0=null;
-  },{passive:true});
+  try{
+    w=frame.contentWindow; d=frame.contentDocument;
+    modal=d.getElementById('memoryModal'); photo=d.getElementById('memoryPhoto'); photos=(w.BEAUX_PHOTOS||[]).slice(0,100);
+    const oldCopy=d.querySelector('#memoryModal .memoryCopy'); if(oldCopy)oldCopy.style.display='none';
+    if(!modal||!photo)return;
+    new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});
+    photo.addEventListener('load',sync);
+    let x0=null; photo.addEventListener('touchstart',e=>{x0=e.touches[0]?.clientX??null},{passive:true});
+    photo.addEventListener('touchend',e=>{if(x0==null)return;const x1=e.changedTouches[0]?.clientX??x0,dx=x1-x0;if(Math.abs(dx)>45)show(index+(dx<0?1:-1));x0=null},{passive:true});
+    sync();
+  }catch(e){console.error(e)}
 });
+back.onclick=()=>{sync();show(index-1)}; next.onclick=()=>{sync();show(index+1)};
+document.addEventListener('keydown',e=>{if(nav.style.display!=='flex')return;if(e.key==='ArrowLeft'){e.preventDefault();show(index-1)}if(e.key==='ArrowRight'){e.preventDefault();show(index+1)}});
 </script>
 </body>
 </html>
