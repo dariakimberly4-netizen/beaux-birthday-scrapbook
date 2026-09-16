@@ -37,6 +37,7 @@ html,body{height:100dvh;min-height:100dvh;max-height:100dvh}
 }
 
 </style>
+<link rel="stylesheet" href="assets/crown-wild.css?v=queen-b-wild-1">
 </head>
 <body>
 <main class="stage" id="stage">
@@ -74,5 +75,6 @@ crown.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventD
 closeMemory.onclick=continueBtn.onclick=closeMem;memoryModal.onclick=e=>{if(e.target===memoryModal)closeMem()};portalBtn.onclick=e=>{e.stopPropagation();openPortal()};reset.onclick=()=>{if(confirm('Reset the 100-piece crown and start again?')){progress=0;localStorage.removeItem(KEY);render()}};
 function closeVid(){videoModal.classList.remove('show');finalVideo.pause()}closeVideo.onclick=closeVid;videoModal.onclick=e=>{if(e.target===videoModal)closeVid()};retryBtn.onclick=()=>{finalVideo.src=VIDEO+'&t='+Date.now();finalVideo.load();videoStatus.textContent='Video reloaded — tap play.'};finalVideo.addEventListener('loadedmetadata',()=>{videoStatus.textContent='Final video ready.';retryBtn.classList.remove('show')});finalVideo.addEventListener('error',()=>{videoStatus.textContent='Video could not load. Tap RELOAD VIDEO.';retryBtn.classList.add('show')});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMem();closeVid()}});render();
 </script>
+<script src="assets/crown-wild.js?v=queen-b-wild-1"></script>
 </body>
 </html>
