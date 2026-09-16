@@ -11,7 +11,14 @@
 </style>
 </head>
 <body>
-<iframe id="crownFrame" src="crown-100.html?viewer=nav9" title="Beaux 100-Piece Crown"></iframe>
+<script>
+const bootParams=new URLSearchParams(location.search);
+if(bootParams.get('reset')==='1'){
+  localStorage.removeItem('beauxCrown100ProgressV1');
+  localStorage.removeItem('beauxCrown100ProgressWildestV1');
+}
+</script>
+<iframe id="crownFrame" src="crown-100.html?viewer=reset10" title="Beaux 100-Piece Crown"></iframe>
 <div id="navOverlay"><button id="backBtn" type="button">← BACK</button><div id="navCount">01 / 100</div><button id="nextBtn" type="button">NEXT →</button></div>
 <section id="videoPreview" aria-label="Final birthday video preview"><div class="videoShell"><div class="videoTitle">THE FINAL BIRTHDAY VIDEO</div><div class="videoSub">Direct original video</div><div class="videoWrap"><video id="directVideo" controls playsinline preload="metadata" src="assets/VID-20260915-WA0000.mp4?v=direct-original"></video></div><div class="videoStatus" id="directStatus">Video ready — tap Play.</div><button class="playBtn" id="playBtn" type="button">▶ PLAY VIDEO</button><button class="videoBack" id="videoBack" type="button">BACK TO THE CROWN</button></div></section>
 <script>
@@ -19,20 +26,18 @@ const frame=document.getElementById('crownFrame'),nav=document.getElementById('n
 const params=new URLSearchParams(location.search),previewVideo=params.get('video')==='1';
 const videoPreview=document.getElementById('videoPreview'),video=document.getElementById('directVideo'),statusEl=document.getElementById('directStatus'),playBtn=document.getElementById('playBtn'),videoBack=document.getElementById('videoBack');
 let d=null,w=null,modal=null,photo=null,photos=[],index=0;
-playBtn.onclick=async()=>{try{await video.play();playBtn.textContent='PLAYING…';statusEl.textContent='Now playing.'}catch(err){console.error(err);statusEl.textContent='Tap the ▶ control inside the video player.'}};
-video.addEventListener('canplay',()=>{statusEl.textContent='Video ready — tap Play.'});
+playBtn.onclick=async()=>{try{await video.play();playBtn.textContent='PLAYING…';statusEl.textContent='Now playing.'}catch(err){statusEl.textContent='Tap the ▶ control inside the video player.'}};
+video.addEventListener('canplay',()=>statusEl.textContent='Video ready — tap Play.');
 video.addEventListener('playing',()=>{playBtn.textContent='PLAYING…';statusEl.textContent='Now playing.'});
 video.addEventListener('pause',()=>{if(!video.ended){playBtn.textContent='▶ PLAY VIDEO';statusEl.textContent='Paused.'}});
 video.addEventListener('ended',()=>{playBtn.textContent='↻ PLAY AGAIN';statusEl.textContent='Video finished.'});
-video.addEventListener('error',()=>{statusEl.textContent='Video failed to load. Refresh the page once.'});
-if(previewVideo){frame.style.display='none';nav.style.display='none';videoPreview.style.display='grid';}
-else{
+if(previewVideo){frame.style.display='none';nav.style.display='none';videoPreview.style.display='grid'}else{
  function sync(){if(!d||!modal||!photo)return;const open=modal.classList.contains('show');nav.style.display=open?'flex':'none';if(!open)return;const src=photo.getAttribute('src')||'';const found=photos.findIndex(p=>src===p||src.includes(p));if(found>=0)index=found;count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length||100).padStart(2,'0')}
  function show(i){if(!photos.length||!photo)return;index=(i+photos.length)%photos.length;photo.src=photos[index];count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0')}
- frame.addEventListener('load',()=>{try{w=frame.contentWindow;d=frame.contentDocument;modal=d.getElementById('memoryModal');photo=d.getElementById('memoryPhoto');photos=(w.BEAUX_PHOTOS||[]).slice(0,100);const oldCopy=d.querySelector('#memoryModal .memoryCopy');if(oldCopy)oldCopy.style.display='none';if(!modal||!photo)return;new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});photo.addEventListener('load',sync);let x0=null;photo.addEventListener('touchstart',e=>{x0=e.touches[0]?.clientX??null},{passive:true});photo.addEventListener('touchend',e=>{if(x0==null)return;const x1=e.changedTouches[0]?.clientX??x0,dx=x1-x0;if(Math.abs(dx)>45)show(index+(dx<0?1:-1));x0=null},{passive:true});sync()}catch(e){console.error(e)}});
+ frame.addEventListener('load',()=>{try{w=frame.contentWindow;d=frame.contentDocument;modal=d.getElementById('memoryModal');photo=d.getElementById('memoryPhoto');photos=(w.BEAUX_PHOTOS||[]).slice(0,100);const oldCopy=d.querySelector('#memoryModal .memoryCopy');if(oldCopy)oldCopy.style.display='none';if(!modal||!photo)return;new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});photo.addEventListener('load',sync);sync()}catch(e){console.error(e)}});
  back.onclick=()=>{sync();show(index-1)};next.onclick=()=>{sync();show(index+1)};
 }
-videoBack.onclick=()=>location.href='crown-100-clean.html?v=crown9';
+videoBack.onclick=()=>location.href='crown-100-clean.html?reset=1&v=reset10';
 </script>
 </body>
 </html>
