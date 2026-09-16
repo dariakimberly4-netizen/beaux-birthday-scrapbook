@@ -7,54 +7,32 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>BEAUX — THE QUEEN B</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#09020e;color:#fff;font-family:Arial,Helvetica,sans-serif}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#09020e}#navOverlay{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:999999;display:none;align-items:center;justify-content:space-between;gap:16px;width:min(760px,88vw);pointer-events:none}#navOverlay button{pointer-events:auto;min-width:150px;min-height:58px;border:1px solid #ffe39a;border-radius:999px;background:rgba(12,2,18,.9);color:#fff4c7;font-weight:900;font-size:13px;letter-spacing:.13em;cursor:pointer}#navCount{color:#ffe39a;font:700 13px Georgia,serif;letter-spacing:.14em}#videoPreview{position:fixed;inset:0;z-index:9999999;display:none;place-items:center;padding:18px;background:radial-gradient(circle at 50% 18%,#4e1464 0,#23062e 38%,#0a010f 100%)}.videoShell{width:min(980px,96vw);max-height:94vh;padding:16px;border:1px solid rgba(245,214,132,.5);border-radius:28px;background:#09020e;box-shadow:0 30px 100px rgba(0,0,0,.62),0 0 90px rgba(138,62,176,.28)}.videoTitle{text-align:center;color:#f5d98b;font:500 clamp(28px,5vw,50px)/1 Georgia,serif;margin:8px 12px 16px}.videoSub{text-align:center;color:#d9c8da;font-size:12px;letter-spacing:.08em;margin-bottom:14px}.videoWrap{position:relative;border-radius:20px;overflow:hidden;background:#000}.videoWrap video{display:block;width:100%;max-height:66vh;background:#000}.videoStatus{text-align:center;color:#d0c2d3;font-size:12px;margin:14px 0 8px}.playBtn,.videoBack{display:block;width:min(360px,88%);margin:12px auto 0;min-height:58px;border:1px solid #ffe4a0;border-radius:999px;font-weight:900;letter-spacing:.12em;cursor:pointer}.playBtn{background:linear-gradient(135deg,#fff0b8,#f7c35f 35%,#d66ed2 70%,#8d4cff);color:#21091b;font-size:14px}.playBtn:disabled{opacity:.55;cursor:default}.videoBack{background:rgba(255,255,255,.04);color:#ffe8ac;font-size:12px}@media(max-width:620px){#navOverlay{bottom:18px;width:94vw;gap:8px}#navOverlay button{min-width:112px;min-height:54px;font-size:11px}#navCount{font-size:11px}.videoShell{padding:12px}.videoWrap video{max-height:58vh}}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#09020e;color:#fff;font-family:Arial,Helvetica,sans-serif}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#09020e}#navOverlay{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:999999;display:none;align-items:center;justify-content:space-between;gap:16px;width:min(760px,88vw);pointer-events:none}#navOverlay button{pointer-events:auto;min-width:150px;min-height:58px;border:1px solid #ffe39a;border-radius:999px;background:rgba(12,2,18,.9);color:#fff4c7;font-weight:900;font-size:13px;letter-spacing:.13em;cursor:pointer}#navCount{color:#ffe39a;font:700 13px Georgia,serif;letter-spacing:.14em}#videoPreview{position:fixed;inset:0;z-index:9999999;display:none;place-items:center;padding:18px;background:radial-gradient(circle at 50% 18%,#4e1464 0,#23062e 38%,#0a010f 100%)}.videoShell{width:min(980px,96vw);max-height:94vh;padding:16px;border:1px solid rgba(245,214,132,.5);border-radius:28px;background:#09020e;box-shadow:0 30px 100px rgba(0,0,0,.62),0 0 90px rgba(138,62,176,.28)}.videoTitle{text-align:center;color:#f5d98b;font:500 clamp(28px,5vw,50px)/1 Georgia,serif;margin:8px 12px 16px}.videoSub{text-align:center;color:#d9c8da;font-size:12px;letter-spacing:.08em;margin-bottom:14px}.videoWrap{position:relative;border-radius:20px;overflow:hidden;background:#000}.videoWrap video{display:block;width:100%;max-height:66vh;background:#000}.videoStatus{text-align:center;color:#d0c2d3;font-size:12px;margin:14px 0 8px}.playBtn,.videoBack{display:block;width:min(360px,88%);margin:12px auto 0;min-height:58px;border:1px solid #ffe4a0;border-radius:999px;font-weight:900;letter-spacing:.12em;cursor:pointer}.playBtn{background:linear-gradient(135deg,#fff0b8,#f7c35f 35%,#d66ed2 70%,#8d4cff);color:#21091b;font-size:14px}.videoBack{background:rgba(255,255,255,.04);color:#ffe8ac;font-size:12px}@media(max-width:620px){#navOverlay{bottom:18px;width:94vw;gap:8px}#navOverlay button{min-width:112px;min-height:54px;font-size:11px}#navCount{font-size:11px}.videoShell{padding:12px}.videoWrap video{max-height:58vh}}
 </style>
 </head>
 <body>
-<iframe id="crownFrame" src="crown-100.html?viewer=nav8" title="Beaux 100-Piece Crown"></iframe>
+<iframe id="crownFrame" src="crown-100.html?viewer=nav9" title="Beaux 100-Piece Crown"></iframe>
 <div id="navOverlay"><button id="backBtn" type="button">← BACK</button><div id="navCount">01 / 100</div><button id="nextBtn" type="button">NEXT →</button></div>
-<section id="videoPreview" aria-label="Final birthday video preview"><div class="videoShell"><div class="videoTitle">THE FINAL BIRTHDAY VIDEO</div><div class="videoSub">Tap the button below to start</div><div class="videoWrap"><video id="directVideo" controls playsinline preload="auto"></video></div><div class="videoStatus" id="directStatus">Loading the video…</div><button class="playBtn" id="playBtn" type="button" disabled>LOADING VIDEO…</button><button class="videoBack" id="videoBack" type="button">BACK TO THE CROWN</button></div></section>
+<section id="videoPreview" aria-label="Final birthday video preview"><div class="videoShell"><div class="videoTitle">THE FINAL BIRTHDAY VIDEO</div><div class="videoSub">Direct original video</div><div class="videoWrap"><video id="directVideo" controls playsinline preload="metadata" src="assets/VID-20260915-WA0000.mp4?v=direct-original"></video></div><div class="videoStatus" id="directStatus">Video ready — tap Play.</div><button class="playBtn" id="playBtn" type="button">▶ PLAY VIDEO</button><button class="videoBack" id="videoBack" type="button">BACK TO THE CROWN</button></div></section>
 <script>
 const frame=document.getElementById('crownFrame'),nav=document.getElementById('navOverlay'),back=document.getElementById('backBtn'),next=document.getElementById('nextBtn'),count=document.getElementById('navCount');
 const params=new URLSearchParams(location.search),previewVideo=params.get('video')==='1';
 const videoPreview=document.getElementById('videoPreview'),video=document.getElementById('directVideo'),statusEl=document.getElementById('directStatus'),playBtn=document.getElementById('playBtn'),videoBack=document.getElementById('videoBack');
-let d=null,w=null,modal=null,photo=null,photos=[],index=0,videoUrl='';
-async function buildVideo(){
- try{
-  statusEl.textContent='Loading the final video…';
-  const parts=[];
-  for(let i=0;i<12;i++){
-   const r=await fetch('assets/fall-video/part'+String(i).padStart(2,'0')+'.txt?v=play4',{cache:'no-store'});
-   if(!r.ok)throw new Error('Missing video part '+i);
-   parts.push((await r.text()).trim());
-   statusEl.textContent='Loading video… '+Math.round(((i+1)/12)*100)+'%';
-  }
-  const b64=parts.join('');
-  const bin=atob(b64);
-  const bytes=new Uint8Array(bin.length);
-  for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
-  videoUrl=URL.createObjectURL(new Blob([bytes],{type:'video/mp4'}));
-  video.src=videoUrl;
-  video.load();
-  playBtn.disabled=false;
-  playBtn.textContent='▶ PLAY VIDEO';
-  statusEl.textContent='Video ready.';
- }catch(err){console.error(err);statusEl.textContent='The video could not load. Please refresh and try again.';playBtn.disabled=true;playBtn.textContent='VIDEO ERROR';}
-}
-playBtn.onclick=async()=>{try{video.currentTime=0;await video.play();playBtn.textContent='PLAYING…';statusEl.textContent='Now playing.';}catch(err){console.error(err);statusEl.textContent='Tap the ▶ control inside the video player.';playBtn.textContent='▶ PLAY VIDEO';}};
+let d=null,w=null,modal=null,photo=null,photos=[],index=0;
+playBtn.onclick=async()=>{try{await video.play();playBtn.textContent='PLAYING…';statusEl.textContent='Now playing.'}catch(err){console.error(err);statusEl.textContent='Tap the ▶ control inside the video player.'}};
+video.addEventListener('canplay',()=>{statusEl.textContent='Video ready — tap Play.'});
 video.addEventListener('playing',()=>{playBtn.textContent='PLAYING…';statusEl.textContent='Now playing.'});
 video.addEventListener('pause',()=>{if(!video.ended){playBtn.textContent='▶ PLAY VIDEO';statusEl.textContent='Paused.'}});
 video.addEventListener('ended',()=>{playBtn.textContent='↻ PLAY AGAIN';statusEl.textContent='Video finished.'});
-video.addEventListener('error',()=>{statusEl.textContent='This browser could not play the video file.';playBtn.textContent='VIDEO ERROR';});
-if(previewVideo){frame.style.display='none';nav.style.display='none';videoPreview.style.display='grid';buildVideo();}
+video.addEventListener('error',()=>{statusEl.textContent='Video failed to load. Refresh the page once.'});
+if(previewVideo){frame.style.display='none';nav.style.display='none';videoPreview.style.display='grid';}
 else{
  function sync(){if(!d||!modal||!photo)return;const open=modal.classList.contains('show');nav.style.display=open?'flex':'none';if(!open)return;const src=photo.getAttribute('src')||'';const found=photos.findIndex(p=>src===p||src.includes(p));if(found>=0)index=found;count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length||100).padStart(2,'0')}
  function show(i){if(!photos.length||!photo)return;index=(i+photos.length)%photos.length;photo.src=photos[index];count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0')}
  frame.addEventListener('load',()=>{try{w=frame.contentWindow;d=frame.contentDocument;modal=d.getElementById('memoryModal');photo=d.getElementById('memoryPhoto');photos=(w.BEAUX_PHOTOS||[]).slice(0,100);const oldCopy=d.querySelector('#memoryModal .memoryCopy');if(oldCopy)oldCopy.style.display='none';if(!modal||!photo)return;new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});photo.addEventListener('load',sync);let x0=null;photo.addEventListener('touchstart',e=>{x0=e.touches[0]?.clientX??null},{passive:true});photo.addEventListener('touchend',e=>{if(x0==null)return;const x1=e.changedTouches[0]?.clientX??x0,dx=x1-x0;if(Math.abs(dx)>45)show(index+(dx<0?1:-1));x0=null},{passive:true});sync()}catch(e){console.error(e)}});
  back.onclick=()=>{sync();show(index-1)};next.onclick=()=>{sync();show(index+1)};
 }
-videoBack.onclick=()=>location.href='crown-100-clean.html?v=crown8';
-window.addEventListener('beforeunload',()=>{if(videoUrl)URL.revokeObjectURL(videoUrl)});
+videoBack.onclick=()=>location.href='crown-100-clean.html?v=crown9';
 </script>
 </body>
 </html>
