@@ -12,13 +12,11 @@
 </head>
 <body>
 <script>
-const bootParams=new URLSearchParams(location.search);
-if(bootParams.get('reset')==='1'){
-  localStorage.removeItem('beauxCrown100ProgressV1');
-  localStorage.removeItem('beauxCrown100ProgressWildestV1');
-}
+// Always begin a new visit at 0 / 100.
+localStorage.removeItem('beauxCrown100ProgressV1');
+localStorage.removeItem('beauxCrown100ProgressWildestV1');
 </script>
-<iframe id="crownFrame" src="crown-100.html?viewer=reset10" title="Beaux 100-Piece Crown"></iframe>
+<iframe id="crownFrame" src="crown-100.html?viewer=reset11" title="Beaux 100-Piece Crown"></iframe>
 <div id="navOverlay"><button id="backBtn" type="button">← BACK</button><div id="navCount">01 / 100</div><button id="nextBtn" type="button">NEXT →</button></div>
 <section id="videoPreview" aria-label="Final birthday video preview"><div class="videoShell"><div class="videoTitle">THE FINAL BIRTHDAY VIDEO</div><div class="videoSub">Direct original video</div><div class="videoWrap"><video id="directVideo" controls playsinline preload="metadata" src="assets/VID-20260915-WA0000.mp4?v=direct-original"></video></div><div class="videoStatus" id="directStatus">Video ready — tap Play.</div><button class="playBtn" id="playBtn" type="button">▶ PLAY VIDEO</button><button class="videoBack" id="videoBack" type="button">BACK TO THE CROWN</button></div></section>
 <script>
@@ -37,7 +35,7 @@ if(previewVideo){frame.style.display='none';nav.style.display='none';videoPrevie
  frame.addEventListener('load',()=>{try{w=frame.contentWindow;d=frame.contentDocument;modal=d.getElementById('memoryModal');photo=d.getElementById('memoryPhoto');photos=(w.BEAUX_PHOTOS||[]).slice(0,100);const oldCopy=d.querySelector('#memoryModal .memoryCopy');if(oldCopy)oldCopy.style.display='none';if(!modal||!photo)return;new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});photo.addEventListener('load',sync);sync()}catch(e){console.error(e)}});
  back.onclick=()=>{sync();show(index-1)};next.onclick=()=>{sync();show(index+1)};
 }
-videoBack.onclick=()=>location.href='crown-100-clean.html?reset=1&v=reset10';
+videoBack.onclick=()=>location.href='crown-100-clean.html?v=reset11';
 </script>
 </body>
 </html>
