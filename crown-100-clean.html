@@ -7,66 +7,85 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>BEAUX — THE QUEEN B</title>
 <style>
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#09020e}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#09020e}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#09020e;color:#fff;font-family:Arial,Helvetica,sans-serif}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#09020e}
 #navOverlay{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:999999;display:none;align-items:center;justify-content:space-between;gap:16px;width:min(760px,88vw);pointer-events:none}
 #navOverlay button{pointer-events:auto;min-width:150px;min-height:58px;border:1px solid #ffe39a;border-radius:999px;background:rgba(12,2,18,.9);color:#fff4c7;font-weight:900;font-size:13px;letter-spacing:.13em;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 26px rgba(255,214,118,.18)}
 #navCount{color:#ffe39a;font:700 13px/1 Georgia,serif;letter-spacing:.14em;text-shadow:0 2px 12px #000;pointer-events:none}
-#videoHint{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:9999999;display:none;padding:10px 16px;border:1px solid rgba(255,227,154,.55);border-radius:999px;background:rgba(12,2,18,.82);color:#ffe9ad;font:800 10px/1 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;backdrop-filter:blur(10px)}
-@media(max-width:620px){#navOverlay{bottom:18px;width:94vw;gap:8px}#navOverlay button{min-width:112px;min-height:54px;font-size:11px}#navCount{font-size:11px}}
+#videoPreview{position:fixed;inset:0;z-index:9999999;display:none;place-items:center;padding:18px;background:radial-gradient(circle at 50% 18%,#4e1464 0,#23062e 38%,#0a010f 100%)}
+.videoShell{width:min(980px,96vw);max-height:94vh;padding:16px;border:1px solid rgba(245,214,132,.5);border-radius:28px;background:#09020e;box-shadow:0 30px 100px rgba(0,0,0,.62),0 0 90px rgba(138,62,176,.28)}
+.videoTitle{text-align:center;color:#f5d98b;font:500 clamp(28px,5vw,50px)/1 Georgia,serif;margin:8px 12px 16px}.videoSub{text-align:center;color:#d9c8da;font-size:12px;letter-spacing:.08em;margin-bottom:14px}.videoWrap{position:relative;border-radius:20px;overflow:hidden;background:#000}.videoWrap video{display:block;width:100%;max-height:72vh;background:#000}.videoStatus{text-align:center;color:#d0c2d3;font-size:12px;margin:14px 0 4px}.videoBack{display:block;width:min(320px,86%);margin:16px auto 0;min-height:54px;border:1px solid #ffe4a0;border-radius:999px;background:linear-gradient(135deg,#f9e7a8,#c78931);color:#170716;font-weight:900;letter-spacing:.12em;cursor:pointer}
+@media(max-width:620px){#navOverlay{bottom:18px;width:94vw;gap:8px}#navOverlay button{min-width:112px;min-height:54px;font-size:11px}#navCount{font-size:11px}.videoWrap video{max-height:66vh}.videoShell{padding:12px}}
 </style>
 </head>
 <body>
-<iframe id="crownFrame" src="crown-100.html?viewer=nav6" title="Beaux 100-Piece Crown"></iframe>
+<iframe id="crownFrame" src="crown-100.html?viewer=nav7" title="Beaux 100-Piece Crown"></iframe>
 <div id="navOverlay"><button id="backBtn" type="button">← BACK</button><div id="navCount">01 / 100</div><button id="nextBtn" type="button">NEXT →</button></div>
-<div id="videoHint">Final video preview</div>
+<section id="videoPreview" aria-label="Final birthday video preview">
+  <div class="videoShell">
+    <div class="videoTitle">THE FINAL BIRTHDAY VIDEO</div>
+    <div class="videoSub">Direct preview</div>
+    <div class="videoWrap"><video id="directVideo" controls playsinline preload="metadata"></video></div>
+    <div class="videoStatus" id="directStatus">Preparing the video…</div>
+    <button class="videoBack" id="videoBack" type="button">BACK TO THE CROWN</button>
+  </div>
+</section>
 <script>
-const frame=document.getElementById('crownFrame'),nav=document.getElementById('navOverlay'),back=document.getElementById('backBtn'),next=document.getElementById('nextBtn'),count=document.getElementById('navCount'),videoHint=document.getElementById('videoHint');
+const frame=document.getElementById('crownFrame'),nav=document.getElementById('navOverlay'),back=document.getElementById('backBtn'),next=document.getElementById('nextBtn'),count=document.getElementById('navCount');
 const params=new URLSearchParams(location.search),previewVideo=params.get('video')==='1';
-let d=null,w=null,modal=null,photo=null,photos=[],index=0;
-function sync(){
-  if(!d||!modal||!photo)return;
-  const open=modal.classList.contains('show');
-  nav.style.display=(!previewVideo&&open)?'flex':'none';
-  if(!open)return;
-  const src=photo.getAttribute('src')||'';
-  const found=photos.findIndex(p=>src===p||src.includes(p));
-  if(found>=0)index=found;
-  count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length||100).padStart(2,'0');
-}
-function show(i){
-  if(!photos.length||!photo)return;
-  index=(i+photos.length)%photos.length;
-  photo.src=photos[index];
-  count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');
-}
-frame.addEventListener('load',()=>{
+const videoPreview=document.getElementById('videoPreview'),directVideo=document.getElementById('directVideo'),directStatus=document.getElementById('directStatus'),videoBack=document.getElementById('videoBack');
+let d=null,w=null,modal=null,photo=null,photos=[],index=0,videoUrl='';
+async function loadDirectVideo(){
   try{
-    w=frame.contentWindow; d=frame.contentDocument;
-    modal=d.getElementById('memoryModal'); photo=d.getElementById('memoryPhoto'); photos=(w.BEAUX_PHOTOS||[]).slice(0,100);
-    const oldCopy=d.querySelector('#memoryModal .memoryCopy'); if(oldCopy)oldCopy.style.display='none';
-    if(modal&&photo){
+    directStatus.textContent='Opening the final video…';
+    const parts=await Promise.all(Array.from({length:12},(_,i)=>fetch('assets/fall-video/part'+String(i).padStart(2,'0')+'.txt?v=direct-video-3',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('Missing video part '+i);return r.text()})));
+    const b64=parts.map(s=>s.trim()).join('');
+    const bin=atob(b64),bytes=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+    videoUrl=URL.createObjectURL(new Blob([bytes],{type:'video/mp4'}));
+    directVideo.src=videoUrl;
+    directStatus.textContent='Video ready — press Play.';
+  }catch(err){
+    console.error(err);
+    directStatus.textContent='The video could not load. Please refresh and try again.';
+  }
+}
+if(previewVideo){
+  frame.style.display='none'; nav.style.display='none'; videoPreview.style.display='grid'; loadDirectVideo();
+}else{
+  function sync(){
+    if(!d||!modal||!photo)return;
+    const open=modal.classList.contains('show');
+    nav.style.display=open?'flex':'none';
+    if(!open)return;
+    const src=photo.getAttribute('src')||'';
+    const found=photos.findIndex(p=>src===p||src.includes(p));
+    if(found>=0)index=found;
+    count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length||100).padStart(2,'0');
+  }
+  function show(i){
+    if(!photos.length||!photo)return;
+    index=(i+photos.length)%photos.length;
+    photo.src=photos[index];
+    count.textContent=String(index+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');
+  }
+  frame.addEventListener('load',()=>{
+    try{
+      w=frame.contentWindow; d=frame.contentDocument;
+      modal=d.getElementById('memoryModal'); photo=d.getElementById('memoryPhoto'); photos=(w.BEAUX_PHOTOS||[]).slice(0,100);
+      const oldCopy=d.querySelector('#memoryModal .memoryCopy'); if(oldCopy)oldCopy.style.display='none';
+      if(!modal||!photo)return;
       new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});
       photo.addEventListener('load',sync);
       let x0=null; photo.addEventListener('touchstart',e=>{x0=e.touches[0]?.clientX??null},{passive:true});
       photo.addEventListener('touchend',e=>{if(x0==null)return;const x1=e.changedTouches[0]?.clientX??x0,dx=x1-x0;if(Math.abs(dx)>45)show(index+(dx<0?1:-1));x0=null},{passive:true});
       sync();
-    }
-    if(previewVideo){
-      videoHint.style.display='block';
-      setTimeout(()=>{
-        const portal=d.getElementById('portalBtn');
-        if(portal) portal.click();
-        else {
-          const vm=d.getElementById('videoModal');
-          if(vm) vm.classList.add('show');
-          if(typeof w.loadVideo==='function') w.loadVideo();
-        }
-      },250);
-    }
-  }catch(e){console.error(e)}
-});
-back.onclick=()=>{sync();show(index-1)}; next.onclick=()=>{sync();show(index+1)};
-document.addEventListener('keydown',e=>{if(nav.style.display!=='flex')return;if(e.key==='ArrowLeft'){e.preventDefault();show(index-1)}if(e.key==='ArrowRight'){e.preventDefault();show(index+1)}});
+    }catch(e){console.error(e)}
+  });
+  back.onclick=()=>{sync();show(index-1)}; next.onclick=()=>{sync();show(index+1)};
+  document.addEventListener('keydown',e=>{if(nav.style.display!=='flex')return;if(e.key==='ArrowLeft'){e.preventDefault();show(index-1)}if(e.key==='ArrowRight'){e.preventDefault();show(index+1)}});
+}
+videoBack.onclick=()=>location.href='crown-100-clean.html?v=crown7';
+window.addEventListener('beforeunload',()=>{if(videoUrl)URL.revokeObjectURL(videoUrl)});
 </script>
 </body>
 </html>
