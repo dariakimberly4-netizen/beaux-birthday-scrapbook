@@ -2,13 +2,47 @@ const _drive=["1zh1cxp5hcBl0ZGsoIercv51RSxszmMSb","1-QVlGgM0BqfcUQqWcQLNPlzoDztm
 window.BEAUX_PHOTOS=_drive.slice(0,100).map(id=>`https://drive.google.com/thumbnail?id=${id}&sz=w1200`);
 document.title='BEAUX — THE QUEEN B';
 
-// Crown memory images: photo-only mode, no per-image captions or descriptive text.
 window.addEventListener('DOMContentLoaded',()=>{
   const style=document.createElement('style');
   style.textContent=`
     #memoryModal .memoryCard{grid-template-columns:1fr!important;width:min(920px,94vw)!important;background:#070109!important}
     #memoryModal .memoryCopy{display:none!important}
     #memoryModal .memoryPhoto{width:100%!important;height:min(84vh,760px)!important;max-height:84vh!important;object-fit:contain!important}
+    .stage{background:radial-gradient(circle at 50% 22%,rgba(170,80,255,.38),transparent 24%),radial-gradient(circle at 18% 18%,rgba(255,105,206,.18),transparent 20%),radial-gradient(circle at 82% 30%,rgba(130,116,255,.2),transparent 22%),radial-gradient(circle at 50% 40%,#4b1362 0,#22052f 36%,#0b0111 100%)!important}
+    .stage:before{background:conic-gradient(from 30deg,transparent 0 10%,rgba(255,222,154,.08) 14%,transparent 18% 38%,rgba(242,88,212,.08) 44%,transparent 50% 72%,rgba(146,74,255,.1) 78%,transparent 84%)!important;animation:wildSpin 28s linear infinite!important}
+    .wildBeams,.wildStars,.wildRain{position:absolute;inset:0;pointer-events:none}
+    .wildBeams:before,.wildBeams:after{content:"";position:absolute;left:50%;top:50%;width:110vmax;height:110vmax;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 90deg,transparent 0 12%,rgba(255,221,150,.06) 15%,transparent 18% 40%,rgba(255,96,206,.05) 44%,transparent 48% 70%,rgba(161,72,255,.08) 74%,transparent 78%);animation:wildSpin 21s linear infinite}
+    .wildBeams:after{width:85vmax;height:85vmax;filter:blur(14px);opacity:.6;animation-duration:14s;animation-direction:reverse}
+    .wildStars{background-image:radial-gradient(circle at 10% 12%,#fff 0 1px,transparent 1.4px),radial-gradient(circle at 24% 77%,#fff 0 1px,transparent 1.4px),radial-gradient(circle at 83% 15%,#ffeccb 0 1.4px,transparent 2px),radial-gradient(circle at 71% 64%,#e6bcff 0 1px,transparent 1.5px),radial-gradient(circle at 55% 23%,#fff 0 1px,transparent 1.5px),radial-gradient(circle at 15% 55%,#ffd889 0 1px,transparent 1.5px);animation:wildTwinkle 4s ease-in-out infinite alternate}
+    .wildRain i{position:absolute;top:-5vh;width:2px;height:18px;border-radius:999px;background:linear-gradient(180deg,#fff6ca,#ff77d7 58%,transparent);opacity:.45;animation:wildRain linear infinite}.wildRain i:nth-child(1){left:8%;animation-duration:7s;animation-delay:-2s}.wildRain i:nth-child(2){left:19%;animation-duration:8s;animation-delay:-5s}.wildRain i:nth-child(3){left:31%;animation-duration:6.5s;animation-delay:-1s}.wildRain i:nth-child(4){left:48%;animation-duration:9s;animation-delay:-3s}.wildRain i:nth-child(5){left:63%;animation-duration:7.8s;animation-delay:-4s}.wildRain i:nth-child(6){left:76%;animation-duration:8.7s;animation-delay:-2s}.wildRain i:nth-child(7){left:89%;animation-duration:6.9s;animation-delay:-6s}
+    .crownZone{filter:drop-shadow(0 0 34px rgba(175,80,255,.3))!important}.ghost{filter:drop-shadow(0 0 22px rgba(255,213,126,.22))!important}.piece.restored{filter:drop-shadow(0 0 10px rgba(255,235,161,.95)) drop-shadow(0 0 24px rgba(236,169,61,.5))!important}.piece.light.restored{filter:drop-shadow(0 0 14px #fff2b0) drop-shadow(0 0 36px rgba(247,203,93,.9))!important}.portalRing{background:radial-gradient(circle,#fff9cf 0 2%,#ffd97b 4%,#f26fe0 16%,#8a3dff 34%,#28083c 55%,#09010d 78%)!important;box-shadow:0 0 38px rgba(248,215,128,.4),0 0 120px rgba(175,77,255,.6)!important;animation:wildPulse 3s ease-in-out infinite!important}
+    .wildBurst,.wildWave,.wildSpark{position:fixed;pointer-events:none}.wildBurst{z-index:90;left:var(--x);top:var(--y);width:8px;height:8px;border-radius:50%;background:#ffe596;box-shadow:0 0 18px #ffd066;animation:wildBurst .95s ease-out forwards}.wildWave{z-index:89;left:var(--x);top:var(--y);width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,222,153,.85);transform:translate(-50%,-50%) scale(.2);box-shadow:0 0 28px rgba(249,111,214,.26);animation:wildWave 1s ease-out forwards}.wildSpark{z-index:88;left:var(--x);top:var(--y);width:3px;height:18px;border-radius:999px;background:linear-gradient(180deg,#fff5c6,#ff75d6 60%,rgba(255,255,255,0));transform:translate(-50%,-50%) rotate(var(--r));animation:wildSpark .8s ease-out forwards}.stage.wildShock{animation:wildShock .24s linear 1}
+    @keyframes wildSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}@keyframes wildTwinkle{50%{opacity:.7}}@keyframes wildPulse{50%{transform:scale(1.06)}}@keyframes wildRain{0%{transform:translateY(-5vh) rotate(10deg);opacity:0}15%{opacity:.5}100%{transform:translateY(110vh) rotate(10deg);opacity:0}}@keyframes wildBurst{to{transform:translate(var(--dx),var(--dy)) scale(.1);opacity:0}}@keyframes wildWave{to{transform:translate(-50%,-50%) scale(9);opacity:0}}@keyframes wildSpark{to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--r));opacity:0}}@keyframes wildShock{0%,100%{transform:translate(0)}25%{transform:translate(2px,-1px)}50%{transform:translate(-2px,1px)}75%{transform:translate(1px,2px)}}
   `;
   document.head.appendChild(style);
+
+  const stage=document.getElementById('stage');
+  if(stage){
+    const beams=document.createElement('div'); beams.className='wildBeams';
+    const stars=document.createElement('div'); stars.className='wildStars';
+    const rain=document.createElement('div'); rain.className='wildRain'; rain.innerHTML='<i></i><i></i><i></i><i></i><i></i><i></i><i></i>';
+    stage.prepend(rain); stage.prepend(stars); stage.prepend(beams);
+  }
+  const h1=document.querySelector('.copy h1'); if(h1) h1.innerHTML='THE <em>WILDER</em> 100-PIECE CROWN';
+  const cp=document.querySelector('.copy p:last-child'); if(cp) cp.textContent='Every tap unleashes a memory burst. Restore all 100 pieces to awaken the final cosmic portal.';
+  const restore=document.getElementById('restore'); if(restore) restore.textContent='UNLEASH PIECE 01';
+  const complete=document.querySelector('.completeText'); if(complete) complete.textContent='THE CROWN HAS GONE SUPERNOVA';
+  const portal=document.getElementById('portalBtn'); if(portal) portal.textContent='ENTER THE FINAL PORTAL';
+
+  function explode(el){
+    if(!el)return; const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    for(let i=0;i<16;i++){const b=document.createElement('i'),a=Math.PI*2*i/16,d=55+(i%4)*18;b.className='wildBurst';b.style.cssText=`--x:${cx}px;--y:${cy}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px`;document.body.appendChild(b);setTimeout(()=>b.remove(),1000)}
+    const w=document.createElement('i');w.className='wildWave';w.style.cssText=`--x:${cx}px;--y:${cy}px`;document.body.appendChild(w);setTimeout(()=>w.remove(),1050);
+    for(let i=0;i<12;i++){const s=document.createElement('i'),a=Math.PI*2*i/12,d=42+(i%3)*18;s.className='wildSpark';s.style.cssText=`--x:${cx}px;--y:${cy}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;--r:${(a*180/Math.PI)+90}deg`;document.body.appendChild(s);setTimeout(()=>s.remove(),850)}
+    if(stage){stage.classList.remove('wildShock');void stage.offsetWidth;stage.classList.add('wildShock');setTimeout(()=>stage.classList.remove('wildShock'),260)}
+  }
+
+  const crown=document.getElementById('crownZone');
+  if(crown){crown.addEventListener('click',()=>setTimeout(()=>{const restored=[...document.querySelectorAll('.piece.restored')].at(-1);explode(restored||crown)},60),true)}
+  if(restore){restore.addEventListener('click',()=>setTimeout(()=>{const restored=[...document.querySelectorAll('.piece.restored')].at(-1);explode(restored||restore)},60),true)}
 });
