@@ -4,25 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#09020e">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>BEAUX — THE QUEEN B</title>
 <style>
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#09020e}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#09020e}
 #navOverlay{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:999999;display:none;align-items:center;justify-content:space-between;gap:16px;width:min(760px,88vw);pointer-events:none}
 #navOverlay button{pointer-events:auto;min-width:150px;min-height:58px;border:1px solid #ffe39a;border-radius:999px;background:rgba(12,2,18,.9);color:#fff4c7;font-weight:900;font-size:13px;letter-spacing:.13em;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 26px rgba(255,214,118,.18)}
 #navCount{color:#ffe39a;font:700 13px/1 Georgia,serif;letter-spacing:.14em;text-shadow:0 2px 12px #000;pointer-events:none}
+#videoHint{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:9999999;display:none;padding:10px 16px;border:1px solid rgba(255,227,154,.55);border-radius:999px;background:rgba(12,2,18,.82);color:#ffe9ad;font:800 10px/1 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;backdrop-filter:blur(10px)}
 @media(max-width:620px){#navOverlay{bottom:18px;width:94vw;gap:8px}#navOverlay button{min-width:112px;min-height:54px;font-size:11px}#navCount{font-size:11px}}
 </style>
 </head>
 <body>
-<iframe id="crownFrame" src="crown-100.html?viewer=nav5" title="Beaux 100-Piece Crown"></iframe>
+<iframe id="crownFrame" src="crown-100.html?viewer=nav6" title="Beaux 100-Piece Crown"></iframe>
 <div id="navOverlay"><button id="backBtn" type="button">← BACK</button><div id="navCount">01 / 100</div><button id="nextBtn" type="button">NEXT →</button></div>
+<div id="videoHint">Final video preview</div>
 <script>
-const frame=document.getElementById('crownFrame'),nav=document.getElementById('navOverlay'),back=document.getElementById('backBtn'),next=document.getElementById('nextBtn'),count=document.getElementById('navCount');
+const frame=document.getElementById('crownFrame'),nav=document.getElementById('navOverlay'),back=document.getElementById('backBtn'),next=document.getElementById('nextBtn'),count=document.getElementById('navCount'),videoHint=document.getElementById('videoHint');
+const params=new URLSearchParams(location.search),previewVideo=params.get('video')==='1';
 let d=null,w=null,modal=null,photo=null,photos=[],index=0;
 function sync(){
   if(!d||!modal||!photo)return;
   const open=modal.classList.contains('show');
-  nav.style.display=open?'flex':'none';
+  nav.style.display=(!previewVideo&&open)?'flex':'none';
   if(!open)return;
   const src=photo.getAttribute('src')||'';
   const found=photos.findIndex(p=>src===p||src.includes(p));
@@ -40,12 +44,25 @@ frame.addEventListener('load',()=>{
     w=frame.contentWindow; d=frame.contentDocument;
     modal=d.getElementById('memoryModal'); photo=d.getElementById('memoryPhoto'); photos=(w.BEAUX_PHOTOS||[]).slice(0,100);
     const oldCopy=d.querySelector('#memoryModal .memoryCopy'); if(oldCopy)oldCopy.style.display='none';
-    if(!modal||!photo)return;
-    new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});
-    photo.addEventListener('load',sync);
-    let x0=null; photo.addEventListener('touchstart',e=>{x0=e.touches[0]?.clientX??null},{passive:true});
-    photo.addEventListener('touchend',e=>{if(x0==null)return;const x1=e.changedTouches[0]?.clientX??x0,dx=x1-x0;if(Math.abs(dx)>45)show(index+(dx<0?1:-1));x0=null},{passive:true});
-    sync();
+    if(modal&&photo){
+      new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});
+      photo.addEventListener('load',sync);
+      let x0=null; photo.addEventListener('touchstart',e=>{x0=e.touches[0]?.clientX??null},{passive:true});
+      photo.addEventListener('touchend',e=>{if(x0==null)return;const x1=e.changedTouches[0]?.clientX??x0,dx=x1-x0;if(Math.abs(dx)>45)show(index+(dx<0?1:-1));x0=null},{passive:true});
+      sync();
+    }
+    if(previewVideo){
+      videoHint.style.display='block';
+      setTimeout(()=>{
+        const portal=d.getElementById('portalBtn');
+        if(portal) portal.click();
+        else {
+          const vm=d.getElementById('videoModal');
+          if(vm) vm.classList.add('show');
+          if(typeof w.loadVideo==='function') w.loadVideo();
+        }
+      },250);
+    }
   }catch(e){console.error(e)}
 });
 back.onclick=()=>{sync();show(index-1)}; next.onclick=()=>{sync();show(index+1)};
