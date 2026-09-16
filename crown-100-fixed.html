@@ -49,7 +49,8 @@ html,body{height:100dvh;min-height:100dvh;max-height:100dvh}
 </main>
 <div class="modal" id="memoryModal"><article class="card"><button class="close" id="closeMemory" aria-label="Close">×</button><img class="photo" id="memoryPhoto" alt="Beaux birthday memory"><div class="info"><small id="memoryN">MEMORY 1 OF 100</small><h2 id="memoryTitle">A piece returns.</h2><div class="pieceType" id="pieceType">Jewel restored</div><button class="continue" id="continueBtn">CONTINUE BUILDING THE CROWN</button></div></article></div>
 <div class="modal" id="videoModal"><section class="videoShell"><button class="close" id="closeVideo" aria-label="Close video">×</button><h2>The crown was only the beginning.</h2><video id="finalVideo" controls playsinline preload="metadata"><source src="assets/VID-20260915-WA0000.mp4?v=clean-final-1" type="video/mp4"></video><div class="status" id="videoStatus">Tap play to watch the final message.</div><button class="retry" id="retryBtn">RELOAD VIDEO</button></section></div>
-<script src="assets/photos.js?v=crown100-direct-1"></script>
+<script>localStorage.removeItem('beauxCrown100ProgressV1');</script>
+<script src="assets/photos.js?v=crown100-unblocked-1"></script>
 <script>
 const TOTAL=100,KEY='beauxCrown100ProgressV2',VIDEO='assets/VID-20260915-WA0000.mp4?v=clean-final-1';
 const $=id=>document.getElementById(id),stage=$('stage'),piecesEl=$('pieces'),countEl=$('count'),bar=$('bar'),restore=$('restore'),reset=$('reset'),crown=$('crown'),crownTap=$('crownTap'),memoryModal=$('memoryModal'),memoryPhoto=$('memoryPhoto'),memoryN=$('memoryN'),memoryTitle=$('memoryTitle'),pieceType=$('pieceType'),closeMemory=$('closeMemory'),continueBtn=$('continueBtn'),portalBtn=$('portalBtn'),videoModal=$('videoModal'),finalVideo=$('finalVideo'),videoStatus=$('videoStatus'),closeVideo=$('closeVideo'),retryBtn=$('retryBtn');
