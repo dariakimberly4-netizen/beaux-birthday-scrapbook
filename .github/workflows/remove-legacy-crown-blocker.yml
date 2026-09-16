@@ -1,0 +1,38 @@
+name: Remove legacy crown blocker
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/remove-legacy-crown-blocker.yml'
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove old crown tap interceptor
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          photos = Path('assets/photos.js')
+          s = photos.read_text()
+          marker = '\n// Crown finale rule:'
+          if marker in s:
+              s = s.split(marker, 1)[0].rstrip() + '\n'
+              photos.write_text(s)
+
+          crown = Path('crown-100-fixed.html')
+          c = crown.read_text()
+          c = c.replace('assets/photos.js?v=crown100-direct-1', 'assets/photos.js?v=crown100-unblocked-1')
+          if "localStorage.removeItem('beauxCrown100ProgressV1')" not in c:
+              c = c.replace('<script src="assets/photos.js?v=crown100-unblocked-1"></script>', '<script>localStorage.removeItem(\'beauxCrown100ProgressV1\');</script>\n<script src="assets/photos.js?v=crown100-unblocked-1"></script>', 1)
+          crown.write_text(c)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/photos.js crown-100-fixed.html
+          git diff --cached --quiet || git commit -m "Remove legacy crown tap blocker"
+          git push
