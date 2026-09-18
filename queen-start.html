@@ -26,11 +26,38 @@ body.breaking .world{animation:worldShake .28s linear 3;filter:contrast(1.14) sa
 @keyframes worldShake{0%,100%{transform:translate(0)}25%{transform:translate(4px,-2px)}50%{transform:translate(-4px,2px)}75%{transform:translate(2px,4px)}}@keyframes flash{0%,100%{background:rgba(255,255,255,0)}40%{background:rgba(255,238,191,.22)}}@keyframes shatter{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--r)) scale(.2)}12%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(calc(var(--r) + 160deg)) scale(1.2)}}
 @media(max-width:800px){.shell{padding:28px 18px}.copy p{margin:18px auto 24px}.copy h1{font-size:clamp(46px,15vw,72px)}.enter{width:min(390px,88vw)}.crownGlyph{top:10%}}
 @media(prefers-reduced-motion:reduce){.world:before,.stars,.crownGlyph,.voidCore{animation:none}.shard{display:none}body.breaking .world{animation:none}body.collapsing .shell{transition:opacity .2s ease;transform:none}.void{transition:opacity .3s ease;transform:none}}
+
+.royalRings{position:absolute;inset:0;z-index:1;pointer-events:none}
+.ring{position:absolute;left:50%;top:48%;width:min(72vw,760px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,224,146,.18);transform:translate(-50%,-50%) scale(.35);opacity:.24;box-shadow:0 0 55px rgba(170,76,255,.12);animation:ringBreath 5.2s ease-in-out infinite}
+.ring:nth-child(2){width:min(86vw,920px);animation-delay:-1.7s;border-color:rgba(223,138,255,.16)}
+.ring:nth-child(3){width:min(102vw,1100px);animation-delay:-3.2s;border-color:rgba(255,233,171,.11)}
+@keyframes ringBreath{50%{transform:translate(-50%,-50%) scale(1.05);opacity:.55}}
+.crownStorm{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.crownBit{position:absolute;left:50%;top:50%;font-family:Georgia,serif;font-weight:700;color:#ffe5a0;text-shadow:0 0 15px rgba(255,213,105,.55);opacity:.28;transform:translate(-50%,-50%) rotate(var(--r));animation:orbitBit var(--t) linear infinite}
+@keyframes orbitBit{from{transform:rotate(0deg) translateX(var(--d)) rotate(0deg)}to{transform:rotate(360deg) translateX(var(--d)) rotate(-360deg)}}
+.omen{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);z-index:4;color:#cdbad4;font-size:9px;font-weight:900;letter-spacing:.32em;text-transform:uppercase;opacity:.66;white-space:nowrap}
+.warning{position:fixed;inset:0;z-index:29;display:grid;place-items:center;pointer-events:none;opacity:0}
+.warning span{font:900 clamp(24px,5vw,64px)/1 Arial,sans-serif;letter-spacing:.18em;color:#fff6d5;text-shadow:0 0 16px #ffd777,0 0 46px #9b4cff;transform:scale(.3)}
+body.breaking .warning{animation:warnFlash 1.45s ease both}
+body.breaking .warning span{animation:warnText 1.45s ease both}
+@keyframes warnFlash{0%,100%{opacity:0}18%{opacity:1}42%{opacity:.18}58%{opacity:1}75%{opacity:.1}}
+@keyframes warnText{0%{transform:scale(.25) rotate(-4deg)}28%{transform:scale(1.12) rotate(1deg)}58%{transform:scale(.82) rotate(-1deg)}100%{transform:scale(2.6);opacity:0}}
+.rift{position:fixed;left:50%;top:50%;z-index:27;width:4px;height:0;background:#fff2be;box-shadow:0 0 28px #ffd66d,0 0 70px #c056ff;transform:translate(-50%,-50%) rotate(17deg);opacity:0;pointer-events:none}
+body.breaking .rift{animation:riftOpen 1.6s ease .22s forwards}
+@keyframes riftOpen{0%{height:0;opacity:0}18%{height:68vh;opacity:1}58%{width:5px;height:120vh;opacity:1}100%{width:38vw;height:150vh;opacity:0}}
+body.breaking .ring{animation:ringBreak 1.35s cubic-bezier(.15,.85,.22,1) forwards}
+@keyframes ringBreak{to{transform:translate(-50%,-50%) scale(2.4);opacity:0}}
+body.breaking .crownStorm{animation:stormBurst 1.8s ease forwards}
+@keyframes stormBurst{to{transform:scale(2.5) rotate(120deg);opacity:0}}
+@media(max-width:800px){.omen{bottom:4%;font-size:8px;letter-spacing:.2em}}
+@media(prefers-reduced-motion:reduce){.ring,.crownBit,.warning,.rift{animation:none!important}}
 </style>
 </head>
 <body>
 <div class="world" id="world">
   <div class="stars"></div>
+  <div class="royalRings" aria-hidden="true"><i class="ring"></i><i class="ring"></i><i class="ring"></i></div>
+  <div class="crownStorm" id="crownStorm" aria-hidden="true"></div>
   <div class="crownGlyph" aria-hidden="true">♛</div>
   <main class="shell">
     <section class="copy">
@@ -38,24 +65,30 @@ body.breaking .world{animation:worldShake .28s linear 3;filter:contrast(1.14) sa
       <h1>BEAUX<br><em>RULES THIS WORLD.</em></h1>
       <p>This looks like her birthday website. It is not. Somewhere underneath it, one hundred real memories are waiting to become a crown.</p>
       <button class="enter" id="breakBtn" type="button">BREAK THE WEBSITE</button>
+      <div class="omen">DO NOT EXPECT THE WEBSITE TO SURVIVE</div>
     </section>
   </main>
 </div>
 <div class="breakLayer"></div>
+<div class="warning"><span>REALITY ERROR</span></div>
+<div class="rift"></div>
 <div class="cracks"><i class="crack2"></i><i class="crack3"></i><i class="crack4"></i></div>
 <div class="shards" id="shards"></div>
 <div class="void" id="void"><div class="voidCore"><div><b>THE CROWN<br>WAS UNDERNEATH.</b><span>Entering 100 memories…</span></div></div></div>
 <script>
-const btn=document.getElementById('breakBtn'), shards=document.getElementById('shards');
+const btn=document.getElementById('breakBtn'), shards=document.getElementById('shards'), crownStorm=document.getElementById('crownStorm');
+const marks=['♛','✦','◆','✧','♕','✶','◇'];
+for(let i=0;i<26;i++){const b=document.createElement('i');b.className='crownBit';b.textContent=marks[i%marks.length];b.style.cssText=`--d:${110+(i%9)*32}px;--t:${7+(i%7)*1.2}s;--r:${(i*31)%360}deg;font-size:${12+(i%6)*5}px;animation-delay:-${(i%8)*.7}s`;crownStorm.appendChild(b)}
+
 for(let i=0;i<34;i++){const s=document.createElement('i');s.className='shard';const a=Math.PI*2*i/34,d=180+(i%7)*34;s.style.cssText=`--w:${28+(i%5)*18}px;--h:${34+(i%6)*22}px;--r:${(i*37)%180}deg;--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px;--d:${(i%8)*.025}s`;shards.appendChild(s)}
 function go(){
  if(document.body.classList.contains('breaking'))return;
  btn.disabled=true;btn.textContent='REALITY UNLOCKED';
- if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.body.classList.add('voiding');setTimeout(()=>location.href='crown-100-clean.html?v=queenbreak2',450);return}
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.body.classList.add('voiding');setTimeout(()=>location.href='crown-100-clean.html?v=queenbreak-wild13',450);return}
  document.body.classList.add('breaking');
  setTimeout(()=>document.body.classList.add('collapsing'),900);
  setTimeout(()=>document.body.classList.add('voiding'),1650);
- setTimeout(()=>location.href='crown-100-clean.html?v=queenbreak2',3050);
+ setTimeout(()=>location.href='crown-100-clean.html?v=queenbreak-wild13',3050);
 }
 btn.addEventListener('click',go);
 </script>
